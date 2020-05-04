@@ -4,7 +4,7 @@
 
 ### Commit rule
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4321ecda-16d8-46b5-ad0f-31a02b76e267/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4321ecda-16d8-46b5-ad0f-31a02b76e267/Untitled.png)
+![image](https://user-images.githubusercontent.com/49897409/80965072-eb9fd280-8e4c-11ea-9b39-c0f3d6cb1dd5.png)
 
 ```jsx
 [#issue_number] Feat: issue content
@@ -25,8 +25,11 @@ ex) featuer/fe-mainPage
 
 ### Branch Structure
 
+```jsx
                   master
 
            dev             deploy
 
-fe-dev be-dev
+    fe-dev      be-dev
+
+```
