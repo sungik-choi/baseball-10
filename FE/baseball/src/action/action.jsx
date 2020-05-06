@@ -1,1 +1,2 @@
-/* action 분류 파일  */
+/* Action type  */
+export const SELECT_TEAM = "SELECT_TEAM";
