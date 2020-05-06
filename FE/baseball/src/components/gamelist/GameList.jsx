@@ -1,11 +1,8 @@
-import React from "react";
-import { useTodoState, useTodoDispatch } from "../../context/context.jsx";
+import React, { useContext } from "react";
+import styled from "styled-components";
 
 const GameList = () => {
-  const state = useTodoState();
-  const dispatch = useTodoDispatch();
-
-  return <div>Game List</div>;
+  return <div>game list</div>;
 };
 
 export default GameList;
