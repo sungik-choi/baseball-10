@@ -3,11 +3,11 @@ import { createContext, useContext } from "react";
 const baseballStateContext = createContext();
 const baseballDispatchContext = createContext();
 
-const useTodoState = () => {
+const useBaseballState = () => {
   return useContext(baseballStateContext);
 };
-const useTodoDispatch = () => {
+const useBaseballDispatch = () => {
   return useContext(baseballDispatchContext);
 };
 
-export { baseballStateContext, baseballDispatchContext, useTodoState, useTodoDispatch };
+export { baseballStateContext, baseballDispatchContext, useBaseballState, useBaseballDispatch };
