@@ -17,13 +17,59 @@ const fonts = css`
   }
 `;
 
-const variables = css``;
+const variables = css`
+  :root {
+    /* Size */
+    --width: 1200px;
+    --height: 768px;
+    --border-radius: 12px;
+    --border-size: 4px;
+    --button-shadow: 8px;
+
+    /* Color */
+    --white: #fff;
+    --orange: #f29c04;
+    --orange-shadow: #e07a0c;
+
+    /* Typography */
+    --text-lg: 1.5rem;
+  }
+`;
 
 const GlobalStyle = createGlobalStyle`
   ${fonts}
   ${reset}
   ${variables}
-  /* other styles */
+
+  * {
+    font-family: "Regular";
+    font-size: 1rem;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    min-width: var(--width);
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    &:active {
+      text-decoration: none;
+    }
+  }
+
+  h1, h2, h3 {
+    font-family: "Bold";
+  }
+
+  button {
+    cursor: pointer;
+    outline: none;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 export default GlobalStyle;
