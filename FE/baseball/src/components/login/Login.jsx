@@ -34,21 +34,22 @@ const bounce = keyframes`
 const LogoSvg = styled.object`
   width: 26rem;
   height: 14.125rem; /* 226 / 16 */
-  margin-bottom: 4rem;
   animation: ${bounce} 2s infinite alternate;
 `;
 
 const LoginWrap = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding-top: 7.5rem;
+  padding-bottom: 2rem;
   width: 100%;
   height: 100%;
 `;
 
 const CodesqaudLogo = styled.img`
-  transform: translateY(2rem);
   width: 8.6875rem; /* 139 / 16 */
   height: 3.875rem; /* 62 / 16 */
 `;
@@ -60,7 +61,8 @@ const GithubLogo = styled.object`
 `;
 
 const LoginButton = styled(Button)`
-  margin-bottom: 3rem;
+  margin: 4rem 0;
+  transform: translateY(1rem);
 `;
 
 export default Login;
