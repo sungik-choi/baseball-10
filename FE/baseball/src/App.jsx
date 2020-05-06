@@ -1,10 +1,10 @@
-import React from 'react';
-import GlobalStyle from './style/GlobalStyle';
-import { Route, Link, Switch } from 'react-router-dom';
+import React from "react";
+import GlobalStyle from "./style/GlobalStyle";
+import { Route, Link, Switch } from "react-router-dom";
 
-import Login from './components/login/Login.jsx';
-import GameList from './components/gamelist/GameList.jsx';
-import PlayGround from './components/playground/PlayGround.jsx';
+import Login from "./components/login/Login.jsx";
+import GameList from "./components/gamelist/GameList.jsx";
+import PlayGround from "./components/playground/PlayGround.jsx";
 
 const App = () => {
   return (
