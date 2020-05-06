@@ -1,10 +1,13 @@
 import { useReducer } from "react";
 import baseballData from "../mock/baseballData.js";
+import { SELECT_TEAM } from "../action/action.jsx";
 
 const baseballReducer = (state, action) => {
   switch (action.type) {
-    case "INCREASE":
-      return { gameList: [...state.gameList], counter: state.counter + 1 };
+    case SELECT_TEAM:
+      return { ...state };
+    default:
+      return state;
   }
 };
 
