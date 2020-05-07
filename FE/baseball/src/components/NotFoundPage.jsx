@@ -1,24 +1,33 @@
 import React from "react";
 import styled from "styled-components";
+import Background from "style/Background";
 
 const NotFoundPage = ({ pathname }) => {
   return (
-    <Warp>
-      <div>이 페이지는 존재하지 않습니다</div>
-      <div>{pathname}</div>
-    </Warp>
+    <Background>
+      <ErrorWrap>
+        <ErrorContent>404 NOT FOUND</ErrorContent>
+        <ErrorPathname>{pathname}</ErrorPathname>
+      </ErrorWrap>
+    </Background>
   );
 };
 
-const Warp = styled.div`
+const ErrorWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-family: "Regular";
-  background-color: black;
-  color: white;
+  width: 100%;
   height: 100vh;
 `;
+
+const ErrorContent = styled.div`
+  font-family: "Bold";
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+`;
+
+const ErrorPathname = styled.div``;
 
 export default NotFoundPage;
