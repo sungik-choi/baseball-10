@@ -2,15 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import Button from "style/Button";
 
-const TeamCard = ({ name, image }) => {
+const TeamCard = ({ name, image, clickHandler }) => {
   const teamName = name;
+
   return (
-    <TeamButton color={"var(--white)"} shadow={"var(--gray-1)"}>
-      <ImgWrap>
-        <TeamImg src={image} />
-      </ImgWrap>
-      <span>{teamName}</span>
-    </TeamButton>
+    <li onClick={() => clickHandler(name, image)}>
+      <TeamButton color={"var(--white)"} shadow={"var(--gray-1)"}>
+        <ImgWrap>
+          <TeamImg src={image} />
+        </ImgWrap>
+        <span>{teamName}</span>
+      </TeamButton>
+    </li>
   );
 };
 
