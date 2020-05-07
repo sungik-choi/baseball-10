@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Background from "style/Background";
 import Header from "./Header";
 import TeamCard from "./TeamCard";
-import { useBaseballState } from "context/context.jsx";
+import { useBaseballState, useBaseballDispatch } from "context/context.jsx";
 import { fadeIn } from "style/Animation";
+import { selectTeam } from "action/action";
 
 const TeamList = () => {
-  const { teamList } = useBaseballState();
-  const [selectedTeam, setSelectedTeam] = useState({});
+  const { teamList, selectedTeam } = useBaseballState();
+  const dispatch = useBaseballDispatch();
 
-  const teamClickHandler = (name, image) => setSelectedTeam({ name: name, image: image });
+  const teamClickHandler = (name, image) => dispatch(selectTeam(name, image));
 
   const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} clickHandler={teamClickHandler} />);
 
   useEffect(() => {
     console.log(selectedTeam);
   }, [selectedTeam]);
-
   return (
     <TeamListWrap color={"var(--orange)"}>
       <Header />
