@@ -14,10 +14,8 @@ const Modal = ({option: { text = "", highlightText = "", image = "", cancelBtn =
             <ModalImg src={image} />
           </ModalImgWrap>
         )}
-        <span>
-          {highlightText && <HighlightSpan>{highlightText}</HighlightSpan>}
-          {text}
-        </span>
+        {highlightText && <HighlightSpan>{highlightText}</HighlightSpan>}
+        {text}
         <ButtonWrap>
         {cancelBtn && <Button white>{cancelBtnText}</Button>}
         <Button>{btnText}</Button>
@@ -43,7 +41,7 @@ const DimmedLayer = styled.div`
 
 const ButtonWrap = styled.div`
   display: flex;
-  margin-top: 8rem;
+  margin-top: 6rem;
   Button {
     margin: 0.5rem;
   }
@@ -51,7 +49,8 @@ const ButtonWrap = styled.div`
 
 const HighlightSpan = styled.span`
   color: var(--orange);
-  margin-right: 0.5rem;
+  display: block;
+  margin-bottom: 1rem;
 `;
 
 const ModalImgWrap = styled.div`
