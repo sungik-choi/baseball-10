@@ -12,7 +12,7 @@ const Login = () => {
     <Background>
       <LoginWrap>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
-        <LoginButton as={Link} to="/gamelist">
+        <LoginButton as={Link} to="/teamlist">
           <GithubLogo type="image/svg+xml" data={githubLogo}></GithubLogo>
           <span>Github으로 시작하기</span>
         </LoginButton>
