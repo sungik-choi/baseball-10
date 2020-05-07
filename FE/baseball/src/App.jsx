@@ -14,7 +14,7 @@ const App = () => {
     <BaseballProvider>
       <GlobalStyle />
       <Switch>
-        <Route path="/login" component={Login} exact />
+        <Route path="/" component={Login} exact />
         <Route path="/teamlist" component={TeamList} />
         <Route path="/playground" component={PlayGround} />
         <Route

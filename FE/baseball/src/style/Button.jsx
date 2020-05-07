@@ -13,7 +13,7 @@ const Button = styled.button`
   border: none;
   border-radius: var(--border-radius);
   width: 18.75rem; /* 300 / 16 */
-  height: 4rem; /* 64 / 16 */
+  height: 3.5rem; /* 56 / 16 */
   margin: var(--border-size);
   margin-bottom: calc(var(--button-shadow) + var(--border-size));
   box-shadow: 0px var(--button-shadow) 0px var(--orange-shadow);

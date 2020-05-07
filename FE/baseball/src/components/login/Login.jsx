@@ -12,15 +12,28 @@ const Login = () => {
     <Background>
       <LoginWrap>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
-        <LoginButton as={Link} to="/teamlist">
-          <GithubLogo type="image/svg+xml" data={githubLogo}></GithubLogo>
-          <span>Github으로 시작하기</span>
-        </LoginButton>
+        {false ? (
+          <PrimaryButton as={Link} to="/teamlist">
+            <GithubLogo type="image/svg+xml" data={githubLogo}></GithubLogo>
+            <span>{GITHUB_BUTTON_TEXT}</span>
+          </PrimaryButton>
+        ) : (
+          <div>
+            <PrimaryButton as={Link} to="/teamlist">
+              {START_BUTTON_TEXT}
+            </PrimaryButton>
+            <PrimaryButton>{LOGOUT_BUTTON_TEXT}</PrimaryButton>
+          </div>
+        )}
         <CodesqaudLogo src={codesquad} />
       </LoginWrap>
     </Background>
   );
 };
+
+const GITHUB_BUTTON_TEXT = "Github으로 시작하기";
+const START_BUTTON_TEXT = "게임 시작";
+const LOGOUT_BUTTON_TEXT = "로그아웃";
 
 const bounce = keyframes`
   0% {
@@ -43,7 +56,7 @@ const LoginWrap = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 7.5rem;
+  padding-top: 6rem;
   padding-bottom: 2rem;
   width: 100%;
   height: 100%;
@@ -60,9 +73,9 @@ const GithubLogo = styled.object`
   fill: var(--white);
 `;
 
-const LoginButton = styled(Button)`
-  margin: 4rem 0;
-  transform: translateY(1rem);
+const PrimaryButton = styled(Button)`
+  margin: 1.5rem 0;
+  /* transform: translateY(1rem); */
 `;
 
 export default Login;
