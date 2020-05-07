@@ -1,20 +1,24 @@
 import React from "react";
+import GlobalStyle from "./style/GlobalStyle";
 import { Route, Link, Switch } from "react-router-dom";
 
 import Login from "./components/login/Login.jsx";
 import GameList from "./components/gamelist/GameList.jsx";
 import PlayGround from "./components/playground/PlayGround.jsx";
 
-function App() {
+import BaseballProvider from "./components/BaseballProvider.jsx";
+
+const App = () => {
   return (
-    <div className="App">
+    <BaseballProvider>
+      <GlobalStyle />
       <Switch>
         <Route path="/" component={Login} exact />
         <Route path="/gamelist" component={GameList} />
         <Route path="/playground" component={PlayGround} />
       </Switch>
-    </div>
+    </BaseballProvider>
   );
-}
+};
 
 export default App;
