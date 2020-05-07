@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import baseballData from "../store/baseballStore.js";
+import baseballStore from "../store/baseballStore.js";
 import { SELECT_TEAM, FETCH_TEAM_LIST } from "../action/action.jsx";
 
 const baseballReducer = (state, action) => {
@@ -7,14 +7,14 @@ const baseballReducer = (state, action) => {
     case FETCH_TEAM_LIST:
       return { ...state, teamList: action.data.teamlist };
     case SELECT_TEAM:
-      return { ...state };
+      return { ...state, selectedTeam: { name: action.name, image: action.image } };
     default:
       return state;
   }
 };
 
 const useBaseballReducer = () => {
-  const [state, dispatch] = useReducer(baseballReducer, baseballData);
+  const [state, dispatch] = useReducer(baseballReducer, baseballStore);
   return { state, dispatch };
 };
 
