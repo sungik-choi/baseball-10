@@ -6,8 +6,8 @@ const NotFoundPage = ({ pathname }) => {
   return (
     <Background>
       <ErrorWrap>
-        <ErrorContent>404 NOT FOUND</ErrorContent>
-        <ErrorPathname>{pathname}</ErrorPathname>
+        <ErrorContent>⚾️😈 404 NOT FOUND 😈⚾️</ErrorContent>
+        <ErrorPathname>http://localhost:3000{pathname}</ErrorPathname>
       </ErrorWrap>
     </Background>
   );
