@@ -1,9 +1,11 @@
 import { useReducer } from "react";
 import baseballData from "../mock/baseballData.js";
-import { SELECT_TEAM } from "../action/action.jsx";
+import { SELECT_TEAM, FETCH_TEAM_LIST } from "../action/action.jsx";
 
 const baseballReducer = (state, action) => {
   switch (action.type) {
+    case FETCH_TEAM_LIST:
+      return { ...state, teamList: action.data.teamlist };
     case SELECT_TEAM:
       return { ...state };
     default:
