@@ -44,7 +44,7 @@ const TRANSITION_DELAY = 1;
 
 const TITLE_TEXT = "온라인 야구게임";
 const GITHUB_BUTTON_TEXT = "Github으로 시작하기";
-const START_BUTTON_TEXT = "게임 시작";
+const START_BUTTON_TEXT = "게임시작";
 const LOGOUT_BUTTON_TEXT = "로그아웃";
 
 const CoverDiv = styled.div`
@@ -75,8 +75,7 @@ const LoginWrap = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 6rem;
-  padding-bottom: 2rem;
+  padding: 2rem 0;
   width: 100%;
   height: 100%;
 `;

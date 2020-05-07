@@ -23,7 +23,7 @@ const TeamListWrap = styled(Background)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 3rem 1.5rem;
   * {
     animation: ${fadeIn} 1s;
