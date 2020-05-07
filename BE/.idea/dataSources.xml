@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="baseball-10" uuid="873ec135-86e5-491d-a981-98740f2170c3">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://baseball-10-proeject.csjhbz8c8oyh.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="baseball-10-real" uuid="24139289-bb1d-4da5-b58f-bd3fb57713eb">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://baseball-10-rds.csjhbz8c8oyh.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+    </data-source>
+  </component>
+</project>
