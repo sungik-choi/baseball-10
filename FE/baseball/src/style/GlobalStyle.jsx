@@ -28,11 +28,17 @@ const variables = css`
 
     /* Color */
     --white: #fff;
+    --black: #1c1e27;
+    --gray-1: #e3e7ea;
+    --gray-2: #8d9596;
     --orange: #f29c04;
     --orange-shadow: #e07a0c;
 
     /* Typography */
+    --text-xl: 2rem;
     --text-lg: 1.5rem;
+    --text-md: 1.25rem;
+    --text-base: 1rem;
   }
 `;
 

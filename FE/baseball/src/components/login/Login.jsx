@@ -11,6 +11,7 @@ const Login = () => {
   return (
     <Background>
       <LoginWrap>
+        <LogoTitle>{TITLE_TEXT}</LogoTitle>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
         {false ? (
           <PrimaryButton as={Link} to="/teamlist">
@@ -31,6 +32,7 @@ const Login = () => {
   );
 };
 
+const TITLE_TEXT = "온라인 야구게임";
 const GITHUB_BUTTON_TEXT = "Github으로 시작하기";
 const START_BUTTON_TEXT = "게임 시작";
 const LOGOUT_BUTTON_TEXT = "로그아웃";
@@ -42,6 +44,10 @@ const bounce = keyframes`
   100% {
     transform: translateY(5%);
   }
+`;
+
+const LogoTitle = styled.h1`
+  font-size: 0;
 `;
 
 const LogoSvg = styled.object`
