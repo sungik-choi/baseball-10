@@ -11,8 +11,14 @@ create table baseball (
 create table team (
     id int primary key not null auto_increment,
     name varchar (100),
+    image varchar (100),
+    total_score varchar (45),
+    inning_score varchar (45),
+    out_count varchar (45),
     baseball int references baseball(id),
     baseball_key int
+    pitcher_name varchar (45),
+    number_pitches varchar (45)
 );
 
 create table score (
