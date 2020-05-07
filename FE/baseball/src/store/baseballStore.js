@@ -1,4 +1,8 @@
 const baseballData = {
+  selectedTeam: {
+    name: null,
+    image: null,
+  },
   teamList: [
     {
       id: 1,
