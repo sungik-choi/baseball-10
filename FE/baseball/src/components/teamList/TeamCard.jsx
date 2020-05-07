@@ -7,7 +7,7 @@ const TeamCard = ({ name, image, clickHandler }) => {
 
   return (
     <li onClick={() => clickHandler(name, image)}>
-      <TeamButton color={"var(--white)"} shadow={"var(--gray-1)"}>
+      <TeamButton white>
         <ImgWrap>
           <TeamImg src={image} />
         </ImgWrap>
@@ -23,7 +23,6 @@ const TeamButton = styled(Button)`
   width: auto;
   height: auto;
   padding: 1.5rem 0;
-  color: var(--black);
   font-size: var(--text-md);
   font-family: "Regular";
   &:hover {

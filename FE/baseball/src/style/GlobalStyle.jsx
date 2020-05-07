@@ -25,6 +25,9 @@ const variables = css`
     --border-radius: 12px;
     --border-size: 4px;
     --button-shadow: 8px;
+    --team-list-width: 80%;
+    --team-list-min-width: 960px; /* 1200 * 80% */
+    --team-list-min-height: 614px; /* 768 * 80% */
 
     /* Color */
     --white: #fff;
@@ -62,8 +65,9 @@ const GlobalStyle = createGlobalStyle`
   a {
     display: block;
     text-decoration: none;
+    color: var(--black);
     &:active {
-      text-decoration: none;
+      color: var(--black);
     }
   }
 

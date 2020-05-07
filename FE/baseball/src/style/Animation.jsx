@@ -9,14 +9,26 @@ export const bounce = keyframes`
   }
 `;
 
-export const fadeIn = keyframes`
+export const slideIn = ({from, to}) => keyframes`
+  0% {
+    transform: translate(${from});
+
+  }
+  100% {
+    transform: translate(${to});
+  }
+`;
+
+export const fadeIn = ({target = 1, changePoint = 66}) => keyframes`
   0% {
     opacity: 0;
   }
-  66% { 
+
+  ${changePoint}% { 
     opacity: 0; 
   }
+
   100% {
-    opacity: 1;
+    opacity: ${target};
   }
 `;

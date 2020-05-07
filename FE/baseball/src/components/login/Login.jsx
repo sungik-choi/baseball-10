@@ -6,13 +6,12 @@ import Background from "style/Background";
 import { bounce, fadeIn } from "style/Animation";
 import logo from "assets/logo.svg";
 import githubLogo from "assets/github.svg";
-import codesquad from "assets/codesquad.png";
 
 const Login = () => {
   const [isGameStart, setIsGameStart] = useState(false);
   let history = useHistory();
 
-  const redirectTeamList = () => {
+  const gameStartBtnClickHandler = () => {
     setIsGameStart(true);
     setTimeout(() => history.push("/teamlist"), TRANSITION_DELAY * 1000);
   };
@@ -30,11 +29,11 @@ const Login = () => {
           </PrimaryButton>
         ) : (
           <div>
-            <PrimaryButton onClick={redirectTeamList}>{START_BUTTON_TEXT}</PrimaryButton>
+            <PrimaryButton onClick={gameStartBtnClickHandler}>{START_BUTTON_TEXT}</PrimaryButton>
             <PrimaryButton>{LOGOUT_BUTTON_TEXT}</PrimaryButton>
           </div>
         )}
-        <CodesqaudLogo src={codesquad} />
+        <a href={GITHUB_URL}>{COPYRIGHT_TEXT}</a>
       </LoginWrap>
     </Background>
   );
@@ -46,9 +45,11 @@ const TITLE_TEXT = "온라인 야구게임";
 const GITHUB_BUTTON_TEXT = "Github으로 시작하기";
 const START_BUTTON_TEXT = "게임시작";
 const LOGOUT_BUTTON_TEXT = "로그아웃";
+const GITHUB_URL = "https://github.com/codesquad-member-2020/baseball-10";
+const COPYRIGHT_TEXT = "Copyright 2020. Baseball-10. Allright reserved.";
 
 const CoverDiv = styled.div`
-  display: ${props => (props.isAppear ? "block" : "none")};
+  display: ${(props) => (props.isAppear ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -56,7 +57,7 @@ const CoverDiv = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--orange);
-  animation: ${fadeIn} ${TRANSITION_DELAY}s;
+  animation: ${fadeIn({changePoint: 0})} ${TRANSITION_DELAY}s cubic-bezier(0, 0.15, 0, 1);
 `;
 
 const LogoTitle = styled.h1`
@@ -78,11 +79,6 @@ const LoginWrap = styled.div`
   padding: 2rem 0;
   width: 100%;
   height: 100%;
-`;
-
-const CodesqaudLogo = styled.img`
-  width: 8.6875rem; /* 139 / 16 */
-  height: 3.875rem; /* 62 / 16 */
 `;
 
 const GithubLogo = styled.object`

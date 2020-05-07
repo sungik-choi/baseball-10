@@ -15,7 +15,7 @@ const Header = () => {
   );
 };
 
-const TITLE_TEXT = "팀을 선택하세요!";
+const TITLE_TEXT = "플레이할 팀을 선택하세요!";
 
 const HeaderWrap = styled.div`
   position: relative;
