@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import baseballData from "../mock/baseballData.js";
+import baseballData from "../store/baseballStore.js";
 import { SELECT_TEAM, FETCH_TEAM_LIST } from "../action/action.jsx";
 
 const baseballReducer = (state, action) => {
