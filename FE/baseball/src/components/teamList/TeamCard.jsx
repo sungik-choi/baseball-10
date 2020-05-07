@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Button from "style/Button";
 
 const TeamCard = ({ name, image }) => {
@@ -14,17 +14,7 @@ const TeamCard = ({ name, image }) => {
   );
 };
 
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const TeamButton = styled(Button)`
-  animation: ${fadeIn} 1s;
   display: flex;
   flex-direction: column;
   width: auto;

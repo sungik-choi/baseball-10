@@ -35,6 +35,7 @@ const variables = css`
     --orange-shadow: #e07a0c;
 
     /* Typography */
+    --text-xxl: 3rem;
     --text-xl: 2rem;
     --text-lg: 1.5rem;
     --text-md: 1.25rem;

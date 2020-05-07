@@ -1,15 +1,25 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
 import Button from "style/Button";
 import Background from "style/Background";
+import { bounce, fadeIn } from "style/Animation";
 import logo from "assets/logo.svg";
 import githubLogo from "assets/github.svg";
 import codesquad from "assets/codesquad.png";
 
 const Login = () => {
+  const [isGameStart, setIsGameStart] = useState(false);
+  let history = useHistory();
+
+  const redirectTeamList = () => {
+    setIsGameStart(true);
+    setTimeout(() => history.push("/teamlist"), TRANSITION_DELAY * 1000);
+  };
+
   return (
     <Background>
+      <CoverDiv isAppear={isGameStart} />
       <LoginWrap>
         <LogoTitle>{TITLE_TEXT}</LogoTitle>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
@@ -20,9 +30,7 @@ const Login = () => {
           </PrimaryButton>
         ) : (
           <div>
-            <PrimaryButton as={Link} to="/teamlist">
-              {START_BUTTON_TEXT}
-            </PrimaryButton>
+            <PrimaryButton onClick={redirectTeamList}>{START_BUTTON_TEXT}</PrimaryButton>
             <PrimaryButton>{LOGOUT_BUTTON_TEXT}</PrimaryButton>
           </div>
         )}
@@ -32,18 +40,23 @@ const Login = () => {
   );
 };
 
+const TRANSITION_DELAY = 1;
+
 const TITLE_TEXT = "온라인 야구게임";
 const GITHUB_BUTTON_TEXT = "Github으로 시작하기";
 const START_BUTTON_TEXT = "게임 시작";
 const LOGOUT_BUTTON_TEXT = "로그아웃";
 
-const bounce = keyframes`
-  0% {
-    transform: translateY(-5%);
-  }
-  100% {
-    transform: translateY(5%);
-  }
+const CoverDiv = styled.div`
+  display: ${props => (props.isAppear ? "block" : "none")};
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: var(--orange);
+  animation: ${fadeIn} ${TRANSITION_DELAY}s;
 `;
 
 const LogoTitle = styled.h1`

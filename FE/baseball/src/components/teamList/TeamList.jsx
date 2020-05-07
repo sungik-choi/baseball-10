@@ -4,27 +4,39 @@ import Background from "style/Background";
 import Header from "./Header";
 import TeamCard from "./TeamCard";
 import { useBaseballState } from "context/context.jsx";
+import { fadeIn } from "style/Animation";
 
 const TeamList = () => {
   const { teamList } = useBaseballState();
   const teamCard = teamList.map(teamInfo => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} />);
   return (
-    <Background color={"var(--orange)"}>
-      <TeamListWrap>
-        <Header />
-        <CardWrap>{teamCard}</CardWrap>
-      </TeamListWrap>
-    </Background>
+    <TeamListWrap color={"var(--orange)"}>
+      <Header />
+      <TeamCardsWrap>
+        <TeamCards>{teamCard}</TeamCards>
+      </TeamCardsWrap>
+    </TeamListWrap>
   );
 };
 
-const TeamListWrap = styled.div`
-  box-sizing: border-box;
-  width: 80%;
-  margin: 0 auto;
+const TeamListWrap = styled(Background)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 1.5rem;
+  * {
+    animation: ${fadeIn} 1s;
+  }
 `;
 
-const CardWrap = styled.div`
+const TeamCardsWrap = styled.div`
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 80%;
+`;
+
+const TeamCards = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
