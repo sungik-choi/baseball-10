@@ -3,7 +3,6 @@ import styled from "styled-components";
 import logo from "assets/logo.svg";
 
 const Header = () => {
-  console.log("header");
   const TITLE_TEXT = "플레이할 팀을 선택하세요!";
   return (
     <HeaderWrap>

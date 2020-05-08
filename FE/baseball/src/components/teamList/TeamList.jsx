@@ -19,9 +19,7 @@ const TeamList = () => {
   const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} clickHandler={teamClickHandler} />);
 
   const modalClickHandler = () => setIsModalExist(false);
-  const confirmClickHandler = () => {
-    console.log("confirm");
-  };
+  const confirmClickHandler = () => {};
 
   const modalOptions = {
     clickHandler: modalClickHandler,
@@ -33,11 +31,7 @@ const TeamList = () => {
     cancelBtnText: CANCEL_BTN_TEXT,
   };
 
-  useEffect(() => {
-    console.log(selectedTeam);
-  }, [selectedTeam]);
-
-  console.log("render");
+  useEffect(() => {}, [selectedTeam]);
 
   return (
     <>
