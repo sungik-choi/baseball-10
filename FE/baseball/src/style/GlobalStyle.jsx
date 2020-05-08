@@ -27,8 +27,7 @@ const variables = css`
     --button-shadow: 8px;
     --team-list-width: 80%;
     --team-list-min-width: 960px; /* 1200 * 80% */
-    --team-list-min-height: 614px; /* 768 * 80% */
-
+    --team-list-min-height: 500px;
     /* Color */
     --white: #fff;
     --black: #1c1e27;

@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Button from "style/Button";
 import { fadeIn, slideIn } from "style/Animation";
 
-const Modal = ({option: { text = "", highlightText = "", image = "", cancelBtn = true, btnText = "", cancelBtnText = ""}}) => {
+const Modal = ({ option: { clickHandler = null, confirmClickHandler = null, text = "", highlightText = "", image = "", cancelBtn = true, btnText = "", cancelBtnText = "" } }) => {
+  const [isConfirm, setIsConfirm] = useState(false);
+  const a = () => setIsConfirm(true);
+
   return ReactDOM.createPortal(
     <>
-      <DimmedLayer></DimmedLayer>
-      <ModalWrap>
+      <DimmedLayer onClick={clickHandler}></DimmedLayer>
+      <ModalWrap isConfirm={isConfirm}>
         {image && (
           <ModalImgWrap>
             <ModalImg src={image} />
@@ -17,12 +20,23 @@ const Modal = ({option: { text = "", highlightText = "", image = "", cancelBtn =
         {highlightText && <HighlightSpan>{highlightText}</HighlightSpan>}
         {text}
         <ButtonWrap>
-        {cancelBtn && <Button white>{cancelBtnText}</Button>}
-        <Button>{btnText}</Button>
+          {cancelBtn && (
+            <Button white onClick={clickHandler}>
+              {cancelBtnText}
+            </Button>
+          )}
+          <Button
+            onClick={() => {
+              confirmClickHandler();
+              a();
+            }}
+          >
+            {btnText}
+          </Button>
         </ButtonWrap>
       </ModalWrap>
     </>,
-    document.getElementById("modal-root"),
+    document.getElementById("root"),
   );
 };
 
@@ -36,13 +50,13 @@ const DimmedLayer = styled.div`
   left: 0;
   background-color: var(--black);
   opacity: ${MODAL_OPACITY};
-  animation: ${fadeIn({target: MODAL_OPACITY, changePoint: 0})} 1s;
+  animation: ${fadeIn({ target: MODAL_OPACITY, changePoint: 0 })} 1s;
 `;
 
 const ButtonWrap = styled.div`
   display: flex;
-  margin-top: 6rem;
-  Button {
+  margin-top: 4rem;
+  button {
     margin: 0.5rem;
   }
 `;
@@ -56,11 +70,11 @@ const HighlightSpan = styled.span`
 const ModalImgWrap = styled.div`
   width: 25%;
   margin-bottom: 2rem;
-`
+`;
 
 const ModalImg = styled.img`
   width: 100%;
-`
+`;
 
 const ModalWrap = styled.div`
   box-sizing: border-box;
@@ -81,7 +95,14 @@ const ModalWrap = styled.div`
   border-radius: var(--border-radius);
   font-family: "Regular";
   font-size: var(--text-xl);
-  animation: ${slideIn({ from: "-50%, 100vh", to: "-50%, -50%" })} 0.7s cubic-bezier(0.22, 0.62, 0, 1);
+  animation: ${(props) =>
+    props.isConfirm
+      ? css`
+          ${slideIn({ from: "-50%, -50%", to: "-50%, 100vh" })} 0.7s cubic-bezier(.78,.03,.65,1.02) both
+        `
+      : css`
+          ${slideIn({ from: "-50%, 100vh", to: "-50%, -50%" })} 0.7s cubic-bezier(0.22, 0.62, 0, 1) both
+        `};
 `;
 
 export default Modal;

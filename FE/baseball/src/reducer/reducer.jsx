@@ -7,7 +7,7 @@ const baseballReducer = (state, action) => {
     case FETCH_TEAM_LIST:
       return { ...state, teamList: action.data.teamlist };
     case SELECT_TEAM:
-      return { ...state, selectedTeam: { name: action.name, image: action.image } };
+      return { ...state, selectedTeam: { ...state.selectedTeam, name: action.name, image: action.image } };
     default:
       return state;
   }
