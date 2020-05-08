@@ -9,7 +9,10 @@ import githubLogo from "assets/github.svg";
 
 const Login = () => {
   const [isGameStart, setIsGameStart] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   let history = useHistory();
+
+  const github_login_url = process.env.REACT_APP_GITHUB_URL;
 
   const gameStartBtnClickHandler = () => {
     setIsGameStart(true);
@@ -22,16 +25,18 @@ const Login = () => {
       <LoginWrap>
         <LogoTitle>{TITLE_TEXT}</LogoTitle>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
-        {false ? (
-          <PrimaryButton as={Link} to="/teamlist">
-            <GithubLogo type="image/svg+xml" data={githubLogo}></GithubLogo>
-            <span>{GITHUB_BUTTON_TEXT}</span>
-          </PrimaryButton>
-        ) : (
+        {isLogin ? (
           <div>
             <PrimaryButton onClick={gameStartBtnClickHandler}>{START_BUTTON_TEXT}</PrimaryButton>
             <PrimaryButton>{LOGOUT_BUTTON_TEXT}</PrimaryButton>
           </div>
+        ) : (
+          <a href={github_login_url}>
+            <PrimaryButton>
+              <GithubLogo type="image/svg+xml" data={githubLogo}></GithubLogo>
+              <span>{GITHUB_BUTTON_TEXT}</span>
+            </PrimaryButton>
+          </a>
         )}
         <a href={GITHUB_URL}>{COPYRIGHT_TEXT}</a>
       </LoginWrap>
@@ -57,7 +62,7 @@ const CoverDiv = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--orange);
-  animation: ${fadeIn({changePoint: 0})} ${TRANSITION_DELAY}s cubic-bezier(0, 0.15, 0, 1);
+  animation: ${fadeIn({ changePoint: 0 })} ${TRANSITION_DELAY}s cubic-bezier(0, 0.15, 0, 1);
 `;
 
 const LogoTitle = styled.h1`
