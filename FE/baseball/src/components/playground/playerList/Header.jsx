@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Button from "style/Button";
+
 const Header = () => {
   return (
     <Wrap>
-      <HeaderButton>게임으로 돌아가기</HeaderButton>
+      <HeaderButton as={Link} to="/playground">
+        게임으로 돌아가기
+      </HeaderButton>
       <Title>선수 명단</Title>
     </Wrap>
   );
