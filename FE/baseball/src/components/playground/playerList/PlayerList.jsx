@@ -3,12 +3,16 @@ import Background from "style/Background";
 import styled from "styled-components";
 
 import Header from "./Header";
+import PlayerListCard from "./PlayerListCard";
 
 const PlayerList = () => {
   return (
     <Wrap>
       <Header />
-      <PlayerListWrap></PlayerListWrap>
+      <PlayerListWrap>
+        <PlayerListCard />
+        <PlayerListCard />
+      </PlayerListWrap>
     </Wrap>
   );
 };
@@ -25,7 +29,8 @@ const Wrap = styled.div`
 
 const PlayerListWrap = styled.div`
   display: flex;
-  width: 90%;
+  justify-content: space-around;
+  width: 95%;
   height: 80vh;
   border-radius: 12px;
   border: solid 4px #51566a;
