@@ -26,7 +26,7 @@ const Wrap = styled.div`
 
 const HeaderButton = styled(Button)`
   position: absolute;
-  left: 4.7%;
+  left: 2.3%;
 `;
 
 const Title = styled.div`
