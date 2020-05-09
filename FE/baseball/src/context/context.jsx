@@ -6,6 +6,7 @@ const baseballDispatchContext = createContext();
 const useBaseballState = () => {
   return useContext(baseballStateContext);
 };
+
 const useBaseballDispatch = () => {
   return useContext(baseballDispatchContext);
 };

@@ -25,14 +25,23 @@ const variables = css`
     --border-radius: 12px;
     --border-size: 4px;
     --button-shadow: 8px;
-
+    --team-list-width: 80%;
+    --team-list-min-width: 960px; /* 1200 * 80% */
+    --team-list-min-height: 500px;
     /* Color */
     --white: #fff;
+    --black: #1c1e27;
+    --gray-1: #e3e7ea;
+    --gray-2: #8d9596;
     --orange: #f29c04;
     --orange-shadow: #e07a0c;
 
     /* Typography */
+    --text-xxl: 3rem;
+    --text-xl: 2rem;
     --text-lg: 1.5rem;
+    --text-md: 1.25rem;
+    --text-base: 1rem;
   }
 `;
 
@@ -55,8 +64,9 @@ const GlobalStyle = createGlobalStyle`
   a {
     display: block;
     text-decoration: none;
+    color: var(--black);
     &:active {
-      text-decoration: none;
+      color: var(--black);
     }
   }
 
