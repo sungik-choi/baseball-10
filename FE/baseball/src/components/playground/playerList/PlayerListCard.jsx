@@ -1,22 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import PlayerCard from "./PlayerCard";
+import TotalCard from "./TotalCard";
 
-const PlayerListCard = () => {
+const PlayerListCard = ({ playerInfo }) => {
+  const infomationList = test_info_list.map((infoName) => <InfoItem>{infoName}</InfoItem>);
+  const playerCards = playerInfo.players.map((playerInfo) => <PlayerCard playerInfo={playerInfo} />);
+  const { totalAppearance, totalHit, totalOut } = playerInfo;
   return (
     <Card>
-      <TeamName>Mavel</TeamName>
+      <TeamName>{playerInfo.team1}</TeamName>
       <CardWarp>
-        <InfoList>
-          <div>타자</div>
-          <div>타석</div>
-          <div>안타</div>
-          <div>아웃</div>
-          <div>평균</div>
-        </InfoList>
+        <InfoList>{infomationList}</InfoList>
+        {playerCards}
+        <TotalCard totalAppearance={totalAppearance} totalHit={totalHit} totalOut={totalOut} />
       </CardWarp>
     </Card>
   );
 };
+
+const test_info_list = ["타자", "타석", "안타", "아웃", "평균"];
 
 const Card = styled.div`
   width: 48%;
@@ -47,14 +50,18 @@ const TeamName = styled.div`
 const InfoList = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
   border-bottom: solid 4px #51566a;
   font-size: var(--text-base);
   color: var(--white);
   font-family: "Bold";
   width: 100%;
   background-color: #333746;
-  height: 5vh;
+  height: 6vh;
+`;
+
+const InfoItem = styled.div`
+  width: 25%;
+  text-align: center;
 `;
 
 export default PlayerListCard;
