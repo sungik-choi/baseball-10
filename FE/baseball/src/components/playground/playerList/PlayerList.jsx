@@ -1,18 +1,19 @@
 import React from "react";
 import Background from "style/Background";
 import styled from "styled-components";
+import { useBaseballState, useBaseballDispatch } from "context/context";
 
 import Header from "./Header";
 import PlayerListCard from "./PlayerListCard";
 
 const PlayerList = () => {
+  const { playerList } = useBaseballState();
+  const playerListCards = playerList.data.map((playerInfo) => <PlayerListCard playerInfo={playerInfo} />);
+
   return (
     <Wrap>
       <Header />
-      <PlayerListWrap>
-        <PlayerListCard />
-        <PlayerListCard />
-      </PlayerListWrap>
+      <PlayerListWrap>{playerListCards}</PlayerListWrap>
     </Wrap>
   );
 };
