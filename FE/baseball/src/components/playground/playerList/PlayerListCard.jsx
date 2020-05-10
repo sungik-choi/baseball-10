@@ -42,7 +42,7 @@ const TeamName = styled.div`
   display: flex;
   align-items: center;
   font-family: "Bold";
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   color: var(--white);
   height: 8vh;
 `;

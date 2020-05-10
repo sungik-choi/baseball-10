@@ -1,5 +1,4 @@
 import React from "react";
-import Background from "style/Background";
 import styled from "styled-components";
 import { useBaseballState, useBaseballDispatch } from "context/context";
 
