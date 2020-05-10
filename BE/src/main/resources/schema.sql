@@ -1,61 +1,104 @@
-drop table if exists game;
+drop table if exists gameApplication;
+drop table if exists matchs;
+drop table if exists matchOneInningInfo;
 drop table if exists team;
-drop table if exists score;
-drop table if exists batter;
-drop table if exists history;
+drop table if exists teamOneMatchInfo;
+drop table if exists teamOneInningInfo;
+drop table if exists teamOneInningPlateInfo;
+drop table if exists player;
+drop table if exists playerOneMatchInfo;
+drop table if exists playerOnePlateAppearanceInfo;
+drop table if exists playerOnePlateAppearanceHistory;
 
-create table game (
+create table gameApplication (
     id int primary key not null auto_increment,
-    game_name varchar (100)
+    name varchar (100)
 );
 
--- team과 pitcher는 1 : 1 관계
--- team table에 pitcher가 들어감.
+create table matchs (
+    id int primary key not null auto_increment
+);
+
+create table matchOneInningInfo (
+    id int primary key not null auto_increment,
+    inning varchar (45),
+    matchs int references matchs(id),
+    matchs_key int
+);
 
 create table team (
     id int primary key not null auto_increment,
     name varchar (100),
-    image varchar (100),
-    total_score varchar (45),
-    inning_score varchar (45),
-    out_count varchar (45),
-    game int references game(id),
-    game_key int,
-    pitcher_name varchar (45),
-    number_pitches varchar (45)
+    logo varchar (500),
+    -- 1 대 1 관계인 user_email 컬럼
+    user_email varchar (500),
+    selected varchar (45),
+    matchs int references matchs(id),
+    matchs_key int
 );
 
-create table score (
+create table teamOneMatchInfo (
     id int primary key not null auto_increment,
-    inning varchar(45),
-    attack varchar (45),
-    value varchar (45),
+    role varchar (45),
+    total_score varchar (45),
+    total_pa varchar (45),
+    total_hit varchar (45),
+    total_out varchar (45),
+    current_order varchar (45),
     team int references team(id),
     team_key int
 );
 
-create table history (
+create table teamOneInningInfo (
+    id int primary key not null auto_increment,
+    inning varchar (45),
+    out_count varchar (45),
+    score varchar (45),
+    teamOneMatchInfo int references teamOneMatchInfo(id),
+    teamOneMatchInfo_key int
+);
+
+create table teamOneInningPlateInfo (
+    id int primary key not null auto_increment,
+    base_name varchar (45),
+    player_id varchar (45),
+    teamOneInningInfo int references teamOneInningInfo(id),
+    teamOneInningInfo_key int
+);
+
+create table player (
+    id int primary key not null auto_increment,
+    name varchar (45),
+    position varchar (45),
+    batting_average varchar (45),
+    orders varchar (45),
+    team int references team(id),
+    team_key int
+);
+
+create table playerOneMatchInfo (
+    id int primary key not null auto_increment,
+    plate_appearance varchar (45),
+    hit_count varchar (45),
+    out_count varchar (45),
+    game_average varchar (45),
+    pitch_count varchar (45),
+    player int references player(id),
+    player_key int
+);
+
+create table playerOnePlateAppearanceInfo (
+    id int primary key not null auto_increment,
+    strike_count varchar (45),
+    ball_count varchar (45),
+    playerOneMatchInfo int references playerOneMatchInfo(id),
+    playerOneMatchInfo_key int
+);
+
+create table playerOnePlateAppearanceHistory (
     id int primary key not null auto_increment,
     history varchar (45),
-    batter int references batter(id),
-    batter_key int
+    playerOnePlateAppearanceInfo int references playerOnePlateAppearanceInfo(id),
+    playerOnePlateAppearanceInfo_key int
 );
 
--- batter와 plates는 1 : 1 관계.
--- plates가 batter 속으로 들어감.
-
-create table batter (
-    id int primary key not null auto_increment,
-    plate_appearence varchar(45),
-    hits varchar(45),
-    outs varchar(45),
-    name varchar(45),
-    batting_average varchar(45),
-    game_average varchar (45),
-    orders varchar (45),
-    strike_count int,
-    ball_count int,
-    base varchar (45),
-    team int references team(id),
-    team_key int
-);

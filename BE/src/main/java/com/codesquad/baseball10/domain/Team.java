@@ -13,13 +13,10 @@ public class Team {
     @Id
     private Long id;
     private String name;
-    private String image;
-    private String totalScore;
-    private String inningScore;
-    private String outCount;
+    private String logo;
     @Embedded.Nullable
-    private Pitcher pitcher;
-
-    private List<Score> scores;
-    private List<Batter> batters;
+    private User user;
+    private String selected;
+    private List<Player> players;
+    private List<TeamOneMatchInfo> teamOneMatchInfos;
 }

@@ -1,15 +1,18 @@
 package com.codesquad.baseball10.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 @Getter
 @ToString
-public class Score {
+@NoArgsConstructor
+public class TeamOneInningPlateInfo {
+
     @Id
     private Long id;
-    private String inning;
-    private String attack;
-    private String value;
+
+    private String baseName;
+    private String player_id;
 }

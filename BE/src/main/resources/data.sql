@@ -1,1 +1,0 @@
-insert into game (id, game_name) values (1, "baseball");

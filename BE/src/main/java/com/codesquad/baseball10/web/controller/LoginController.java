@@ -22,6 +22,10 @@ public class LoginController {
                                 HttpServletResponse response) {
         logger.info("code : {}", code);
         Cookie cookie = new Cookie("code", code);
+        // access token
+        // hoi email 
+        // jwt token
+        //
         response.addCookie(cookie);
         return code;
     }
