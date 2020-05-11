@@ -212,6 +212,69 @@ const baseballData = {
       },
     ],
   },
+  playGround: {
+    status: "200",
+    matchInfo: {
+      currentInning: 0,
+      when: "top",
+    },
+    teams: [
+      {
+        teamName: "삼성",
+        totalScore: "3",
+        where: "HOME",
+        pitcher: {
+          name: "최동원",
+          count: "0",
+        },
+      },
+      {
+        teamName: "LG",
+        totalScore: "20",
+        where: "AWAY",
+        batter: [
+          {
+            name: "트라웃",
+            plateAppearance: "1",
+            hit: "2",
+            order: "3",
+            history: ["1", "1", "3"],
+          },
+          {
+            name: "이대호",
+            plateAppearance: "1",
+            hit: "2",
+            order: "4",
+            history: ["1", "2", "3"],
+          },
+        ],
+      },
+    ],
+    ballCount: {
+      strike: 0,
+      ball: 0,
+      out: 0,
+    },
+    plates: {
+      baseFirst: "1",
+      baseSecond: "0",
+      baseThird: "1",
+    },
+    displays: [
+      {
+        team1: "삼성",
+        where: "AWAY",
+        totalScore: "0",
+        inningScore: ["0", "0", "0", "0", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        team1: "한화",
+        where: "HOME",
+        totalScore: "0",
+        inningScore: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+    ],
+  },
 };
 
 export default baseballData;
