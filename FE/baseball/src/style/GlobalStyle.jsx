@@ -28,6 +28,7 @@ const variables = css`
     --team-list-width: 80%;
     --team-list-min-width: 960px; /* 1200 * 80% */
     --team-list-min-height: 500px;
+
     /* Color */
     --white: #fff;
     --black: #1c1e27;
@@ -42,6 +43,9 @@ const variables = css`
     --text-lg: 1.5rem;
     --text-md: 1.25rem;
     --text-base: 1rem;
+
+    /* */
+    --opacity-5: 0.5;
   }
 `;
 
