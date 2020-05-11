@@ -21,7 +21,7 @@ public class MockController {
             TeamResponseDto team = TeamResponseDto.builder()
                     .id(1L)
                     .name("삼성")
-                    .image("http://naver.com")
+                    .logoUrl("http://naver.com")
                     .build();
             data.add(team);
         }

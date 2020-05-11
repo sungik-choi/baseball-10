@@ -11,12 +11,18 @@ import lombok.ToString;
 public class TeamResponseDto {
     private Long id;
     private String name;
-    private String image;
+    private String logoUrl;
+    private String userEmail;
+    private String selected;
+    private String location;
 
     @Builder
-    public TeamResponseDto(Long id, String name, String image) {
+    public TeamResponseDto(Long id, String name, String logoUrl, String userEmail, String selected, String location) {
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.logoUrl = logoUrl;
+        this.userEmail = userEmail;
+        this.selected = selected;
+        this.location = location;
     }
 }
