@@ -4,8 +4,8 @@ import TeamScores from "./TeamScores.jsx";
 
 const ScoreBoard = ({ displays }) => {
   console.log(displays);
-  const scoreBar = scoreList.map((score) => {
-    return <Score>{score}</Score>;
+  const scoreBar = scoreList.map((score, idx) => {
+    return <Score key={idx}>{score}</Score>;
   });
   return (
     <ScoreBoardWrap>

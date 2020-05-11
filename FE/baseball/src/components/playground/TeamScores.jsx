@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const TeamScores = ({ border, scoreInfomation }) => {
-  const { team1, where, totalScore, inningScore } = scoreInfomation;
-  const teamScores = inningScore.map((score) => <TeamScore>{score}</TeamScore>);
+  const { team1, totalScore, inningScore } = scoreInfomation;
+  const teamScores = inningScore.map((score, idx) => <TeamScore key={idx}>{score}</TeamScore>);
   return (
     <TeamScoreWarp border={border}>
       <TeamName>{team1}</TeamName>
