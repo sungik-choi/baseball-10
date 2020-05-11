@@ -10,7 +10,7 @@ const Modal = ({ option: { clickHandler = null, confirmClickHandler = null, text
 
   return ReactDOM.createPortal(
     <>
-      <DimmedLayer onClick={clickHandler}></DimmedLayer>
+      <DimmedLayer></DimmedLayer>
       <ModalWrap isConfirm={isConfirm}>
         {image && (
           <ModalImgWrap>
@@ -40,8 +40,6 @@ const Modal = ({ option: { clickHandler = null, confirmClickHandler = null, text
   );
 };
 
-const MODAL_OPACITY = 0.5;
-
 const DimmedLayer = styled.div`
   position: fixed;
   width: 100%;
@@ -49,8 +47,8 @@ const DimmedLayer = styled.div`
   top: 0;
   left: 0;
   background-color: var(--black);
-  opacity: ${MODAL_OPACITY};
-  animation: ${fadeIn({ target: MODAL_OPACITY, changePoint: 0 })} 1s;
+  opacity: var(--opacity-5);
+  animation: ${fadeIn({ target: "var(--opacity-5)", changePoint: 0 })} 1s;
 `;
 
 const ButtonWrap = styled.div`

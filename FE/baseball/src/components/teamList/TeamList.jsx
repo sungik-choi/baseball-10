@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Background from "style/Background";
 import Header from "./Header";
@@ -10,28 +10,27 @@ import { selectTeam } from "action/action";
 
 const TeamList = () => {
   const { teamList, selectedTeam } = useBaseballState();
-  const [isModalExist, setIsModalExist] = useState(false);
   const dispatch = useBaseballDispatch();
+  const [isModalExist, setIsModalExist] = useState(false);
+
   const teamClickHandler = (name, image) => {
     setIsModalExist(true);
     dispatch(selectTeam(name, image));
   };
-  const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} clickHandler={teamClickHandler} />);
-
   const modalClickHandler = () => setIsModalExist(false);
   const confirmClickHandler = () => {};
+
+  const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} clickHandler={teamClickHandler} />);
 
   const modalOptions = {
     clickHandler: modalClickHandler,
     confirmClickHandler: confirmClickHandler,
-    text: MODAL_TEXT,
-    highlightText: selectedTeam.name,
     image: selectedTeam.image,
+    text: MODAL_TEXT,
     btnText: BTN_TEXT,
     cancelBtnText: CANCEL_BTN_TEXT,
+    highlightText: selectedTeam.name,
   };
-
-  useEffect(() => {}, [selectedTeam]);
 
   return (
     <>
