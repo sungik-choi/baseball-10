@@ -1,24 +1,32 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Background from "style/Background";
+import { useHistory } from "react-router-dom";
+import { useBaseballState, useBaseballDispatch } from "context/context.jsx";
 import Header from "./Header";
 import TeamCard from "./TeamCard";
 import Modal from "../Modal";
-import { useBaseballState, useBaseballDispatch } from "context/context.jsx";
+import Background from "style/Background";
+import Cover from "style/Cover";
 import { fadeIn } from "style/Animation";
 import { selectTeam } from "action/action";
 
 const TeamList = () => {
   const { teamList, selectedTeam } = useBaseballState();
   const dispatch = useBaseballDispatch();
+  const [isGameStart, setIsGameStart] = useState(false);
   const [isModalExist, setIsModalExist] = useState(false);
+  let history = useHistory();
 
   const teamClickHandler = (name, image) => {
     setIsModalExist(true);
     dispatch(selectTeam(name, image));
   };
+
   const modalClickHandler = () => setIsModalExist(false);
-  const confirmClickHandler = () => {};
+  const confirmClickHandler = () => {
+    setIsGameStart(true);
+    setTimeout(() => history.push("/loading"), TRANSITION_DELAY * 1000);
+  };
 
   const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} clickHandler={teamClickHandler} />);
 
@@ -35,6 +43,7 @@ const TeamList = () => {
   return (
     <>
       <TeamListWrap color={"var(--orange)"}>
+        <Cover color={"var(--orange)"} isAppear={isGameStart} duration={TRANSITION_DELAY} />
         <Header />
         <TeamCardsWrap>
           <TeamCardUl>{teamCard}</TeamCardUl>
@@ -44,6 +53,8 @@ const TeamList = () => {
     </>
   );
 };
+
+const TRANSITION_DELAY = 2;
 
 const MODAL_TEXT = "팀을 선택하시겠습니까?";
 const BTN_TEXT = "이 팀으로 게임시작";

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Button from "style/Button";
 import Background from "style/Background";
-import { bounce, fadeIn } from "style/Animation";
+import Cover from "style/Cover";
+import { bounce } from "style/Animation";
 import logo from "assets/logo.svg";
 import githubLogo from "assets/github.svg";
 
 const Login = () => {
   const [isGameStart, setIsGameStart] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   let history = useHistory();
 
   const github_login_url = process.env.REACT_APP_GITHUB_URL;
@@ -21,7 +22,7 @@ const Login = () => {
 
   return (
     <Background>
-      <CoverDiv isAppear={isGameStart} />
+      <Cover isAppear={isGameStart} duration={TRANSITION_DELAY} />
       <LoginWrap>
         <LogoTitle>{TITLE_TEXT}</LogoTitle>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
@@ -52,18 +53,6 @@ const START_BUTTON_TEXT = "게임시작";
 const LOGOUT_BUTTON_TEXT = "로그아웃";
 const GITHUB_URL = "https://github.com/codesquad-member-2020/baseball-10";
 const COPYRIGHT_TEXT = "Copyright 2020. Baseball-10. Allright reserved.";
-
-const CoverDiv = styled.div`
-  display: ${(props) => (props.isAppear ? "block" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  width: 100%;
-  height: 100%;
-  background-color: var(--orange);
-  animation: ${fadeIn({ changePoint: 0 })} ${TRANSITION_DELAY}s cubic-bezier(0, 0.15, 0, 1);
-`;
 
 const LogoTitle = styled.h1`
   font-size: 0;
