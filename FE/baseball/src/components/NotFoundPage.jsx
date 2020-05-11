@@ -6,7 +6,7 @@ const NotFoundPage = ({ pathname }) => {
   return (
     <Background>
       <ErrorWrap>
-        <ErrorContent>⚾️😈 404 NOT FOUND 😈⚾️</ErrorContent>
+        <ErrorContent role="img">⚾️😈 404 NOT FOUND 😈⚾️</ErrorContent>
         <ErrorPathname>http://localhost:3000{pathname}</ErrorPathname>
       </ErrorWrap>
     </Background>
@@ -22,7 +22,8 @@ const ErrorWrap = styled.div`
   height: 100vh;
 `;
 
-const ErrorContent = styled.div`
+const ErrorContent = styled.span`
+  display: block;
   font-family: "Bold";
   font-size: 2rem;
   margin-bottom: 0.5rem;

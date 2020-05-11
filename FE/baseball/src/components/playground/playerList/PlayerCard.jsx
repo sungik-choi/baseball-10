@@ -32,7 +32,7 @@ const PlayerInfoItem = styled.div`
   justify-content: center;
   width: 25%;
   text-align: center;
-  border-bottom: solid 2px #51566a;
+  border-bottom: solid 2px var(--gray-4);
   height: 6vh;
 `;
 

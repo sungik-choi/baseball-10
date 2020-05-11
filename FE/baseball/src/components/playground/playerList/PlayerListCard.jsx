@@ -31,8 +31,8 @@ const Card = styled.div`
 `;
 
 const CardWarp = styled.div`
-  border-radius: 12px;
-  border: solid 4px #51566a;
+  border-radius: var(--border-radius);
+  border: solid var(--border-size) var(--gray-4);
   background-color: var(--black);
   height: 70vh;
   width: 100%;
@@ -50,12 +50,12 @@ const TeamName = styled.div`
 const InfoList = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: solid 4px #51566a;
+  border-bottom: solid var(--border-size) var(--gray-4);
   font-size: var(--text-base);
   color: var(--white);
   font-family: "Bold";
   width: 100%;
-  background-color: #333746;
+  background-color: var(--gray-3);
   height: 6vh;
 `;
 
