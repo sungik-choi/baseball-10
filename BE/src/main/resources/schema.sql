@@ -16,7 +16,9 @@ create table gameApplication (
 );
 
 create table matchs (
-    id int primary key not null auto_increment
+    id int primary key not null auto_increment,
+    current_inning varchar (45),
+    location varchar (45)
 );
 
 create table matchOneInningInfo (
