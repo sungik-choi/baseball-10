@@ -24,7 +24,7 @@ const Wrap = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-color: #333746;
+  background-color: var(--gray-3);
 `;
 
 const PlayerListWrap = styled.div`
@@ -32,8 +32,8 @@ const PlayerListWrap = styled.div`
   justify-content: space-around;
   width: 95%;
   height: 80vh;
-  border-radius: 12px;
-  border: solid 4px #51566a;
+  border-radius: var(--border-radius);
+  border: solid var(--border-size) var(--gray-4);
   background-color: var(--black);
 `;
 

@@ -28,12 +28,15 @@ const variables = css`
     --team-list-width: 80%;
     --team-list-min-width: 960px; /* 1200 * 80% */
     --team-list-min-height: 500px;
+    --team-card-width: 24rem;
 
     /* Color */
     --white: #fff;
     --black: #1c1e27;
     --gray-1: #e3e7ea;
     --gray-2: #8d9596;
+    --gray-3: #333746;
+    --gray-4: #51566a;
     --orange: #f29c04;
     --orange-shadow: #e07a0c;
 
@@ -44,7 +47,7 @@ const variables = css`
     --text-md: 1.25rem;
     --text-base: 1rem;
 
-    /* */
+    /* Opacity */
     --opacity-5: 0.5;
   }
 `;
