@@ -19,7 +19,7 @@ const PlayerInfoCard = styled.div`
   align-items: center;
   font-size: var(--text-base);
   color: var(--white);
-  font-family: "Bold";
+  font-family: "Regular";
   width: 100%;
   &:hover {
     color: var(--orange);
