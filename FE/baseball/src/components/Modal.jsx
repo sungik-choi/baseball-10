@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import styled, { css } from "styled-components";
 import Button from "style/Button";
-import { fadeIn, slideIn } from "style/Animation";
+import { fadeIn, fadeOut, slideIn } from "style/Animation";
 
 const Modal = ({ option: { clickHandler = null, confirmClickHandler = null, text = "", highlightText = "", image = "", cancelBtn = true, btnText = "", cancelBtnText = "" } }) => {
-  const [isConfirm, setIsConfirm] = useState(false);
-  const a = () => setIsConfirm(true);
+  const [isClosed, setIsClosed] = useState(false);
+  const modalCloseHandler = () => setIsClosed(true);
 
   return ReactDOM.createPortal(
     <>
-      <DimmedLayer></DimmedLayer>
-      <ModalWrap isConfirm={isConfirm}>
+      <DimmedLayer isClosed={isClosed}></DimmedLayer>
+      <ModalWrap isClosed={isClosed}>
         {image && (
           <ModalImgWrap>
             <ModalImg src={image} />
@@ -28,7 +28,7 @@ const Modal = ({ option: { clickHandler = null, confirmClickHandler = null, text
           <Button
             onClick={() => {
               confirmClickHandler();
-              a();
+              modalCloseHandler();
             }}
           >
             {btnText}
@@ -48,7 +48,14 @@ const DimmedLayer = styled.div`
   left: 0;
   background-color: var(--black);
   opacity: var(--opacity-5);
-  animation: ${fadeIn({ target: "var(--opacity-5)", changePoint: 0 })} 1s;
+  animation: ${(props) =>
+    props.isClosed
+      ? css`
+          ${fadeOut({ start: "var(--opacity-5)", changePoint: 0 })} 1s both;
+        `
+      : css`
+          ${fadeIn({ end: "var(--opacity-5)", changePoint: 0 })} 1s both;
+        `};
 `;
 
 const ButtonWrap = styled.div`
@@ -94,7 +101,7 @@ const ModalWrap = styled.div`
   font-family: "Regular";
   font-size: var(--text-xl);
   animation: ${(props) =>
-    props.isConfirm
+    props.isClosed
       ? css`
           ${slideIn({ from: "-50%, -50%", to: "-50%, 100vh" })} 0.7s cubic-bezier(.78,.03,.65,1.02) both
         `
