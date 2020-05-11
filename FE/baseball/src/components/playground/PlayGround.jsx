@@ -24,7 +24,9 @@ const PlayGround = () => {
       <CurrentPlayer pitcher={home.pitcher} batter={away.batter[0]} />
       <GameArea home={home} away={away} />
       <StatsCenter />
-      <PlayerListButton>선수 목록</PlayerListButton>
+      <PlayerListButton as={Link} to="/playerlist">
+        선수 목록
+      </PlayerListButton>
     </PlayGroundWrap>
   );
 };
