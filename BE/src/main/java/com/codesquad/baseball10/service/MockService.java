@@ -70,10 +70,10 @@ public class MockService {
                 .build();
     }
 
-    public TeamChoiceResponseDto postTeamChoice(TeamChoiceRequestDto requestBody) {
+    public TeamChoiceResponseDto postTeamChoice(Long teamId) {
 
         TeamResponseDto team1 = TeamResponseDto.builder()
-                .id(requestBody.getTeamId())
+                .id(teamId)
                 .name("삼성")
                 .logoUrl("www.naver.com")
                 .userEmail("guswns1659@gmail.com")
@@ -92,7 +92,7 @@ public class MockService {
         String userWhere = "HOME";
 
         MatchInfoResponseDto matchInfo = MatchInfoResponseDto.builder()
-                .currentInning("0")
+                .currentInning("1")
                 .when("TOP")
                 .build();
 
@@ -155,6 +155,92 @@ public class MockService {
                 .location("HOME")
                 .totalScore("0")
                 .inningScore(Arrays.asList("0","0","0","0","0","0","0","0","0"))
+                .build();
+
+        displays.add(display1);
+        displays.add(display2);
+
+        return ProgressResponseDto.builder()
+                .status(status)
+                .userWhere(userWhere)
+                .matchInfo(matchInfo)
+                .defense(defense)
+                .defenseTeam(defenseTeam)
+                .attackTeam(attackTeam)
+                .ballCount(ballcount)
+                .plates(plates)
+                .display(displays)
+                .build();
+    }
+
+    public ProgressResponseDto getProgress(String inning, String when) {
+        String status = "200";
+        String userWhere = "HOME";
+
+        MatchInfoResponseDto matchInfo = MatchInfoResponseDto.builder()
+                .currentInning(inning)
+                .when(when)
+                .build();
+
+        String defense = "true";
+
+        PitcherResponseDto pitcher = PitcherResponseDto.builder()
+                .name("최동원")
+                .count("45")
+                .build();
+
+        TeamProgressResponseDto defenseTeam = TeamProgressResponseDto.builder()
+                .teamName("삼성")
+                .totalScore("5")
+                .location("HOME")
+                .pitcher(pitcher)
+                .build();
+
+        List<BatterHistoryResponseDto> batters = new ArrayList<>();
+
+        for (int index = 1; index < 10; index++) {
+            BatterHistoryResponseDto batter = BatterHistoryResponseDto.builder()
+                    .name("트라웃")
+                    .plateAppearance("1")
+                    .hit("1")
+                    .order(String.valueOf(index))
+                    .history(Arrays.asList("1", "2", "1"))
+                    .build();
+            batters.add(batter);
+        }
+
+        TeamProgressResponseDto attackTeam = TeamProgressResponseDto.builder()
+                .teamName("LG")
+                .totalScore("5")
+                .location("AWAY")
+                .batter(batters)
+                .build();
+
+        BallCountResponseDto ballcount = BallCountResponseDto.builder()
+                .strike("1")
+                .ball("2")
+                .out("1")
+                .build();
+
+        PlatesResponseDto plates = PlatesResponseDto.builder()
+                .baseFirst("1")
+                .baseSecond("0")
+                .baseThird("1")
+                .build();
+
+        List<DisplayResponseDto> displays = new ArrayList<>();
+        DisplayResponseDto display1 = DisplayResponseDto.builder()
+                .teamName("삼성")
+                .location("AWAY")
+                .totalScore("5")
+                .inningScore(Arrays.asList("1","2","2","0","0","0","0","0","0"))
+                .build();
+
+        DisplayResponseDto display2 = DisplayResponseDto.builder()
+                .teamName("한화")
+                .location("HOME")
+                .totalScore("5")
+                .inningScore(Arrays.asList("2","2","1","0","0","0","0","0","0"))
                 .build();
 
         displays.add(display1);

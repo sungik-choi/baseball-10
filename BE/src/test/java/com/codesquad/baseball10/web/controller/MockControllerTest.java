@@ -77,6 +77,13 @@ public class MockControllerTest {
 
     @Test
     public void getProgressTest() {
+        String url = "http://localhost:" + port + "/mock/2/TOP";
 
+        ResponseEntity<ProgressResponseDto> responseEntity
+                = restTemplate.getForEntity(url, ProgressResponseDto.class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getMatchInfo().getCurrentInning()).isEqualTo("2");
+        assertThat(responseEntity.getBody().getMatchInfo().getWhen()).isEqualTo("TOP");
     }
 }

@@ -1,13 +1,15 @@
 package com.codesquad.baseball10.web.controller;
 
 import com.codesquad.baseball10.service.MockService;
-import com.codesquad.baseball10.web.dto.requestDto.TeamChoiceRequestDto;
 import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.ProgressResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/mock")
@@ -21,14 +23,9 @@ public class MockController {
         return mockService.getTeamsResponseDto();
     }
 
-    @GetMapping("players")
-    public PlayersResponseDto getPlayers() {
-        return mockService.getPlayersResponseDto();
-    }
-
-    @PostMapping("choice")
-    public TeamChoiceResponseDto postTeamChoice(@RequestBody TeamChoiceRequestDto requestBody) {
-        return mockService.postTeamChoice(requestBody);
+    @GetMapping("{teamId}")
+    public TeamChoiceResponseDto postTeamChoice(@PathVariable("teamId") Long teamId) {
+        return mockService.postTeamChoice(teamId);
     }
 
     @GetMapping("first")
@@ -36,5 +33,14 @@ public class MockController {
         return mockService.getFirstProgress();
     }
 
+    @GetMapping("{inning}/{when}")
+    public ProgressResponseDto getProgress(@PathVariable String inning,
+                                           @PathVariable String when) {
+        return mockService.getProgress(inning, when);
+    }
 
+    @GetMapping("players")
+    public PlayersResponseDto getPlayers() {
+        return mockService.getPlayersResponseDto();
+    }
 }
