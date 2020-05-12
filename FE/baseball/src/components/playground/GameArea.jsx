@@ -2,7 +2,6 @@ import React from "react";
 import Background from "style/Background";
 import styled from "styled-components";
 import GameBoard from "./gameboard/GameBoard";
-import { fadeIn } from "style/Animation";
 
 const GameArea = ({ home, away, plates, ballCount }) => {
   const { strike, out, ball } = ballCount;

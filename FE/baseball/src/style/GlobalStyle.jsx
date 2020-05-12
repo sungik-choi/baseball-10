@@ -57,6 +57,7 @@ const variables = css`
     --orange: #f29c04;
     --orange-shadow: #e07a0c;
     --blue: #384faa;
+    --green: #71A01C;
 
     /* Typography */
     --text-xxl: 3rem;

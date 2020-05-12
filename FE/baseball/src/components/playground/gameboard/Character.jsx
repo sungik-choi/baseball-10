@@ -18,9 +18,12 @@ const play = keyframes`
 `;
 
 const CharacterDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: var(--sprite-size);
   height: var(--sprite-size);
-  background: url(${run}) left center;
+  background: url(${idle}) left center;
   background-size: cover;
   animation: ${play} ${ANIMATION_SPEED}s steps(${SPRITE_NUM}) infinite !important;
 `;
