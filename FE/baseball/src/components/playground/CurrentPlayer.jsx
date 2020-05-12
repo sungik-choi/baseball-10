@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const CurrentPlayer = ({ pitcher, batter }) => {
+const CurrentPlayer = ({ defenseTeam, attackTeam }) => {
+  const currentPitcher = defenseTeam.pitcher !== null ? defenseTeam.pitcher : attackTeam.pitcher;
+  const currentBatter = defenseTeam.batter !== null ? defenseTeam.batter[0] : attackTeam.batter[0];
+  console.log(currentBatter);
   return (
     <CurrentPlayerWarp>
       <Top>
@@ -10,17 +13,17 @@ const CurrentPlayer = ({ pitcher, batter }) => {
 
       <Player>
         <PlayerPosition>투수 </PlayerPosition>
-        <PlayerName>{pitcher.name}</PlayerName>
-        <PlyerInfo>#{pitcher.count}</PlyerInfo>
+        <PlayerName>{currentPitcher.name}</PlayerName>
+        <PlyerInfo>#{currentPitcher.count}</PlyerInfo>
       </Player>
 
       <hr />
 
       <Player border="true">
         <PlayerPosition>타자 </PlayerPosition>
-        <PlayerName>{batter.name}</PlayerName>
+        <PlayerName>{currentBatter.name}</PlayerName>
         <PlyerInfo>
-          {batter.plateAppearance}타석 {batter.hit}안타 {batter.order}타순
+          {currentBatter.plateAppearance}타석 {currentBatter.hit}안타 {currentBatter.order}타순
         </PlyerInfo>
       </Player>
     </CurrentPlayerWarp>
