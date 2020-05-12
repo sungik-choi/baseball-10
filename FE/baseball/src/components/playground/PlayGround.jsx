@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useBaseballState, useBaseballDispatch } from "context/context";
 
@@ -17,7 +17,7 @@ const PlayGround = () => {
   const away = playGround.teams[1];
 
   return (
-    <PlayGroundWrap color="#333746">
+    <PlayGroundWrap color="var(--gray-3)">
       <Logo>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>

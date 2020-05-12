@@ -5,8 +5,8 @@ import run from "assets/run.png";
 
 const Character = () => {
   return (
-    <TestDiv>
-    </TestDiv>
+    <CharacterDiv>
+    </CharacterDiv>
   );
 };
 
@@ -17,7 +17,7 @@ const play = keyframes`
    100% { background-position: calc(var(--sprite-size) * -${SPRITE_NUM}); }
 `;
 
-const TestDiv = styled.div`
+const CharacterDiv = styled.div`
   width: var(--sprite-size);
   height: var(--sprite-size);
   background: url(${run}) left center;
