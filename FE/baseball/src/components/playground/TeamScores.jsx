@@ -3,7 +3,16 @@ import styled from "styled-components";
 
 const TeamScores = ({ border, scoreInfomation }) => {
   const { team1, totalScore, inningScore } = scoreInfomation;
-  const teamScores = inningScore.map((score, idx) => <TeamScore key={idx}>{score}</TeamScore>);
+
+  const inningScoreLength = inningScore.length - 1;
+
+  const teamScores = fullInning.map((score, idx) => {
+    if (idx <= inningScoreLength) {
+      return <TeamScore key={idx}>{inningScore[idx]}</TeamScore>;
+    } else {
+      return <TeamScore key={idx}>-</TeamScore>;
+    }
+  });
   return (
     <TeamScoreWarp border={border}>
       <TeamName>{team1}</TeamName>
@@ -13,7 +22,7 @@ const TeamScores = ({ border, scoreInfomation }) => {
   );
 };
 
-const inningScores = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+const fullInning = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
 const TeamScoreWarp = styled.div`
   display: flex;
