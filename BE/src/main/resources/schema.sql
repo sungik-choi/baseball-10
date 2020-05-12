@@ -1,4 +1,5 @@
-drop table if exists gameApplication;
+drop table if exists game_application;
+drop table if exists basic_team;
 drop table if exists matchs;
 drop table if exists matchOneInningInfo;
 drop table if exists team;
@@ -10,9 +11,17 @@ drop table if exists playerOneMatchInfo;
 drop table if exists playerOnePlateAppearanceInfo;
 drop table if exists playerOnePlateAppearanceHistory;
 
-create table gameApplication (
+create table game_application (
     id int primary key not null auto_increment,
     name varchar (100)
+);
+
+create table basic_team (
+    id int primary key not null auto_increment,
+    name varchar (100),
+    logo_url varchar (500),
+    game_application int references game_application(id),
+    game_application_key int
 );
 
 create table matchs (

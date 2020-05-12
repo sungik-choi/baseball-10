@@ -1,8 +1,7 @@
 package com.codesquad.baseball10.domain;
+
 import lombok.*;
 import org.springframework.data.annotation.Id;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -10,11 +9,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class GameApplication {
+public class BasicTeam {
 
     @Id
     private Long id;
+
     private String name;
-    private List<Matchs> matchs;
-    private List<BasicTeam> BasicTeams;
+    private String logoUrl;
 }

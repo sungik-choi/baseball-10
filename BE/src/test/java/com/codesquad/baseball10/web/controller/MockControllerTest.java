@@ -32,7 +32,6 @@ public class MockControllerTest {
 
     @Test
     public void getTeamsTest() {
-
         String url = "http://15.164.34.6/api/mock/teams";
         ResponseEntity<TeamsResponseDto> responseEntity = restTemplate.getForEntity(url, TeamsResponseDto.class);
 
