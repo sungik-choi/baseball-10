@@ -2,12 +2,12 @@ import React from 'react';
 import styled, { keyframes } from "styled-components";
 import { fadeIn } from "style/Animation";
 import idle from "assets/idle_1.png";
-import run from "assets/run.png";
+import run from "assets/run_1.png";
 
-const Character = () => {
+const Character = ({ isRun }) => {
   return (
     <CharacterWrap>
-      <CharacterDiv></CharacterDiv>
+      <CharacterDiv isRun={isRun}></CharacterDiv>
       <ShadowDiv></ShadowDiv>
     </CharacterWrap>
   );
@@ -23,7 +23,7 @@ const play = keyframes`
 const CharacterDiv = styled.div`
   z-index: 10;
   height: 100%;
-  background: url(${idle}) left center;
+  background: ${(props) => (props.isRun ? `url(${run})` : `url(${idle})`)} left center;
   background-size: cover;
 `;
 
@@ -41,7 +41,7 @@ const ShadowDiv = styled.div`
 
 const CharacterWrap = styled.div`
   position: absolute;
-  bottom: 12.5rem;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, 220%);
   width: var(--sprite-size);

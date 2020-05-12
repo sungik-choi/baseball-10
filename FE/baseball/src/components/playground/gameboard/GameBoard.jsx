@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import styled from "styled-components";
 import GameCanvas from "./GameCanvas"
 import Character from "./Character";
@@ -8,6 +8,8 @@ import { scaleUp } from "style/Animation";
 const GameBoard = ({ plates }) => {
   const {baseFirst, baseSecond, baseThird} = plates;
   console.log(baseFirst, baseSecond, baseThird);
+  const [isRun, setIsRun] = useState(false);
+  const clickHandler = () => setIsRun(!isRun);
 
   useEffect(() => {
 
@@ -16,8 +18,8 @@ const GameBoard = ({ plates }) => {
   return (
     <GameBoardWrap>
       <GameCanvas />
-      <Character plates={plates}/>
-      <PitchButton>{PITCH_TEXT}</PitchButton>
+      <Character isRun={isRun} plates={plates}/>
+      <PitchButton onClick={clickHandler}>{PITCH_TEXT}</PitchButton>
     </GameBoardWrap>
   );
 };
