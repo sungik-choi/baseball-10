@@ -4,9 +4,9 @@ import { fadeIn } from "style/Animation";
 import idle from "assets/idle_1.png";
 import run from "assets/run_1.png";
 
-const Character = ({ isRun }) => {
+const Character = ({ isRun, enterDelay, plates }) => {
   return (
-    <CharacterWrap>
+    <CharacterWrap delay={enterDelay}>
       <CharacterDiv isRun={isRun}></CharacterDiv>
       <ShadowDiv></ShadowDiv>
     </CharacterWrap>
@@ -20,8 +20,17 @@ const play = keyframes`
    100% { background-position: calc(var(--sprite-size) * -${SPRITE_NUM}); }
 `;
 
+const enter = keyframes`
+  0% {
+    transform: translate(-50%, 500%);
+  }
+
+  100% {
+    transform: translate(-50%, 220%);
+  }
+`;
+
 const CharacterDiv = styled.div`
-  z-index: 10;
   height: 100%;
   background: ${(props) => (props.isRun ? `url(${run})` : `url(${idle})`)} left center;
   background-size: cover;
@@ -46,6 +55,8 @@ const CharacterWrap = styled.div`
   transform: translate(-50%, 220%);
   width: var(--sprite-size);
   height: var(--sprite-size);
+  animation: ${enter} ${(props) => props.delay || 2}s linear !important;
+
   ${ShadowDiv} {
     animation: ${fadeIn({ end: 0.2, changePoint: 30 })} 1s;
   }

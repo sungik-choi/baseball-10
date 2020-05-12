@@ -47,12 +47,12 @@ export const fadeOut = ({ start = 1, changePoint = 66 }) => keyframes`
   }
 `;
 
-export const scaleUp = keyframes`
+export const scale = ({ from = 0, to = 1 }) => keyframes`
   0% {
-    transform: scale(0);
+    transform: scale(${from});
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(${to});
   }
 `
