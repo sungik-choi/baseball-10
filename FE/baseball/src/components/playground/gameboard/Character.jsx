@@ -22,7 +22,7 @@ const CharacterDiv = styled.div`
   height: var(--sprite-size);
   background: url(${run}) left center;
   background-size: cover;
-  animation: ${play} ${ANIMATION_SPEED}s steps(${SPRITE_NUM}) infinite;
+  animation: ${play} ${ANIMATION_SPEED}s steps(${SPRITE_NUM}) infinite !important;
 `;
 
 export default Character;

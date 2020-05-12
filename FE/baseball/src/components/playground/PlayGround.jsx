@@ -9,6 +9,7 @@ import GameArea from "./GameArea";
 
 import Background from "style/Background";
 import Button from "style/Button";
+import { fadeIn } from "style/Animation";
 import logo from "assets/logo.svg";
 
 const PlayGround = () => {
@@ -17,7 +18,7 @@ const PlayGround = () => {
   const away = playGround.teams[1];
 
   return (
-    <PlayGroundWrap color="var(--gray-3)">
+    <PlayGroundWrap color="var(--gray-3 )">
       <Logo>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
@@ -41,6 +42,7 @@ const PlayGroundWrap = styled(Background)`
   grid-template-areas: var(--grid-template-areas);
   * {
     box-sizing: border-box;
+    animation: ${fadeIn({ target: 1, changePoint: 30 })} 1s;
   }
 `;
 

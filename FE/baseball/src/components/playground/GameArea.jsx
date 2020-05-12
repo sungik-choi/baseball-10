@@ -25,7 +25,7 @@ const GameArea = ({ home, away, ballCount }) => {
   const outCountPoints = ballCountHandler(outLength, out, "#e5292c");
 
   return (
-    <GameBackground color={"var(--white)"}>
+    <GameBackground color={"none"}>
       <GameBoard />
       <ScoreBar>
         <TeamName>{home.teamName}</TeamName>
@@ -138,7 +138,6 @@ const StatusBoard = styled.div`
   border-radius: var(--border-radius);
   border: solid var(--border-size) var(--gray-4);
   font-size: var(--text-lg);
-  opacity: .8;
   padding: 0.625rem;
   .title {
     width: 15%;
