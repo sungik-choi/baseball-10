@@ -2,8 +2,9 @@ import React from "react";
 import Background from "style/Background";
 import styled from "styled-components";
 import GameBoard from "./gameboard/GameBoard";
+import { fadeIn } from "style/Animation";
 
-const GameArea = ({ home, away, ballCount }) => {
+const GameArea = ({ home, away, plates, ballCount }) => {
   const { strike, out, ball } = ballCount;
 
   console.log(ball);
@@ -26,7 +27,7 @@ const GameArea = ({ home, away, ballCount }) => {
 
   return (
     <GameBackground color={"none"}>
-      <GameBoard />
+      <GameBoard plates={plates}/>
       <ScoreBar>
         <TeamName>{home.teamName}</TeamName>
         <Mid>

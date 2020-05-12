@@ -246,9 +246,9 @@ const baseballData = {
       out: 2,
     },
     plates: {
-      baseFirst: "2",
+      baseFirst: "0",
       baseSecond: "0",
-      baseThird: "1",
+      baseThird: "0",
     },
     displays: [
       {

@@ -24,7 +24,7 @@ const PlayGround = () => {
       </Logo>
       <ScoreBoard displays={playGround.displays} />
       <CurrentPlayer pitcher={home.pitcher} batter={away.batter[0]} />
-      <GameArea home={home} away={away} ballCount={playGround.ballCount} />
+      <GameArea home={home} away={away} plates={playGround.plates} ballCount={playGround.ballCount} />
       <StatsCenter />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
@@ -64,7 +64,7 @@ const StatsCenter = styled.div`
   width: 100%;
   height: 100%;
   border-radius: var(--border-radius);
-  border: solid var(--border-size) #51566a;
+  border: solid var(--border-size) var(--gray-4);
 `;
 
 const PlayerListButton = styled(Button)`

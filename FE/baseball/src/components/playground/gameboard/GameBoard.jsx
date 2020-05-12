@@ -1,8 +1,11 @@
 import React from 'react';
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Character from "./Character";
 
-const GameBoard = () => {
+const GameBoard = ({ plates: {baseFirst, baseSecond, baseThird} }) => {
+
+  console.log(baseFirst, baseSecond, baseThird);
+
   return (
     <GameBoardWrap>
       <Character />
