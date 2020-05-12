@@ -1,4 +1,4 @@
-package com.codesquad.baseball10.web.dto;
+package com.codesquad.baseball10.web.dto.responesDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

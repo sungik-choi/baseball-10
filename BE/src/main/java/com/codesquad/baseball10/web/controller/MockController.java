@@ -1,9 +1,8 @@
 package com.codesquad.baseball10.web.controller;
 
-import com.codesquad.baseball10.web.dto.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.codesquad.baseball10.web.dto.requestDto.TeamChoiceRequestDto;
+import com.codesquad.baseball10.web.dto.responesDto.*;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,5 +64,23 @@ public class MockController {
                 .status("200")
                 .data(data)
                 .build();
+    }
+
+    @PostMapping("choice")
+    public TeamChoiceResponseDto postTeamChoice(@RequestBody TeamChoiceRequestDto teamId) {
+        TeamResponseDto team1 = TeamResponseDto.builder()
+                .id(teamId.getTeamId())
+                .name("삼성")
+                .logoUrl("www.naver.com")
+                .userEmail("guswns1659@gmail.com")
+                .selected("true")
+                .location("HOME")
+                .build();
+
+        return TeamChoiceResponseDto.builder()
+                .status("200")
+                .team(team1)
+                .build();
+
     }
 }

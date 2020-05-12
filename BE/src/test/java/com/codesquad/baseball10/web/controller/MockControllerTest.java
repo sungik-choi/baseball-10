@@ -1,8 +1,8 @@
 package com.codesquad.baseball10.web.controller;
 
-import com.codesquad.baseball10.web.dto.PlayersResponseDto;
-import com.codesquad.baseball10.web.dto.TeamChoiceResponseDto;
-import com.codesquad.baseball10.web.dto.TeamsResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,6 +14,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,12 +53,14 @@ public class MockControllerTest {
 
     @Test
     public void teamChoiceTest() {
-        String url = "http://15.164.34.6/api/mock/1";
+//        String url = "http://15.164.34.6/api/mock/1";
+        String url = "http://localhost:"+port+"/mock/choice";
 
-        Object request = new Object();
+        Map<String, Long> requestBody = new HashMap<>();
+        requestBody.put("teamId", 1L);
 
         ResponseEntity<TeamChoiceResponseDto> responseEntity
-                = restTemplate.postForEntity(url, request, TeamChoiceResponseDto.class);
+                = restTemplate.postForEntity(url, requestBody, TeamChoiceResponseDto.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getTeam().getName()).isEqualTo("삼성");
