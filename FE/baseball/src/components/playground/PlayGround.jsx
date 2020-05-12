@@ -22,7 +22,7 @@ const PlayGround = () => {
       </Logo>
       <ScoreBoard displays={playGround.displays} />
       <CurrentPlayer pitcher={home.pitcher} batter={away.batter[0]} />
-      <GameArea home={home} away={away} />
+      <GameArea home={home} away={away} ballCount={playGround.ballCount} />
       <StatsCenter />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
