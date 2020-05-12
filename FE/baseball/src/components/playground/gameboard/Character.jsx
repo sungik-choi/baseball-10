@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { fadeIn } from "style/Animation";
 import idle from "assets/idle_1.png";
 import run from "assets/run.png";
