@@ -1,6 +1,7 @@
 import React from "react";
 import Background from "style/Background";
 import styled from "styled-components";
+import Character from "./Character";
 
 const GameArea = ({ home, away, ballCount }) => {
   const { strike, out, ball } = ballCount;
@@ -34,6 +35,7 @@ const GameArea = ({ home, away, ballCount }) => {
         </Mid>
         <TeamName>{away.teamName}</TeamName>
       </ScoreBar>
+      <Character />
       <BottomWarp>
         <StatusBoard>
           <BallCountStatus>
@@ -53,6 +55,7 @@ const GameArea = ({ home, away, ballCount }) => {
     </GameBackground>
   );
 };
+
 const strikeLength = 3;
 const ballLength = 4;
 const outLength = 3;

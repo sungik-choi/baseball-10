@@ -1,14 +1,15 @@
 import React from "react";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import Background from "style/Background";
-import logo from "assets/logo.svg";
-import Button from "style/Button";
 import { useBaseballState, useBaseballDispatch } from "context/context";
 
 import ScoreBoard from "./ScoreBoard";
 import CurrentPlayer from "./CurrentPlayer";
 import GameArea from "./GameArea";
+
+import Background from "style/Background";
+import Button from "style/Button";
+import logo from "assets/logo.svg";
 
 const PlayGround = () => {
   const { playGround } = useBaseballState();
@@ -72,9 +73,3 @@ const PlayerListButton = styled(Button)`
 
 export default PlayGround;
 
-// <Link to="/playerlist">선수 명단</Link>
-//<Header>
-// <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
-//   <ScoreBoard />
-//     <CurrentPlayer />
-//     </Header>
