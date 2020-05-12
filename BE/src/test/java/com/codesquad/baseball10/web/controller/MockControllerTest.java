@@ -1,8 +1,6 @@
 package com.codesquad.baseball10.web.controller;
 
-import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -64,5 +62,21 @@ public class MockControllerTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getTeam().getName()).isEqualTo("삼성");
+    }
+
+    @Test
+    public void getFirstProgressTest() {
+        String url = "http://localhost:" + port + "/mock/first";
+
+        ResponseEntity<ProgressResponseDto> responseEntity
+                = restTemplate.getForEntity(url, ProgressResponseDto.class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getUserWhere()).isEqualTo("HOME");
+    }
+
+    @Test
+    public void getProgressTest() {
+
     }
 }

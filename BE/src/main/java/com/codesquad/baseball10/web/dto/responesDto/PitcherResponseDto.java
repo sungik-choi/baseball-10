@@ -7,11 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class BatterResponseDto {
-    private String name;
-    private String plateAppearance;
-    private String hit;
-    private String out;
-    private String average;
+public class PitcherResponseDto {
 
+    private String name;
+    private String count;
 }
