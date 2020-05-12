@@ -15,6 +15,7 @@ const PlayGround = () => {
   const { playGround } = useBaseballState();
   const defenseTeam = playGround.defenseTeam;
   const attackTeam = playGround.attackTeam;
+  const currentAttackTeamBatterList = defenseTeam.batter !== null ? defenseTeam.batter : attackTeam.batter;
 
   return (
     <PlayGroundWrap color="#333746">
@@ -22,9 +23,9 @@ const PlayGround = () => {
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
       <ScoreBoard displays={playGround.displays} />
-      <CurrentPlayer pitcher={defenseTeam.pitcher} batter={attackTeam.batter[0]} />
+      <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
       <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} ballCount={playGround.ballCount} />
-      <StatsCenter batterList={attackTeam.batter} />
+      <StatsCenter batterList={currentAttackTeamBatterList} />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
       </PlayerListButton>
