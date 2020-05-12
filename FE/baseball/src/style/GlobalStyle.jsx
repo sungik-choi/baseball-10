@@ -19,6 +19,22 @@ const fonts = css`
 
 const variables = css`
   :root {
+    /* Grid */
+    --grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    --grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    --grid-template-areas: "logo logo scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard currentPlayer currentPlayer currentPlayer"
+      "logo logo scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard currentPlayer currentPlayer currentPlayer"
+      "logo logo scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard scoreBoard currentPlayer currentPlayer currentPlayer"
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea statsCenter statsCenter statsCenter "
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea playerListButton playerListButton  playerListButton"
+      "gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea gameArea playerListButton playerListButton  playerListButton";
+
     /* Size */
     --width: 1200px;
     --height: 768px;
