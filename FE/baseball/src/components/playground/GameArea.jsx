@@ -2,10 +2,8 @@ import React from "react";
 import Background from "style/Background";
 import styled from "styled-components";
 
-const GameArea = ({ home, away, ballCount }) => {
+const GameArea = ({ defenseTeam, attackTeam, ballCount }) => {
   const { strike, out, ball } = ballCount;
-
-  console.log(ball);
 
   const ballCountHandler = (statusCount, currentCount, color) => {
     const countPointList = [];
@@ -26,13 +24,13 @@ const GameArea = ({ home, away, ballCount }) => {
   return (
     <GameBackground>
       <ScoreBar>
-        <TeamName>{home.teamName}</TeamName>
+        <TeamName>{defenseTeam.teamName}</TeamName>
         <Mid>
-          <TotalScore>{home.totalScore}</TotalScore>
+          <TotalScore>{defenseTeam.totalScore}</TotalScore>
           <CurrentInning>2회초 수비</CurrentInning>
-          <TotalScore>{away.totalScore}</TotalScore>
+          <TotalScore>{attackTeam.totalScore}</TotalScore>
         </Mid>
-        <TeamName>{away.teamName}</TeamName>
+        <TeamName>{attackTeam.teamName}</TeamName>
       </ScoreBar>
       <BottomWarp>
         <StatusBoard>

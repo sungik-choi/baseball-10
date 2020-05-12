@@ -9,11 +9,12 @@ import { useBaseballState, useBaseballDispatch } from "context/context";
 import ScoreBoard from "./ScoreBoard";
 import CurrentPlayer from "./CurrentPlayer";
 import GameArea from "./GameArea";
+import StatsCenter from "./StatsCenter";
 
 const PlayGround = () => {
   const { playGround } = useBaseballState();
-  const home = playGround.teams[0];
-  const away = playGround.teams[1];
+  const defenseTeam = playGround.defenseTeam;
+  const attackTeam = playGround.attackTeam;
 
   return (
     <PlayGroundWrap color="#333746">
@@ -21,9 +22,9 @@ const PlayGround = () => {
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
       <ScoreBoard displays={playGround.displays} />
-      <CurrentPlayer pitcher={home.pitcher} batter={away.batter[0]} />
-      <GameArea home={home} away={away} ballCount={playGround.ballCount} />
-      <StatsCenter />
+      <CurrentPlayer pitcher={defenseTeam.pitcher} batter={attackTeam.batter[0]} />
+      <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} ballCount={playGround.ballCount} />
+      <StatsCenter batterList={attackTeam.batter} />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
       </PlayerListButton>
@@ -54,14 +55,6 @@ const LogoSvg = styled.object`
   grid-area: logo;
   width: 85%;
   height: 85%;
-`;
-
-const StatsCenter = styled.div`
-  grid-area: statsCenter;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--border-radius);
-  border: solid var(--border-size) #51566a;
 `;
 
 const PlayerListButton = styled(Button)`
