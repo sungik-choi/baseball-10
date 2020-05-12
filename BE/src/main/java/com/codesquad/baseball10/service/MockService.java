@@ -1,6 +1,5 @@
 package com.codesquad.baseball10.service;
 
-import com.codesquad.baseball10.web.dto.requestDto.TeamChoiceRequestDto;
 import com.codesquad.baseball10.web.dto.responesDto.*;
 import com.codesquad.baseball10.web.dto.responesDto.progress.*;
 import org.springframework.stereotype.Service;

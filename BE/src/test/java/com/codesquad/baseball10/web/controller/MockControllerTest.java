@@ -1,6 +1,9 @@
 package com.codesquad.baseball10.web.controller;
 
-import com.codesquad.baseball10.web.dto.responesDto.*;
+import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.ProgressResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,9 +15,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,14 +51,10 @@ public class MockControllerTest {
 
     @Test
     public void teamChoiceTest() {
-//        String url = "http://15.164.34.6/api/mock/1";
-        String url = "http://localhost:"+port+"/mock/choice";
-
-        Map<String, Long> requestBody = new HashMap<>();
-        requestBody.put("teamId", 1L);
+        String url = "http://15.164.34.6/api/mock/1";
 
         ResponseEntity<TeamChoiceResponseDto> responseEntity
-                = restTemplate.postForEntity(url, requestBody, TeamChoiceResponseDto.class);
+                = restTemplate.getForEntity(url, TeamChoiceResponseDto.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getTeam().getName()).isEqualTo("삼성");
@@ -66,7 +62,7 @@ public class MockControllerTest {
 
     @Test
     public void getFirstProgressTest() {
-        String url = "http://localhost:" + port + "/mock/first";
+        String url = "http://15.164.34.6/api/mock/first";
 
         ResponseEntity<ProgressResponseDto> responseEntity
                 = restTemplate.getForEntity(url, ProgressResponseDto.class);
@@ -77,7 +73,7 @@ public class MockControllerTest {
 
     @Test
     public void getProgressTest() {
-        String url = "http://localhost:" + port + "/mock/2/TOP";
+        String url = "http://15.164.34.6/api/mock/2/TOP";
 
         ResponseEntity<ProgressResponseDto> responseEntity
                 = restTemplate.getForEntity(url, ProgressResponseDto.class);
