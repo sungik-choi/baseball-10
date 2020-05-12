@@ -1,12 +1,15 @@
 import React from 'react';
 import styled, {keyframes} from "styled-components";
-import idle from "assets/idle.png";
+import { fadeIn } from "style/Animation";
+import idle from "assets/idle_1.png";
 import run from "assets/run.png";
 
 const Character = () => {
   return (
-    <CharacterDiv>
-    </CharacterDiv>
+    <CharacterWrap>
+      <CharacterDiv></CharacterDiv>
+      <ShadowDiv></ShadowDiv>
+    </CharacterWrap>
   );
 };
 
@@ -18,15 +21,37 @@ const play = keyframes`
 `;
 
 const CharacterDiv = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: var(--sprite-size);
-  height: var(--sprite-size);
+  z-index: 10;
+  height: 100%;
   background: url(${idle}) left center;
   background-size: cover;
-  animation: ${play} ${ANIMATION_SPEED}s steps(${SPRITE_NUM}) infinite !important;
+`;
+
+const ShadowDiv = styled.div`
+  position: relative;
+  z-index: -10;
+  bottom: 0;
+  width: 50%;
+  height: 0.8rem;
+  transform: translate(50%, -40%);
+  background-color: var(--black);
+  opacity: 0.2;
+  border-radius: 50%;
+`;
+
+const CharacterWrap = styled.div`
+  position: absolute;
+  bottom: 12.5rem;
+  left: 50%;
+  transform: translate(-50%, 220%);
+  width: var(--sprite-size);
+  height: var(--sprite-size);
+  ${ShadowDiv} {
+    animation: ${fadeIn({ end: 0.2, changePoint: 30 })} 1s;
+  }
+  ${CharacterDiv} {
+    animation: ${play} ${ANIMATION_SPEED}s steps(${SPRITE_NUM}) infinite;
+  }
 `;
 
 export default Character;

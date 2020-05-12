@@ -34,6 +34,8 @@ const PlayGround = () => {
 };
 
 const PlayGroundWrap = styled(Background)`
+  min-width: var(--width);
+  min-height: var(--height);
   display: grid;
   grid-template-columns: var(--grid-template-columns);
   grid-template-rows: var(--grid-template-rows);
@@ -42,7 +44,7 @@ const PlayGroundWrap = styled(Background)`
   grid-template-areas: var(--grid-template-areas);
   * {
     box-sizing: border-box;
-    animation: ${fadeIn({ target: 1, changePoint: 30 })} 1s;
+    animation: ${fadeIn({ end: 1, changePoint: 30 })} 1s;
   }
 `;
 

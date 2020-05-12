@@ -70,7 +70,6 @@ const GameCanvas = () => {
     ctx.fillStyle = "#fff";
     ctx.save();
     ctx.translate(centerX, centerY + COURT_SIZE * 0.5 + BASE_SIZE + offsetY);
-    ctx.rotate((45 * Math.PI) / 180);
     ctx.translate(-centerX, -centerY);
     ctx.fillRect(centerX - BASE_SIZE * 0.5, centerY - BASE_SIZE * 0.5, BASE_SIZE, BASE_SIZE);
 
