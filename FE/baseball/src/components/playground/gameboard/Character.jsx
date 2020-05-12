@@ -19,8 +19,9 @@ const play = keyframes`
 
 const CharacterDiv = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: var(--sprite-size);
   height: var(--sprite-size);
   background: url(${idle}) left center;
