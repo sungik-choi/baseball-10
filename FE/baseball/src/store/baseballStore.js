@@ -241,12 +241,12 @@ const baseballData = {
       },
     ],
     ballCount: {
-      strike: 0,
-      ball: 0,
-      out: 0,
+      strike: 1,
+      ball: 3,
+      out: 2,
     },
     plates: {
-      baseFirst: "1",
+      baseFirst: "2",
       baseSecond: "0",
       baseThird: "1",
     },
