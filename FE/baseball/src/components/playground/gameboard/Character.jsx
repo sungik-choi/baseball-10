@@ -18,7 +18,7 @@ const Character = ({ isRun, enterDelay, plates }) => {
 const ANIMATION_SPEED = 0.5;
 const SPRITE_NUM = 11;
 const CHARACTER_X = 50;
-const CHARACTER_Y = 180;
+const CHARACTER_Y = 170;
 
 const play = keyframes`
    100% { background-position: calc(var(--sprite-size) * -${SPRITE_NUM}); }

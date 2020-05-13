@@ -34,11 +34,11 @@ const GameCanvas = () => {
       ctx.fillRect(canvasElem.width * (TILE_COUNT / 100) * index, 0, canvasElem.width * (TILE_COUNT / 100), canvas.current.height);
     }
 
-    const COURT_SIZE = 350;
-    const BASE_SIZE = 80;
+    const COURT_SIZE = canvasElem.width * 0.2;
+    const BASE_SIZE = canvasElem.width * 0.04;
     const centerX = canvasElem.width * 0.5;
     const centerY = canvasElem.height * 0.5;
-    const offsetY = 100;
+    const offsetY = canvasElem.height * 0.11;
 
     ctx.strokeStyle = "#fff";
     ctx.lineWidth = 8;
@@ -61,7 +61,7 @@ const GameCanvas = () => {
     // center ellipse
     ctx.fillStyle = "#E3B189";
     ctx.beginPath();
-    ctx.arc(centerX, centerY, 50, 0, Math.PI * 2);
+    ctx.arc(centerX, centerY, BASE_SIZE * 0.6, 0, Math.PI * 2);
     ctx.fill();
     ctx.closePath();
 

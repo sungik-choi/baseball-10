@@ -26,7 +26,7 @@ const GameBoard = ({ userTeam, plates }) => {
   return (
     <GameBoardWrap>
       <GameCanvas />
-      <Character team={opposingTeam} base={"first"} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
+      <Character team={opposingTeam} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
       <Character team={userTeam} base={"first"} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
       <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
         {PITCH_TEXT}
