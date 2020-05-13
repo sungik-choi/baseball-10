@@ -1,9 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Background from "style/Background";
-import logo from "assets/logo.svg";
-import Button from "style/Button";
+import { Link } from "react-router-dom";
 import { useBaseballState, useBaseballDispatch } from "context/context";
 
 import ScoreBoard from "./ScoreBoard";
@@ -11,20 +8,27 @@ import CurrentPlayer from "./CurrentPlayer";
 import GameArea from "./GameArea";
 import StatsCenter from "./StatsCenter";
 
+import Background from "style/Background";
+import Button from "style/Button";
+import { fadeIn } from "style/Animation";
+import logo from "assets/logo.svg";
+
 const PlayGround = () => {
   const { playGround } = useBaseballState();
+
   const defenseTeam = playGround.defenseTeam;
   const attackTeam = playGround.attackTeam;
+  const userTeam = playGround.userWhere;
   const currentAttackTeamBatterList = defenseTeam.batter !== null ? defenseTeam.batter : attackTeam.batter;
 
   return (
-    <PlayGroundWrap color="#333746">
+    <PlayGroundWrap color="var(--gray-3 )">
       <Logo>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
       <ScoreBoard displays={playGround.displays} />
       <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
-      <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} ballCount={playGround.ballCount} />
+      <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
       <StatsCenter batterList={currentAttackTeamBatterList} />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
@@ -34,6 +38,8 @@ const PlayGround = () => {
 };
 
 const PlayGroundWrap = styled(Background)`
+  min-width: var(--width);
+  /* min-height: var(--height); */
   display: grid;
   grid-template-columns: var(--grid-template-columns);
   grid-template-rows: var(--grid-template-rows);
@@ -42,6 +48,7 @@ const PlayGroundWrap = styled(Background)`
   grid-template-areas: var(--grid-template-areas);
   * {
     box-sizing: border-box;
+    animation: ${fadeIn({ end: 1, changePoint: 30 })} 1s;
   }
 `;
 
@@ -65,10 +72,3 @@ const PlayerListButton = styled(Button)`
 `;
 
 export default PlayGround;
-
-// <Link to="/playerlist">선수 명단</Link>
-//<Header>
-// <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
-//   <ScoreBoard />
-//     <CurrentPlayer />
-//     </Header>

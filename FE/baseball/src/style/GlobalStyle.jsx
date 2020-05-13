@@ -45,6 +45,7 @@ const variables = css`
     --team-list-min-width: 960px; /* 1200 * 80% */
     --team-list-min-height: 500px;
     --team-card-width: 24rem;
+    --sprite-size: 4rem;
 
     /* Color */
     --white: #fff;
@@ -55,6 +56,8 @@ const variables = css`
     --gray-4: #51566a;
     --orange: #f29c04;
     --orange-shadow: #e07a0c;
+    --blue: #384faa;
+    --green: #71A01C;
 
     /* Typography */
     --text-xxl: 3rem;
