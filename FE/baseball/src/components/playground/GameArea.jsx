@@ -6,14 +6,16 @@ const GameArea = ({ defenseTeam, attackTeam, ballCount }) => {
   const { strike, out, ball } = ballCount;
 
   const ballCountHandler = (statusCount, currentCount, color) => {
-    const countPointList = [];
-    for (let i = 1; i < statusCount; i++) {
-      if (i <= currentCount) {
-        countPointList.push(<CountPoint color={color} />);
+    const currentCountLength = currentCount - 1;
+
+    const countPointList = statusCount.map((el, idx) => {
+      if (idx <= currentCountLength) {
+        return <CountPoint key={idx} color={color} />;
       } else {
-        countPointList.push(<CountPoint />);
+        return <CountPoint key={idx} />;
       }
-    }
+    });
+
     return countPointList;
   };
 
@@ -51,9 +53,9 @@ const GameArea = ({ defenseTeam, attackTeam, ballCount }) => {
     </GameBackground>
   );
 };
-const strikeLength = 3;
-const ballLength = 4;
-const outLength = 3;
+const strikeLength = ["", ""];
+const ballLength = ["", "", ""];
+const outLength = ["", ""];
 
 const GameBackground = styled(Background)`
   grid-area: gameArea;
