@@ -211,7 +211,7 @@ const baseballData = {
     defenseTeam: {
       teamName: "삼성",
       totalScore: "0",
-      location: "HOME",
+      location: "AWAY",
       pitcher: {
         name: "최동원",
         count: "0",
@@ -221,7 +221,7 @@ const baseballData = {
     attackTeam: {
       teamName: "LG",
       totalScore: "0",
-      location: "AWAY",
+      location: "HOME",
       pitcher: null,
       batter: [
         {
@@ -253,8 +253,8 @@ const baseballData = {
       out: 2,
     },
     plates: {
-      baseFirst: "0",
-      baseSecond: "0",
+      baseFirst: "1",
+      baseSecond: "1",
       baseThird: "0",
     },
     displays: [

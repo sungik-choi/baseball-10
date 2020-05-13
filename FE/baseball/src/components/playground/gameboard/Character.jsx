@@ -6,10 +6,13 @@ import idleAway from "assets/idle_away.png";
 import runHome from "assets/run_home.png";
 import runAway from "assets/run_away.png";
 
-const Character = ({ isRun, enterDelay, plates }) => {
+const Character = ({ team, plate, isRun, aniDelay }) => {
+  const idle = team === "HOME" ? idleHome : idleAway;
+  const run = team === "HOME" ? runHome : runAway;
+
   return (
-    <CharacterWrap delay={enterDelay}>
-      <CharacterDiv isRun={isRun}></CharacterDiv>
+    <CharacterWrap team={team} plate={plate} delay={aniDelay}>
+      <CharacterDiv idleAni={idle} runAni={run} isRun={isRun}></CharacterDiv>
       <ShadowDiv></ShadowDiv>
     </CharacterWrap>
   );
@@ -17,26 +20,46 @@ const Character = ({ isRun, enterDelay, plates }) => {
 
 const ANIMATION_SPEED = 0.5;
 const SPRITE_NUM = 11;
-const CHARACTER_X = 50;
-const CHARACTER_Y = 170;
+
+const getCharacterPosition = (plate) => {
+  switch (plate) {
+    case "PITCHER":
+      return {
+        x: "50",
+        y: "54",
+      };
+    case "HOME":
+      return {
+        x: "50",
+        y: "82",
+      };
+    case "FIRST":
+      return {
+        x: "64",
+        y: "54",
+      };
+    case "SECOND":
+      return {
+        x: "50",
+        y: "27",
+      };
+    case "THIRD":
+      return {
+        x: "36",
+        y: "54",
+      };
+    default:
+      break;
+  }
+};
 
 const play = keyframes`
    100% { background-position: calc(var(--sprite-size) * -${SPRITE_NUM}); }
 `;
 
-const enter = keyframes`
-  0% {
-    transform: translate(-50%, 500%);
-  }
-
-  100% {
-    transform: translate(-50%, ${CHARACTER_Y}%);
-  }
-`;
-
 const CharacterDiv = styled.div`
   height: 100%;
-  background: ${(props) => (props.isRun ? `url(${runHome})` : `url(${idleHome})`)} left center;
+  background: ${(props) => (props.isRun ? `url(${props.runAni})` : `url(${props.idleAni})`)} left center;
   background-size: cover;
 `;
 
@@ -54,12 +77,11 @@ const ShadowDiv = styled.div`
 
 const CharacterWrap = styled.div`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, ${CHARACTER_Y}%);
+  left: ${(props) => getCharacterPosition(props.plate).x}%;
+  top: ${(props) => getCharacterPosition(props.plate).y}%;
+  transform: translate(-50%, -50%);
   width: var(--sprite-size);
   height: var(--sprite-size);
-  animation: ${enter} ${(props) => props.delay || 2}s linear !important;
 
   ${ShadowDiv} {
     animation: ${fadeIn({ end: 0.2, changePoint: 30 })} 1s;

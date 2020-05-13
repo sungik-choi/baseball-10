@@ -4,30 +4,53 @@ import GameCanvas from "./GameCanvas";
 import Character from "./Character";
 import Button from "style/Button";
 import { scale } from "style/Animation";
+import { useBaseballDispatch } from "context/context";
 
-const GameBoard = ({ userTeam, plates }) => {
+const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
   let { baseFirst, baseSecond, baseThird } = plates;
-  const [isRun, setIsRun] = useState(true);
+  const dispatch = useBaseballDispatch();
+  const [isRun, setIsRun] = useState(false);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const clickHandler = () => {
     setIsRun(!isRun);
+    dispatch({ type: "TEST" });
     setIsPitchBtnAppear(false);
   };
 
-  const opposingTeam = userTeam === "HOME" ? "HOME" : "AWAY";
-  const ENTER_DELAY = 2;
+  const ANIMATION_DELAY = 2;
+
+  const platesType = ["PITCHER", "HOME", "FIRST", "SECOND", "THIRD"];
+
+  const isExist = (type) => {
+    switch (type) {
+      case "HOME":
+        return true;
+      case "FIRST":
+        return +baseFirst;
+      case "SECOND":
+        return +baseSecond;
+      case "THIRD":
+        return +baseThird;
+      default:
+        return false;
+    }
+  };
+
+  const characters = platesType.map((type, index) => {
+    if (type === "PITCHER") return <Character key={index} team={defenseTeam.location} plate={"PITCHER"} isRun={false} aniDelay={ANIMATION_DELAY} />;
+    if (isExist(type)) return <Character key={index} team={attackTeam.location} plate={type} isRun={isRun} aniDelay={ANIMATION_DELAY} />;
+  });
 
   useEffect(() => {
     console.log(baseFirst, baseSecond, baseThird);
-    console.log(userTeam);
-    setTimeout(() => setIsRun(false), ENTER_DELAY * 1000);
+    console.log("userTeam : ", userTeam);
+    // setTimeout(() => setIsRun(false), ANIMATION_DELAY * 1000);
   }, [baseFirst, baseSecond, baseThird]);
 
   return (
     <GameBoardWrap>
       <GameCanvas />
-      <Character team={opposingTeam} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
-      <Character team={userTeam} base={"first"} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
+      {characters}
       <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
         {PITCH_TEXT}
       </PitchButton>

@@ -39,7 +39,6 @@ const PlayGround = () => {
 
 const PlayGroundWrap = styled(Background)`
   min-width: var(--width);
-  /* min-height: var(--height); */
   display: grid;
   grid-template-columns: var(--grid-template-columns);
   grid-template-rows: var(--grid-template-rows);
