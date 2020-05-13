@@ -3,7 +3,7 @@ import Background from "style/Background";
 import styled from "styled-components";
 import GameBoard from "./gameboard/GameBoard";
 
-const GameArea = ({ home, away, plates, ballCount }) => {
+const GameArea = ({ home, away, userTeam, plates, ballCount }) => {
   const { strike, out, ball } = ballCount;
 
   console.log(ball);
@@ -27,7 +27,7 @@ const GameArea = ({ home, away, plates, ballCount }) => {
   return (
     <GameBackground color={"none"}>
       {/* HOME AWAY 인지 파악하고, PITCH 버튼 나오게 하는 로직 작성 */}
-      <GameBoard plates={plates}/>
+      <GameBoard userTeam={userTeam} plates={plates} />
       <ScoreBar>
         <TeamName>{home.teamName}</TeamName>
         <Mid>

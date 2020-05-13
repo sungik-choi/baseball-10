@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import { fadeIn } from "style/Animation";
-import idle from "assets/idle_1.png";
-import run from "assets/run_1.png";
+import idleHome from "assets/idle_home.png";
+import idleAway from "assets/idle_away.png";
+import runHome from "assets/run_home.png";
+import runAway from "assets/run_away.png";
 
 const Character = ({ isRun, enterDelay, plates }) => {
   return (
@@ -15,6 +17,8 @@ const Character = ({ isRun, enterDelay, plates }) => {
 
 const ANIMATION_SPEED = 0.5;
 const SPRITE_NUM = 11;
+const CHARACTER_X = 50;
+const CHARACTER_Y = 180;
 
 const play = keyframes`
    100% { background-position: calc(var(--sprite-size) * -${SPRITE_NUM}); }
@@ -26,13 +30,13 @@ const enter = keyframes`
   }
 
   100% {
-    transform: translate(-50%, 220%);
+    transform: translate(-50%, ${CHARACTER_Y}%);
   }
 `;
 
 const CharacterDiv = styled.div`
   height: 100%;
-  background: ${(props) => (props.isRun ? `url(${run})` : `url(${idle})`)} left center;
+  background: ${(props) => (props.isRun ? `url(${runHome})` : `url(${idleHome})`)} left center;
   background-size: cover;
 `;
 
@@ -52,7 +56,7 @@ const CharacterWrap = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 220%);
+  transform: translate(-50%, ${CHARACTER_Y}%);
   width: var(--sprite-size);
   height: var(--sprite-size);
   animation: ${enter} ${(props) => props.delay || 2}s linear !important;

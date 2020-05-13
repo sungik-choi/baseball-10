@@ -34,7 +34,7 @@ const GameCanvas = () => {
       ctx.fillRect(canvasElem.width * (TILE_COUNT / 100) * index, 0, canvasElem.width * (TILE_COUNT / 100), canvas.current.height);
     }
 
-    const COURT_SIZE = 450;
+    const COURT_SIZE = 350;
     const BASE_SIZE = 80;
     const centerX = canvasElem.width * 0.5;
     const centerY = canvasElem.height * 0.5;
@@ -70,6 +70,7 @@ const GameCanvas = () => {
     ctx.fillStyle = "#fff";
     ctx.save();
     ctx.translate(centerX, centerY + COURT_SIZE * 0.5 + BASE_SIZE + offsetY);
+    ctx.rotate((45 * Math.PI) / 180);
     ctx.translate(-centerX, -centerY);
     ctx.fillRect(centerX - BASE_SIZE * 0.5, centerY - BASE_SIZE * 0.5, BASE_SIZE, BASE_SIZE);
 

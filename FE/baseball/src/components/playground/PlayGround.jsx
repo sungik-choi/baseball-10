@@ -16,7 +16,7 @@ const PlayGround = () => {
   const { playGround } = useBaseballState();
   const home = playGround.teams[0];
   const away = playGround.teams[1];
-
+  const userTeam = playGround.userWhere;
   return (
     <PlayGroundWrap color="var(--gray-3 )">
       <Logo>
@@ -24,7 +24,7 @@ const PlayGround = () => {
       </Logo>
       <ScoreBoard displays={playGround.displays} />
       <CurrentPlayer pitcher={home.pitcher} batter={away.batter[0]} />
-      <GameArea home={home} away={away} plates={playGround.plates} ballCount={playGround.ballCount} />
+      <GameArea home={home} away={away} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
       <StatsCenter />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
@@ -35,7 +35,7 @@ const PlayGround = () => {
 
 const PlayGroundWrap = styled(Background)`
   min-width: var(--width);
-  min-height: var(--height);
+  /* min-height: var(--height); */
   display: grid;
   grid-template-columns: var(--grid-template-columns);
   grid-template-rows: var(--grid-template-rows);
@@ -76,4 +76,3 @@ const PlayerListButton = styled(Button)`
 `;
 
 export default PlayGround;
-

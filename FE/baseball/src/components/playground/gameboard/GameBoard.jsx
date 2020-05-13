@@ -5,31 +5,29 @@ import Character from "./Character";
 import Button from "style/Button";
 import { scale } from "style/Animation";
 
-const GameBoard = ({ plates }) => {
+const GameBoard = ({ userTeam, plates }) => {
   let { baseFirst, baseSecond, baseThird } = plates;
   const [isRun, setIsRun] = useState(true);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const clickHandler = () => {
     setIsRun(!isRun);
     setIsPitchBtnAppear(false);
-    baseFirst++;
-    console.log(+baseFirst);
   };
 
+  const opposingTeam = userTeam === "HOME" ? "HOME" : "AWAY";
   const ENTER_DELAY = 2;
 
   useEffect(() => {
     console.log(baseFirst, baseSecond, baseThird);
+    console.log(userTeam);
     setTimeout(() => setIsRun(false), ENTER_DELAY * 1000);
   }, [baseFirst, baseSecond, baseThird]);
 
   return (
     <GameBoardWrap>
       <GameCanvas />
-      {+baseFirst === 0 && <Character isRun={isRun} enterDelay={ENTER_DELAY} base={baseFirst} />}
-      {+baseFirst > 0 && <Character isRun={isRun} enterDelay={ENTER_DELAY} base={baseFirst} />}
-      {+baseSecond > 0 && <Character isRun={isRun} enterDelay={ENTER_DELAY} base={baseSecond} />}
-      {+baseThird > 0 && <Character isRun={isRun} enterDelay={ENTER_DELAY} base={baseThird} />}
+      <Character team={opposingTeam} base={"first"} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
+      <Character team={userTeam} base={"first"} isExist={baseFirst} isRun={isRun} enterDelay={ENTER_DELAY} />
       <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
         {PITCH_TEXT}
       </PitchButton>
@@ -50,7 +48,7 @@ const GameBoardWrap = styled.div`
 `;
 
 const PitchButton = styled(Button)`
-  /* display: ${props => props.appear ? "block" : "none"}; */
+  /* display: ${(props) => (props.appear ? "block" : "none")}; */
   position: absolute;
   width: 15rem;
   left: 1.5rem;
