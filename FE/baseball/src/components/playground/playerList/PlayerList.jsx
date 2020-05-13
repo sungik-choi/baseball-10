@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useBaseballState, useBaseballDispatch } from "context/context";
+import useFetch from "components/useFetch";
 
 import Header from "./Header";
 import PlayerListCard from "./PlayerListCard";
 
 const PlayerList = () => {
+  const dispatch = useBaseballDispatch();
+  console.log(process.env.REACT_APP_PLAYERS_API_URL);
+  console.log(useFetch);
   const { playerList } = useBaseballState();
   const playerListCards = playerList.data.map((playerInfo) => <PlayerListCard playerInfo={playerInfo} />);
+
+  //useFetch(process.env.REACT_APP_PLAYERS_API_URL, "PLAYER_LIST", dispatch);
+  // useEffect(() => {
+  //   fetch(process.env.REACT_APP_PLAYERS_API_URL)
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // });
 
   return (
     <Wrap>
