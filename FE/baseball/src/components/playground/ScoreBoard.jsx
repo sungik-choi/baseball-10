@@ -3,7 +3,6 @@ import styled from "styled-components";
 import TeamScores from "./TeamScores.jsx";
 
 const ScoreBoard = ({ displays }) => {
-  console.log(displays);
   const scoreBar = scoreList.map((score, idx) => {
     return <Score key={idx}>{score}</Score>;
   });
