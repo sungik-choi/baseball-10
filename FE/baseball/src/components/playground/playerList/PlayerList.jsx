@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useBaseballState, useBaseballDispatch } from "context/context";
 import useFetch from "components/useFetch";
