@@ -1,5 +1,8 @@
 package com.codesquad.baseball10.web.controller;
 
+import com.codesquad.baseball10.service.LoginService;
+import com.codesquad.baseball10.web.dto.responesDto.login.LoginResponseDto;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,20 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("github")
+@AllArgsConstructor
 public class LoginController {
+
     private final Logger logger = LoggerFactory.getLogger(LoginController.class);
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final LoginService loginService;
 
     @GetMapping("/oauth/callback")
-    public String OauthCallback(@RequestParam("code") String code,
-                                HttpServletResponse response) {
-        logger.info("code : {}", code);
-        Cookie cookie = new Cookie("code", code);
-        // access token
-        // hoi email 
-        // jwt token
-        //
-        response.addCookie(cookie);
-        return code;
+    public LoginResponseDto OauthCallback(@RequestParam("code") String code,
+                                          HttpServletResponse response) {
+        return loginService.handleLogin(code, response);
+
     }
 }

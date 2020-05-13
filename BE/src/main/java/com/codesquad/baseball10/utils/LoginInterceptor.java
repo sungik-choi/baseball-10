@@ -27,13 +27,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             if (cookies == null) throw new IllegalStateException("no cookie");
 
             Cookie cookie = Arrays.stream(cookies)
-                    .filter(each -> each.getName().equals("jwt"))
+                    .filter(each -> each.getName().equals("userEmail"))
                     .findFirst()
                     .orElseThrow(IllegalStateException::new);
 
-            String jwt = cookie.getValue();
-            String jwtUserEmail = JwtUtils.jwtParsing(jwt);
-            request.setAttribute("userEmail", jwtUserEmail);
+            String userEmail = cookie.getValue();
+//            String jwtUserEmail = JwtUtils.jwtParsing(jwt);
+            request.setAttribute("userEmail", userEmail);
 
         } catch (Exception e) {
             response.setStatus(401);
