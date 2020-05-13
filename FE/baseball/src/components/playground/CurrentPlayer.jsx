@@ -4,7 +4,7 @@ import styled from "styled-components";
 const CurrentPlayer = ({ defenseTeam, attackTeam }) => {
   const currentPitcher = defenseTeam.pitcher !== null ? defenseTeam.pitcher : attackTeam.pitcher;
   const currentBatter = defenseTeam.batter !== null ? defenseTeam.batter[0] : attackTeam.batter[0];
-  console.log(currentBatter);
+
   return (
     <CurrentPlayerWarp>
       <Top>
