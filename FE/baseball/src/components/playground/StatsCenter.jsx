@@ -3,13 +3,13 @@ import styled from "styled-components";
 import BatterHistorys from "./BatterHistorys";
 
 const StatsCenter = ({ batterList }) => {
-  const batterLists = batterList.map((batter) => {
+  const batterLists = batterList.map((batter, idx) => {
     return (
-      <BatterInfo>
+      <BatterInfo key={idx}>
         <BatterName>
           {batter.order}번 타자 {batter.name}
         </BatterName>
-        <BatterHistorys history={batter.history} />
+        <BatterHistorys batterHistorys={batter.history} />
       </BatterInfo>
     );
   });
