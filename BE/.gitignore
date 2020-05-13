@@ -107,13 +107,13 @@ fabric.properties
 
 ### Gradle ###
 .gradle
-build/
+#build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
+#!gradle-wrapper.jar
 
 # Cache of project
 .gradletasknamecache
@@ -122,6 +122,12 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 ### Gradle Patch ###
-**/build/
+#**/build/
 
 # End of https://www.gitignore.io/api/linux,gradle,intellij
+HELP.md 제거할 예정
+src/main/java/com/codesquad/baseball10/config/ 제거할 예정
+src/main/java/com/codesquad/baseball10/service/ 제거할 예정
+src/main/java/com/codesquad/baseball10/web/dto/ 제거할 예정
+src/main/resources/static/ 제거할 예정
+src/main/resources/templates/ 제거할 예정
