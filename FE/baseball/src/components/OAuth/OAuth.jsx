@@ -1,16 +1,25 @@
-import React from "react";
-import queryString from "query-string";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import _ from "../../util/util";
+import Background from "style/Background";
 
-const OAuth = ({ location }) => {
-  console.log(location.search);
-  const queryCode = queryString.parse(location.search).code;
+const OAuth = () => {
+  const history = useHistory();
+  const judgeCookie = () => {
+    if (_.getCookie("token")) {
+      history.push("/");
+    } else {
+      setTimeout(() => {
+        judgeCookie();
+      }, 2000);
+    }
+  };
 
-  const githubLoginURL = process.env.REACT_APP_GITHUB_LOGIN_URL;
-  console.log(githubLoginURL);
-  _.OAuthFetch(githubLoginURL, queryCode);
-  return <div></div>;
+  useEffect(() => {
+    judgeCookie();
+  }, []);
+  return <Background></Background>;
 };
 
 export default OAuth;
