@@ -19,5 +19,11 @@ public class Player {
     private String position;
     private String batting_average;
     private String orders;
-    private List<PlayerOneMatchInfo> playerOneMatchInfos;
+    private String pa;
+    private String hitCount;
+    private String outCount;
+    private String gameAverage;
+    private String pitchCount;
+    private List<PlayerOnePlateAppearanceInfo> playerOnePlateAppearanceInfos;
+//    private List<PlayerOneMatchInfo> playerOneMatchInfos;
 }

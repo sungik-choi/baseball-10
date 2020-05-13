@@ -3,20 +3,18 @@ package com.codesquad.baseball10.domain;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-import java.util.List;
-
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Builder
-public class BasicTeam {
+public class BasicPlayer {
 
     @Id
     private Long id;
 
     private String name;
-    private String logoUrl;
-    private List<BasicPlayer> basicPlayers;
+    private String position;
+    private String battingAverage;
+    private String orders;
 }

@@ -10,6 +10,7 @@ public class Matchs {
 
     private String currentInning;
     private String location;
+    private String teamMatching;
     private List<Team> teams;
     private List<MatchOneInningInfo> matchOneInningInfos;
 }

@@ -18,5 +18,13 @@ public class Team {
     private User user;
     private String selected;
     private List<Player> players;
-    private List<TeamOneMatchInfo> teamOneMatchInfos;
+    private String role;
+    private String totalScore;
+    private String totalPa;
+    private String totalHit;
+    private String totalOut;
+    private String currentOrder;
+    private String pitchCount;
+    private List<TeamOneInningInfo> teamOneInningInfos;
+//    private List<TeamOneMatchInfo> teamOneMatchInfos;
 }
