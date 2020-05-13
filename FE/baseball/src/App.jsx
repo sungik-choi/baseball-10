@@ -8,6 +8,7 @@ import PlayGround from "components/playground/PlayGround.jsx";
 import PlayerList from "components/playground/playerList/PlayerList.jsx";
 import Loading from "components/loading/Loading.jsx";
 import NotFoundPage from "components/NotFoundPage.jsx";
+import OAuth from "components/OAuth/OAuth";
 
 import BaseballProvider from "components/BaseballProvider.jsx";
 
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/playground" component={PlayGround} />
         <Route path="/playerlist" component={PlayerList} />
         <Route path="/loading" component={Loading} />
+        <Route path="/api/github/oauth" component={OAuth} />
         <Route
           render={({ location }) => {
             return <NotFoundPage pathname={location.pathname} />;
