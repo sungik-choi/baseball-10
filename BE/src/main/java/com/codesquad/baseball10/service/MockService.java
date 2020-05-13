@@ -1,5 +1,6 @@
 package com.codesquad.baseball10.service;
 
+import com.codesquad.baseball10.domain.BasicTeam;
 import com.codesquad.baseball10.web.dto.responesDto.*;
 import com.codesquad.baseball10.web.dto.responesDto.progress.*;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,10 @@ import java.util.List;
 public class MockService {
 
     public TeamsResponseDto getTeamsResponseDto() {
-        List<TeamResponseDto> data = new ArrayList<>();
+        List<BasicTeam> data = new ArrayList<>();
 
         for (int count = 0; count < 10; count++) {
-            TeamResponseDto team = TeamResponseDto.builder()
+            BasicTeam team = BasicTeam.builder()
                     .id(1L)
                     .name("삼성")
                     .logoUrl("http://naver.com")

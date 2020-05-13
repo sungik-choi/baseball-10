@@ -1,15 +1,15 @@
 drop table if exists game_application;
 drop table if exists basic_team;
 drop table if exists matchs;
-drop table if exists matchOneInningInfo;
+drop table if exists match_one_inning_info;
 drop table if exists team;
-drop table if exists teamOneMatchInfo;
-drop table if exists teamOneInningInfo;
-drop table if exists teamOneInningPlateInfo;
+drop table if exists team_one_match_info;
+drop table if exists team_one_inning_info;
+drop table if exists team_one_inning_plate_info;
 drop table if exists player;
-drop table if exists playerOneMatchInfo;
-drop table if exists playerOnePlateAppearanceInfo;
-drop table if exists playerOnePlateAppearanceHistory;
+drop table if exists player_one_match_info;
+drop table if exists player_one_plate_appearance_info;
+drop table if exists player_one_plate_appearance_history;
 
 create table game_application (
     id int primary key not null auto_increment,
@@ -27,10 +27,12 @@ create table basic_team (
 create table matchs (
     id int primary key not null auto_increment,
     current_inning varchar (45),
-    location varchar (45)
+    location varchar (45),
+    game_application int references game_application(id),
+    game_application_key int
 );
 
-create table matchOneInningInfo (
+create table match_one_inning_info (
     id int primary key not null auto_increment,
     inning varchar (45),
     matchs int references matchs(id),
@@ -48,7 +50,7 @@ create table team (
     matchs_key int
 );
 
-create table teamOneMatchInfo (
+create table team_one_match_info (
     id int primary key not null auto_increment,
     role varchar (45),
     total_score varchar (45),
@@ -60,21 +62,21 @@ create table teamOneMatchInfo (
     team_key int
 );
 
-create table teamOneInningInfo (
+create table team_one_inning_info (
     id int primary key not null auto_increment,
     inning varchar (45),
     out_count varchar (45),
     score varchar (45),
-    teamOneMatchInfo int references teamOneMatchInfo(id),
-    teamOneMatchInfo_key int
+    team_one_match_info int references team_one_match_info(id),
+    team_one_match_info_key int
 );
 
-create table teamOneInningPlateInfo (
+create table team_one_inning_plate_info (
     id int primary key not null auto_increment,
     base_name varchar (45),
     player_id varchar (45),
-    teamOneInningInfo int references teamOneInningInfo(id),
-    teamOneInningInfo_key int
+    team_one_inning_info int references team_one_inning_info(id),
+    team_one_inning_info_key int
 );
 
 create table player (
@@ -87,7 +89,7 @@ create table player (
     team_key int
 );
 
-create table playerOneMatchInfo (
+create table player_one_match_info (
     id int primary key not null auto_increment,
     plate_appearance varchar (45),
     hit_count varchar (45),
@@ -98,18 +100,18 @@ create table playerOneMatchInfo (
     player_key int
 );
 
-create table playerOnePlateAppearanceInfo (
+create table player_one_plate_appearance_info (
     id int primary key not null auto_increment,
     strike_count varchar (45),
     ball_count varchar (45),
-    playerOneMatchInfo int references playerOneMatchInfo(id),
-    playerOneMatchInfo_key int
+    player_one_match_info int references player_one_match_info(id),
+    player_one_match_info_key int
 );
 
-create table playerOnePlateAppearanceHistory (
+create table player_one_plate_appearance_history (
     id int primary key not null auto_increment,
     history varchar (45),
-    playerOnePlateAppearanceInfo int references playerOnePlateAppearanceInfo(id),
-    playerOnePlateAppearanceInfo_key int
+    player_one_plate_appearance_info int references player_one_plate_appearance_info(id),
+    player_one_plate_appearance_info_key int
 );
 

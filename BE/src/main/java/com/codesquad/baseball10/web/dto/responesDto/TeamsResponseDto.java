@@ -1,22 +1,16 @@
 package com.codesquad.baseball10.web.dto.responesDto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.codesquad.baseball10.domain.BasicTeam;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class TeamsResponseDto {
     private String status;
-    private List<TeamResponseDto> data;
-
-    @Builder
-    public TeamsResponseDto(String status, List<TeamResponseDto> data) {
-        this.status = status;
-        this.data = data;
-    }
+    private List<BasicTeam> data;
 }
