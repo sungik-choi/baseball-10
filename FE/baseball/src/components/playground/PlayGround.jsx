@@ -6,6 +6,7 @@ import { useBaseballState, useBaseballDispatch } from "context/context";
 import ScoreBoard from "./ScoreBoard";
 import CurrentPlayer from "./CurrentPlayer";
 import GameArea from "./GameArea";
+import StatsCenter from "./StatsCenter";
 
 import Background from "style/Background";
 import Button from "style/Button";
@@ -14,18 +15,21 @@ import logo from "assets/logo.svg";
 
 const PlayGround = () => {
   const { playGround } = useBaseballState();
-  const home = playGround.teams[0];
-  const away = playGround.teams[1];
+
+  const defenseTeam = playGround.defenseTeam;
+  const attackTeam = playGround.attackTeam;
   const userTeam = playGround.userWhere;
+  const currentAttackTeamBatterList = defenseTeam.batter !== null ? defenseTeam.batter : attackTeam.batter;
+
   return (
     <PlayGroundWrap color="var(--gray-3 )">
       <Logo>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
       <ScoreBoard displays={playGround.displays} />
-      <CurrentPlayer pitcher={home.pitcher} batter={away.batter[0]} />
-      <GameArea home={home} away={away} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
-      <StatsCenter />
+      <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
+      <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
+      <StatsCenter batterList={currentAttackTeamBatterList} />
       <PlayerListButton as={Link} to="/playerlist">
         선수 목록
       </PlayerListButton>
@@ -59,14 +63,6 @@ const LogoSvg = styled.object`
   grid-area: logo;
   width: 85%;
   height: 85%;
-`;
-
-const StatsCenter = styled.div`
-  grid-area: statsCenter;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--border-radius);
-  border: solid var(--border-size) var(--gray-4);
 `;
 
 const PlayerListButton = styled(Button)`

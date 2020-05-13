@@ -3,20 +3,20 @@ import Background from "style/Background";
 import styled from "styled-components";
 import GameBoard from "./gameboard/GameBoard";
 
-const GameArea = ({ home, away, userTeam, plates, ballCount }) => {
+const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount }) => {
   const { strike, out, ball } = ballCount;
 
-  console.log(ball);
-
   const ballCountHandler = (statusCount, currentCount, color) => {
-    const countPointList = [];
-    for (let i = 1; i < statusCount; i++) {
-      if (i <= currentCount) {
-        countPointList.push(<CountPoint color={color} />);
+    const currentCountLength = currentCount - 1;
+
+    const countPointList = statusCount.map((el, idx) => {
+      if (idx <= currentCountLength) {
+        return <CountPoint key={idx} color={color} />;
       } else {
-        countPointList.push(<CountPoint />);
+        return <CountPoint key={idx} />;
       }
-    }
+    });
+
     return countPointList;
   };
 
@@ -29,13 +29,13 @@ const GameArea = ({ home, away, userTeam, plates, ballCount }) => {
       {/* HOME AWAY 인지 파악하고, PITCH 버튼 나오게 하는 로직 작성 */}
       <GameBoard userTeam={userTeam} plates={plates} />
       <ScoreBar>
-        <TeamName>{home.teamName}</TeamName>
+        <TeamName>{defenseTeam.teamName}</TeamName>
         <Mid>
-          <TotalScore>{home.totalScore}</TotalScore>
+          <TotalScore>{defenseTeam.totalScore}</TotalScore>
           <CurrentInning>2회초 수비</CurrentInning>
-          <TotalScore>{away.totalScore}</TotalScore>
+          <TotalScore>{attackTeam.totalScore}</TotalScore>
         </Mid>
-        <TeamName>{away.teamName}</TeamName>
+        <TeamName>{attackTeam.teamName}</TeamName>
       </ScoreBar>
       <StatusBoard>
         <BallCountStatus>
@@ -55,9 +55,9 @@ const GameArea = ({ home, away, userTeam, plates, ballCount }) => {
   );
 };
 
-const strikeLength = 3;
-const ballLength = 4;
-const outLength = 3;
+const strikeLength = ["", ""];
+const ballLength = ["", "", ""];
+const outLength = ["", ""];
 
 const GameBackground = styled(Background)`
   grid-area: gameArea;
