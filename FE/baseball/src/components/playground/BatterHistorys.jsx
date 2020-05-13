@@ -1,39 +1,34 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 
-const BatterHistorys = ({ history }) => {
+const BatterHistorys = ({ batterHistorys }) => {
   const batterHistoryHandler = () => {
-    const historys = [];
     let pitchCount = 0;
     let strikeCount = 0;
     let ballCount = 0;
 
-    history.forEach((el) => {
-      switch (el) {
+    const batterPicthHistorys = batterHistorys.map((pitchType, idx) => {
+      switch (pitchType) {
         case strike:
           strikeCount++;
           pitchCount++;
-          historys.push(batterHistoryTemplate(pitchCount, "스트라이크", strikeCount, ballCount));
-          break;
+          return batterHistoryTemplate(pitchCount, "스트라이크", strikeCount, ballCount, idx);
         case ball:
           ballCount++;
           pitchCount++;
-          historys.push(batterHistoryTemplate(pitchCount, "볼", strikeCount, ballCount));
-          break;
+          return batterHistoryTemplate(pitchCount, "볼", strikeCount, ballCount);
         case hit:
-          historys.push(finishHistoryTemplate("안타"));
-          break;
+          return finishHistoryTemplate("안타", idx);
         case out:
-          historys.push(finishHistoryTemplate("아웃"));
-          break;
+          return finishHistoryTemplate("아웃", idx);
       }
     });
-    return historys.reverse();
+    return batterPicthHistorys.reverse();
   };
 
-  const batterHistoryTemplate = (pitchCount, pitchResult, strikeCount, ballCount) => {
+  const batterHistoryTemplate = (pitchCount, pitchResult, strikeCount, ballCount, idx) => {
     return (
-      <BatterHistory>
+      <BatterHistory key={idx}>
         <PitchCount>{pitchCount}제구</PitchCount>
         <PitchResult>{pitchResult}</PitchResult>
         <Stats>
@@ -43,17 +38,15 @@ const BatterHistorys = ({ history }) => {
     );
   };
 
-  const finishHistoryTemplate = (pitchResult) => {
+  const finishHistoryTemplate = (pitchResult, idx) => {
     return (
-      <BatterHistory>
+      <BatterHistory key={idx}>
         <FinishPitch>{pitchResult} !</FinishPitch>
       </BatterHistory>
     );
   };
 
-  const test = batterHistoryHandler();
-
-  return <BatterHistoryWrap>{test}</BatterHistoryWrap>;
+  return <BatterHistoryWrap>{batterHistoryHandler()}</BatterHistoryWrap>;
 };
 
 const strike = "1";
