@@ -60,7 +60,7 @@ const DimmedLayer = styled.div`
 
 const ButtonWrap = styled.div`
   display: flex;
-  margin-top: 4rem;
+  margin-top: 2rem;
   button {
     margin: 0.5rem;
   }
@@ -74,7 +74,7 @@ const HighlightSpan = styled.span`
 
 const ModalImgWrap = styled.div`
   width: 25%;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const ModalImg = styled.img`

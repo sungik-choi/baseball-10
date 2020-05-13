@@ -55,7 +55,7 @@ const Top = styled.div`
 const Title = styled.div`
   width: 100%;
   height: 34%;
-  padding-left: 10px;
+  padding-left: 1.25rem;
 `;
 
 const Player = styled.div`
@@ -63,7 +63,7 @@ const Player = styled.div`
   align-items: center;
   width: 100%;
   height: 32.4%;
-  padding-left: 10px;
+  padding-left: 1.25rem;
   background-color: var(--black);
   color: var(--white);
   border-radius: ${(props) => (props.border ? "0px 0px 9px 9px" : "none")};

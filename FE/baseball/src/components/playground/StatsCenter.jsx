@@ -23,12 +23,14 @@ const StatsCenter = ({ batterList }) => {
 };
 
 const StatsCenterWarp = styled.div`
+  box-sizing: border-box;
   grid-area: statsCenter;
   width: 100%;
   height: 100%;
   border-radius: var(--border-radius);
   border: solid var(--border-size) var(--gray-4);
   background-color: var(--black);
+  padding-bottom: 1rem;
   overflow-y: auto;
   ::-webkit-scrollbar {
     width: 12px;
@@ -50,7 +52,7 @@ const Top = styled.div`
   border-bottom: solid var(--border-size) var(--gray-4);
   background-color: var(--gray-3);
   color: var(--white);
-  padding-left: 10px;
+  padding-left: 1.25rem;
 `;
 
 const BatterInfo = styled.div`
@@ -63,8 +65,9 @@ const BatterInfo = styled.div`
 
 const BatterName = styled.div`
   width: 80%;
-  padding-top: 10px;
-  padding-bottom: 5px;
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
   color: #98a2cb;
   border-bottom: solid 1px var(--gray-4);
 `;
