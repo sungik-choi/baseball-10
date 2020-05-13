@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useBaseballState, useBaseballDispatch } from "context/context";
@@ -15,6 +15,7 @@ import logo from "assets/logo.svg";
 
 const PlayGround = () => {
   const { playGround } = useBaseballState();
+  const dispatch = useBaseballDispatch();
 
   const defenseTeam = playGround.defenseTeam;
   const attackTeam = playGround.attackTeam;
@@ -26,7 +27,7 @@ const PlayGround = () => {
       <Logo>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
-      <ScoreBoard displays={playGround.displays} />
+      <ScoreBoard displays={playGround.display} />
       <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
       <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
       <StatsCenter batterList={currentAttackTeamBatterList} />
