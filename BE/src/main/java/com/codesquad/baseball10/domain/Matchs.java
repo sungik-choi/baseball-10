@@ -1,9 +1,15 @@
 package com.codesquad.baseball10.domain;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Matchs {
     @Id
     private Long id;

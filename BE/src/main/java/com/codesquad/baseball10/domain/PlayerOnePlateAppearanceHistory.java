@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 @Getter
 @ToString
 @NoArgsConstructor
-public class PlayerOnePlateAppearanceHistoryInfo {
+public class PlayerOnePlateAppearanceHistory {
 
     @Id
     private Long id;

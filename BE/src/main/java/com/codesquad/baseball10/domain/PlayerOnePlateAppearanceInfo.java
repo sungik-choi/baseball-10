@@ -17,5 +17,5 @@ public class PlayerOnePlateAppearanceInfo {
 
     private String strikeCount;
     private String ballCount;
-    private List<PlayerOnePlateAppearanceHistoryInfo> playerOnePlateAppearanceHistoryInfos;
+    private List<PlayerOnePlateAppearanceHistory> playerOnePlateAppearanceHistories;
 }

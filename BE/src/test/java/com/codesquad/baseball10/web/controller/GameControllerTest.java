@@ -48,6 +48,6 @@ public class GameControllerTest {
                 = restTemplate.getForEntity(url, TeamsResponseDto.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getStatus()).isEqualTo("200");
+        assertThat(responseEntity.getBody().getMatchId()).isEqualTo(1);
     }
 }

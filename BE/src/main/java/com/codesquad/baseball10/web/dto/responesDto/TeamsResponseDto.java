@@ -12,5 +12,6 @@ import java.util.List;
 @Builder
 public class TeamsResponseDto {
     private String status;
+    private Long matchId;
     private List<BasicTeam> data;
 }
