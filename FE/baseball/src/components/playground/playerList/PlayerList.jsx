@@ -8,17 +8,11 @@ import PlayerListCard from "./PlayerListCard";
 
 const PlayerList = () => {
   const dispatch = useBaseballDispatch();
-  console.log(process.env.REACT_APP_PLAYERS_API_URL);
-  console.log(useFetch);
+  const playerListURL = process.env.REACT_APP_PLAYERS_API_URL;
   const { playerList } = useBaseballState();
   const playerListCards = playerList.data.map((playerInfo) => <PlayerListCard playerInfo={playerInfo} />);
 
-  //useFetch(process.env.REACT_APP_PLAYERS_API_URL, "PLAYER_LIST", dispatch);
-  // useEffect(() => {
-  //   fetch(process.env.REACT_APP_PLAYERS_API_URL)
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // });
+  useFetch(playerListURL, "PLAYER_LIST", dispatch);
 
   return (
     <Wrap>
