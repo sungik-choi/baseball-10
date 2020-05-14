@@ -6,11 +6,8 @@ import Button from "style/Button";
 import { scale } from "style/Animation";
 import { useBaseballDispatch } from "context/context";
 import { useBaseballState } from "context/context";
-<<<<<<< HEAD
 import { playGroundFetch } from "components/useFetch";
-=======
 import { STR } from "constants/constants";
->>>>>>> 1ed511d3e907956f8ca3ab262f9fb30fe892d0f6
 import _ from "../../../util/util";
 
 const GameBoard = () => {
@@ -26,7 +23,6 @@ const GameBoard = () => {
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const [buttonAvailable, setButtonAvailable] = useState(true);
   const ANIMATION_DELAY = 2;
-  const dispatch = useBaseballDispatch();
 
   const requsetAPI = process.env.REACT_APP_API_URL + ``;
 
