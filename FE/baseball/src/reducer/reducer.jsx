@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import baseballStore from "../store/baseballStore.js";
-import { SELECT_TEAM, FETCH_TEAM_LIST, PLAYER_LIST } from "../action/action.jsx";
+import { SELECT_TEAM, FETCH_TEAM_LIST, PLAYER_LIST, PLAYGROUND } from "../action/action.jsx";
 
 const baseballReducer = (state, action) => {
   switch (action.type) {
@@ -13,8 +13,11 @@ const baseballReducer = (state, action) => {
     case PLAYER_LIST: {
       return { ...state, playerList: action.data };
     }
-    case "PLAYGROUND": {
+    case PLAYGROUND: {
       return { ...state, playGround: action.data };
+    }
+    case "TESTING": {
+      return { ...state, playGround: { ...state.playGround, defense: "false" } };
     }
     default:
       return state;
