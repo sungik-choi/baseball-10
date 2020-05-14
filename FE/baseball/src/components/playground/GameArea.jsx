@@ -27,7 +27,7 @@ const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount }) => {
   return (
     <GameBackground color={"none"}>
       {/* HOME AWAY 인지 파악하고, PITCH 버튼 나오게 하는 로직 작성 */}
-      <GameBoard userTeam={userTeam} plates={plates} />
+      <GameBoard defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={plates} />
       <ScoreBar>
         <TeamName>{defenseTeam.teamName}</TeamName>
         <Mid>

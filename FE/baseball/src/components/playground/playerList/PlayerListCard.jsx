@@ -9,7 +9,7 @@ const PlayerListCard = ({ playerInfo }) => {
   const { totalAppearance, totalHit, totalOut } = playerInfo;
   return (
     <Card>
-      <TeamName>{playerInfo.team1}</TeamName>
+      <TeamName>{playerInfo.teamName}</TeamName>
       <CardWarp>
         <InfoList>{infomationList}</InfoList>
         {playerCards}
