@@ -3,56 +3,12 @@ const baseballData = {
     name: null,
     image: null,
   },
+  matchId: null,
   teamList: [
     {
-      id: 1,
-      name: "LA다저스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 2,
-      name: "필라델피아",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 3,
-      name: "LA에인절스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 4,
-      name: "뉴욕양키스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 5,
-      name: "LA다저스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 6,
-      name: "필라델피아",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 7,
-      name: "LA에인절스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 8,
-      name: "뉴욕양키스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 9,
-      name: "LA다저스",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-    {
-      id: 10,
-      name: "필라델피아",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
+      id: null,
+      name: null,
+      logoUrl: null,
     },
   ],
   playerList: {
