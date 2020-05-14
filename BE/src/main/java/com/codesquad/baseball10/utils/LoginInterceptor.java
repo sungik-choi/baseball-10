@@ -33,7 +33,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     .orElseThrow(IllegalStateException::new);
 
             String userEmail = cookie.getValue();
-//            String jwtUserEmail = JwtUtils.jwtParsing(jwt);
             request.setAttribute("userEmail", userEmail);
 
         } catch (Exception e) {

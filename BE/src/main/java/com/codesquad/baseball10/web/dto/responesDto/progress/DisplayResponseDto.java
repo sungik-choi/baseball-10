@@ -12,7 +12,7 @@ import java.util.List;
 public class DisplayResponseDto {
 
     private String teamName;
-    private String location;
+    private String role;
     private String totalScore;
     private List<String> inningScore;
 }

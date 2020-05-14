@@ -13,5 +13,5 @@ public class TeamResponseDto {
     private String logoUrl;
     private String userEmail;
     private String selected;
-    private String location;
+    private String role;
 }

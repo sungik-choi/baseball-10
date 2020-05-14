@@ -78,7 +78,7 @@ public class MockService {
                 .logoUrl("www.naver.com")
                 .userEmail("guswns1659@gmail.com")
                 .selected("true")
-                .location("HOME")
+                .role("HOME")
                 .build();
 
         return TeamChoiceResponseDto.builder()
@@ -106,7 +106,7 @@ public class MockService {
         TeamProgressResponseDto defenseTeam = TeamProgressResponseDto.builder()
                 .teamName("삼성")
                 .totalScore("0")
-                .location("HOME")
+                .role("HOME")
                 .pitcher(pitcher)
                 .build();
 
@@ -126,7 +126,7 @@ public class MockService {
         TeamProgressResponseDto attackTeam = TeamProgressResponseDto.builder()
                 .teamName("LG")
                 .totalScore("0")
-                .location("AWAY")
+                .role("AWAY")
                 .batter(batters)
                 .build();
 
@@ -145,14 +145,14 @@ public class MockService {
         List<DisplayResponseDto> displays = new ArrayList<>();
         DisplayResponseDto display1 = DisplayResponseDto.builder()
                 .teamName("삼성")
-                .location("AWAY")
+                .role("AWAY")
                 .totalScore("0")
                 .inningScore(Arrays.asList("0","0","0","0","0","0","0","0","0"))
                 .build();
 
         DisplayResponseDto display2 = DisplayResponseDto.builder()
                 .teamName("한화")
-                .location("HOME")
+                .role("HOME")
                 .totalScore("0")
                 .inningScore(Arrays.asList("0","0","0","0","0","0","0","0","0"))
                 .build();
@@ -192,7 +192,7 @@ public class MockService {
         TeamProgressResponseDto defenseTeam = TeamProgressResponseDto.builder()
                 .teamName("삼성")
                 .totalScore("5")
-                .location("HOME")
+                .role("HOME")
                 .pitcher(pitcher)
                 .build();
 
@@ -212,7 +212,7 @@ public class MockService {
         TeamProgressResponseDto attackTeam = TeamProgressResponseDto.builder()
                 .teamName("LG")
                 .totalScore("5")
-                .location("AWAY")
+                .role("AWAY")
                 .batter(batters)
                 .build();
 
@@ -231,14 +231,14 @@ public class MockService {
         List<DisplayResponseDto> displays = new ArrayList<>();
         DisplayResponseDto display1 = DisplayResponseDto.builder()
                 .teamName("삼성")
-                .location("AWAY")
+                .role("AWAY")
                 .totalScore("5")
                 .inningScore(Arrays.asList("1","2","2","0","0","0","0","0","0"))
                 .build();
 
         DisplayResponseDto display2 = DisplayResponseDto.builder()
                 .teamName("한화")
-                .location("HOME")
+                .role("HOME")
                 .totalScore("5")
                 .inningScore(Arrays.asList("2","2","1","0","0","0","0","0","0"))
                 .build();

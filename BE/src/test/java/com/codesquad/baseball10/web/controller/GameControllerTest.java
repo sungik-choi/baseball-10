@@ -20,11 +20,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class GameControllerTest {
 
     @LocalServerPort
-    private int port;
+    private int port = 30000;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -36,9 +36,8 @@ public class GameControllerTest {
 
     @Before
     public void setUp() {
-        String initRequestURL = "http://localhost:" + port + "/init";
-
         // 초기 데이터 삽입 요청
+        String initRequestURL = "http://localhost:" + port + "/init";
         restTemplate.getForEntity(initRequestURL, GameApplication.class);
 
         // 팀 리스트 요청
@@ -46,9 +45,14 @@ public class GameControllerTest {
         restTemplate.getForEntity(teamsRequestURL, TeamsResponseDto.class);
 
         // 유저1 팀 선택 요청
-//        String userEmail = "guswns1659@gmail.com";
-//        String userTeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ userEmail;
-//        restTemplate.getForEntity(userTeamChoiceRequestURL, TeamChoiceResponseDto.class);
+        String user1Email = "guswns1659@gmail.com";
+        String user1TeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ user1Email;
+        restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
+
+        // user2 team request
+        String user2Email = "guswns1659@gmail.com";
+        String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
+        restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
     }
 
     @Test
@@ -84,26 +88,20 @@ public class GameControllerTest {
         assertThat(responseEntity.getBody().getTeam().getName()).isEqualTo(teamName);
         assertThat(responseEntity.getBody().getTeam().getUserEmail()).isEqualTo(userEmail);
         assertThat(responseEntity.getBody().getTeam().getSelected()).isEqualTo(True);
-        assertThat(responseEntity.getBody().getTeam().getLocation()).isEqualTo(location);
+        assertThat(responseEntity.getBody().getTeam().getRole()).isEqualTo(location);
     }
 
     @Test
     public void getLastestTest() {
         // given
-        Long matchId = 1L;
-        String url = "http://localhost:8080" + port + "/" + matchId + "/lastest";
+        String url = "http://localhost:8080" + port + "/1"  + "/lastest";
 
         String userWhere = "HOME";
-        String isRunning = "true";
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("userEmail", "guswns1659@gmail.com");
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String isRunning = "false";
 
         // when
         ResponseEntity<ProgressResponseDto> responseEntity
-                = restTemplate.exchange(url, HttpMethod.GET, entity, ProgressResponseDto.class);
+                = restTemplate.getForEntity(url, ProgressResponseDto.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);

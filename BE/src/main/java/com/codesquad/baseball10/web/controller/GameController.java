@@ -37,19 +37,11 @@ public class GameController {
         return gameService.getChoosedTeam(matchId, teamId, userEmail, request);
     }
 
-    @GetMapping("{matchId}/lastest")
+    @GetMapping("{matchId}/{userEmail}/lastest")
     public ProgressResponseDto getLastest(@PathVariable Long matchId,
+                                          @PathVariable String userEmail,
                                           HttpServletRequest request) {
 
-        String userEmail = (String) request.getAttribute("userEmail");
-
-
-        // 처음 게임 시작인지.
-        // mat
-
-        //
-
-        return new ProgressResponseDto();
-
+        return gameService.getLastest(matchId, userEmail, request);
     }
 }
