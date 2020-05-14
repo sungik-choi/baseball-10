@@ -1,4 +1,4 @@
-package com.codesquad.baseball10.web.dto.responesDto;
+package com.codesquad.baseball10.web.dto.responesDto.progress;
 
 import com.codesquad.baseball10.web.dto.responesDto.progress.*;
 import lombok.*;
@@ -15,6 +15,8 @@ public class ProgressResponseDto {
     private String status;
     private String userWhere;
     private MatchInfoResponseDto matchInfo;
+    private String isRunning;
+    private String isScore;
     private String defense;
     private TeamProgressResponseDto defenseTeam;
     private TeamProgressResponseDto attackTeam;

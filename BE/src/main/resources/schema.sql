@@ -3,6 +3,7 @@ drop table if exists basic_team;
 drop table if exists basic_player;
 drop table if exists matchs;
 drop table if exists match_one_inning_info;
+drop table if exists match_plate;
 drop table if exists team;
 drop table if exists team_one_inning_info;
 drop table if exists team_one_inning_plate_info;
@@ -45,15 +46,24 @@ create table matchs (
 create table match_one_inning_info (
     id int primary key not null auto_increment,
     inning varchar (45),
+    is_running varchar (45),
+    is_score varchar (45),
     matchs int references matchs(id),
     matchs_key int
+);
+
+create table match_plate (
+    id int primary key not null auto_increment,
+    name varchar (45),
+    is_batter varchar (45),
+    match_one_inning_info int references match_one_inning_info(id),
+    match_one_inning_info_key int
 );
 
 create table team (
     id int primary key not null auto_increment,
     name varchar (100),
-    logo varchar (500),
-    -- 1 대 1 관계인 user_email 컬럼
+    logo_url varchar (500),
     user_email varchar (500),
     selected varchar (45),
     role varchar (45),
@@ -76,13 +86,13 @@ create table team_one_inning_info (
     team_key int
 );
 
-create table team_one_inning_plate_info (
-    id int primary key not null auto_increment,
-    base_name varchar (45),
-    player_id varchar (45),
-    team_one_inning_info int references team_one_inning_info(id),
-    team_one_inning_info_key int
-);
+-- create table team_one_inning_plate_info (
+--     id int primary key not null auto_increment,
+--     base_name varchar (45),
+--     player_id varchar (45),
+--     team_one_inning_info int references team_one_inning_info(id),
+--     team_one_inning_info_key int
+-- );
 
 create table player (
     id int primary key not null auto_increment,

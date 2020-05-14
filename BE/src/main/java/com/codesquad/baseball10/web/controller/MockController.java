@@ -2,7 +2,7 @@ package com.codesquad.baseball10.web.controller;
 
 import com.codesquad.baseball10.service.MockService;
 import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.ProgressResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.progress.ProgressResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
 import lombok.AllArgsConstructor;
