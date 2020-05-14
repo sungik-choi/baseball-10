@@ -1,7 +1,6 @@
 package com.codesquad.baseball10.domain;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
 
@@ -9,13 +8,15 @@ import java.util.List;
 
 @Getter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class Team {
     @Id
     private Long id;
     private String name;
-    private String logo;
-    @Embedded.Nullable
-    private User user;
+    private String logoUrl;
+    private String userEmail;
     private String selected;
     private List<Player> players;
     private String role;

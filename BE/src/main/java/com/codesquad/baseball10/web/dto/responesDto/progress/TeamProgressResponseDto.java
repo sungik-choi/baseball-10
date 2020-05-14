@@ -14,7 +14,7 @@ public class TeamProgressResponseDto {
 
     private String teamName;
     private String totalScore;
-    private String location;
+    private String role;
     private PitcherResponseDto pitcher;
     private List<BatterHistoryResponseDto> batter;
 }

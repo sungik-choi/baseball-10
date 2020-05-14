@@ -2,7 +2,9 @@ package com.codesquad.baseball10.web.controller;
 
 import com.codesquad.baseball10.domain.GameApplication;
 import com.codesquad.baseball10.domain.GameApplicationRepository;
+import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.progress.ProgressResponseDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,18 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class GameControllerTest {
 
     @LocalServerPort
-    private int port;
+    private int port = 30000;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -35,8 +36,23 @@ public class GameControllerTest {
 
     @Before
     public void setUp() {
-        String url = "http://localhost:" + port + "/init";
-        restTemplate.getForEntity(url, GameApplication.class);
+        // 초기 데이터 삽입 요청
+        String initRequestURL = "http://localhost:" + port + "/init";
+        restTemplate.getForEntity(initRequestURL, GameApplication.class);
+
+        // 팀 리스트 요청
+        String teamsRequestURL = "http://localhost:" + port + "/teams";
+        restTemplate.getForEntity(teamsRequestURL, TeamsResponseDto.class);
+
+        // 유저1 팀 선택 요청
+        String user1Email = "guswns1659@gmail.com";
+        String user1TeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ user1Email;
+        restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
+
+        // user2 team request
+        String user2Email = "guswns1659@gmail.com";
+        String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
+        restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
     }
 
     @Test
@@ -49,5 +65,47 @@ public class GameControllerTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getMatchId()).isEqualTo(1);
+    }
+
+    @Test
+    public void teamChooseTest() {
+
+        // give
+        String teamName = "키움히어로즈";
+        String playerName = "키르난데스";
+        String teamLogoUrl = "https://i.ibb.co/4dyWvQq/kiwoom.png";
+        String userEmail = "guswns1659@gmail.com";
+        String True = "true";
+        String location = "HOME";
+        String userTeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ userEmail;
+
+        // when
+        ResponseEntity<TeamChoiceResponseDto> responseEntity
+                = restTemplate.getForEntity(userTeamChoiceRequestURL, TeamChoiceResponseDto.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getTeam().getName()).isEqualTo(teamName);
+        assertThat(responseEntity.getBody().getTeam().getUserEmail()).isEqualTo(userEmail);
+        assertThat(responseEntity.getBody().getTeam().getSelected()).isEqualTo(True);
+        assertThat(responseEntity.getBody().getTeam().getRole()).isEqualTo(location);
+    }
+
+    @Test
+    public void getLastestTest() {
+        // given
+        String url = "http://localhost:8080" + port + "/1"  + "/lastest";
+
+        String userWhere = "HOME";
+        String isRunning = "false";
+
+        // when
+        ResponseEntity<ProgressResponseDto> responseEntity
+                = restTemplate.getForEntity(url, ProgressResponseDto.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getUserWhere()).isEqualTo(userWhere);
+        assertThat(responseEntity.getBody().getIsRunning()).isEqualTo(isRunning);
     }
 }

@@ -18,6 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                              HttpServletResponse response,
                              Object handler) {
         logger.info("preHandler");
+
         if (request.getMethod().equals("OPTIONS")) {
             return true;
         }
@@ -32,7 +33,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     .orElseThrow(IllegalStateException::new);
 
             String userEmail = cookie.getValue();
-//            String jwtUserEmail = JwtUtils.jwtParsing(jwt);
             request.setAttribute("userEmail", userEmail);
 
         } catch (Exception e) {
