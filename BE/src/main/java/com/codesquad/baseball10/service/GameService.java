@@ -36,70 +36,114 @@ public class GameService {
     private final String AWAY = "AWAY";
     private final String TOP = "TOP";
     private final String BOTTOM = "BOTTOM";
+    private final String ZERO = "0";
 
     // 팀 리스트 요청 시 Match가 1개 만들어진다.
     public TeamsResponseDto getTeams() {
 
         try {
             List<String> baseNames = Arrays.asList("baseFirst", "baseSecond", "baseThird");
-            final String ZERO = "0";
 
             GameApplication gameApplication = gameApplicationRepository.findById(1L).orElseThrow(() ->
                     new IllegalStateException("해당 gameApp은 없습니다"));
 
-            List<MatchOneInningInfo> matchOneInningInfos
-                    = new ArrayList<>();
+            Matchs teamMatchingMatchs = gameApplication.getMatchs().stream()
+                    .filter(match -> match.getTeamMatching().equals("progress"))
+                    .findFirst()
+                    .orElse(createMatchs(baseNames));
 
-            for (int index = 0; index < 12; index++) {
+            boolean result = gameApplication.getMatchs().stream().anyMatch(each -> each.getId().equals(teamMatchingMatchs.getId()));
 
-                List<MatchPlate> matchPlates = new ArrayList<>();
+            if (result) {
+                teamMatchingMatchs.finishTeamMatching();
+                gameApplication = gameApplicationRepository.save(gameApplication);
+                List<TeamResponseDto> data = new ArrayList<>();
 
-                for (String baseName : baseNames) {
-                    MatchPlate matchPlate = MatchPlate.builder()
-                            .name(baseName)
-                            .isBatter(ZERO)
+                for (int index = 0; index < gameApplication.getBasicTeams().size(); index++) {
+                    TeamResponseDto teamResponseDto = TeamResponseDto.builder()
+                            .id(gameApplication.getBasicTeams().get(index).getId())
+                            .name(gameApplication.getBasicTeams().get(index).getName())
+                            .logoUrl(gameApplication.getBasicTeams().get(index).getLogoUrl())
                             .build();
-                    matchPlates.add(matchPlate);
+
+                    data.add(teamResponseDto);
                 }
 
-                MatchOneInningInfo each = MatchOneInningInfo.builder()
-                        .inning(String.valueOf(index+1))
-                        .isRunning(FALSE)
-                        .isScore(FALSE)
-                        .matchPlates(matchPlates)
+                return TeamsResponseDto.builder()
+                        .status(OK)
+                        .matchId(teamMatchingMatchs.getId())
+                        .data(data)
                         .build();
+            } else {
+                gameApplication.getMatchs().add(teamMatchingMatchs);
+                gameApplication = gameApplicationRepository.save(gameApplication);
+                List<TeamResponseDto> data = new ArrayList<>();
 
-                matchOneInningInfos.add(each);
+                for (int index = 0; index < gameApplication.getBasicTeams().size(); index++) {
+                    TeamResponseDto teamResponseDto = TeamResponseDto.builder()
+                            .id(gameApplication.getBasicTeams().get(index).getId())
+                            .name(gameApplication.getBasicTeams().get(index).getName())
+                            .logoUrl(gameApplication.getBasicTeams().get(index).getLogoUrl())
+                            .build();
+
+                    data.add(teamResponseDto);
+                }
+
+                Matchs savedMatch = gameApplication.getMatchs().stream()
+                        .filter(each -> each.getTeamMatching().equals("progress"))
+                        .findFirst()
+                        .orElseThrow(() ->
+                                new IllegalStateException("GameApplication에서 progress인 match가 없습니다."));
+
+
+                return TeamsResponseDto.builder()
+                        .status(OK)
+                        .matchId(savedMatch.getId())
+                        .data(data)
+                        .build();
             }
-
-            Matchs match = Matchs.builder()
-                    .currentInning("1")
-                    .location("TOP")
-                    .teamMatching("progress")
-                    .matchOneInningInfos(matchOneInningInfos)
-                    .build();
-
-            gameApplication.getMatchs().add(match);
-            gameApplication = gameApplicationRepository.save(gameApplication);
-            Matchs savedMatch = gameApplication.getMatchs().stream().filter(each -> each.getTeamMatching().equals("progress"))
-                    .findFirst()
-                    .orElseThrow(() ->
-                            new IllegalStateException("GameApplication에서 progress인 match가 없습니다."));
-
-            return TeamsResponseDto.builder()
-                    .status(OK)
-                    .matchId(savedMatch.getId())
-                    .data(gameApplication.getBasicTeams())
-                    .build();
-
         } catch (Exception e) {
-            logger.error("실행?");
             e.printStackTrace();
             return TeamsResponseDto.builder()
                     .status(UNAUTHORIZED)
                     .data(null)
                     .build();
         }
+    }
+
+    private Matchs createMatchs(List<String> baseNames) {
+        List<MatchOneInningInfo> matchOneInningInfos
+                = new ArrayList<>();
+
+        for (int index = 0; index < 12; index++) {
+
+            List<MatchPlate> matchPlates = new ArrayList<>();
+
+            for (String baseName : baseNames) {
+                MatchPlate matchPlate = MatchPlate.builder()
+                        .name(baseName)
+                        .isBatter(ZERO)
+                        .build();
+                matchPlates.add(matchPlate);
+            }
+
+            MatchOneInningInfo each = MatchOneInningInfo.builder()
+                    .inning(String.valueOf(index+1))
+                    .isRunning(FALSE)
+                    .isScore(FALSE)
+                    .matchPlates(matchPlates)
+                    .build();
+
+            matchOneInningInfos.add(each);
+        }
+
+        return Matchs.builder()
+                .currentInning("1")
+                .location("TOP")
+                .teamMatching("progress")
+                .matchOneInningInfos(matchOneInningInfos)
+                .build();
+
     }
 
     public TeamChoiceResponseDto getChoosedTeam(Long matchId, Long teamId, String userEmail, HttpServletRequest request) {
@@ -205,7 +249,7 @@ public class GameService {
                     .orElseThrow(() ->
                             new IllegalStateException("getLastest : not opposite. userEmail : " + userEmail));
 
-            ProgressResponseDto progressResponseDto = new ProgressResponseDto();
+            ProgressResponseDto progressResponseDto;
 
             if (matchs.getLocation().equals(TOP)) {
                 if (userTeam.getRole().equals(HOME)) {

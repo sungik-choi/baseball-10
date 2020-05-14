@@ -13,5 +13,5 @@ import java.util.List;
 public class TeamsResponseDto {
     private String status;
     private Long matchId;
-    private List<BasicTeam> data;
+    private List<TeamResponseDto> data;
 }

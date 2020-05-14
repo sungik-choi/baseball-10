@@ -40,19 +40,19 @@ public class GameControllerTest {
         String initRequestURL = "http://localhost:" + port + "/init";
         restTemplate.getForEntity(initRequestURL, GameApplication.class);
 
-        // 팀 리스트 요청
-        String teamsRequestURL = "http://localhost:" + port + "/teams";
-        restTemplate.getForEntity(teamsRequestURL, TeamsResponseDto.class);
-
-        // 유저1 팀 선택 요청
-        String user1Email = "guswns1659@gmail.com";
-        String user1TeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ user1Email;
-        restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
-
-        // user2 team request
-        String user2Email = "zmdk1127@naver.com";
-        String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
-        restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
+//        // 팀 리스트 요청
+//        String teamsRequestURL = "http://localhost:" + port + "/teams";
+//        restTemplate.getForEntity(teamsRequestURL, TeamsResponseDto.class);
+//
+//        // 유저1 팀 선택 요청
+//        String user1Email = "guswns1659@gmail.com";
+//        String user1TeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ user1Email;
+//        restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
+//
+//        // user2 team request
+//        String user2Email = "zmdk1127@naver.com";
+//        String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
+//        restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
     }
 
     @Test
@@ -65,6 +65,8 @@ public class GameControllerTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getMatchId()).isEqualTo(1);
+        assertThat(responseEntity.getBody().getData().get(0).getUserEmail()).isNull();
+        assertThat(responseEntity.getBody().getData().get(0).getSelected()).isNull();
     }
 
     @Test

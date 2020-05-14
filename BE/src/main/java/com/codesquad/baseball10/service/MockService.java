@@ -26,7 +26,7 @@ public class MockService {
 
         return TeamsResponseDto.builder()
                 .status("200")
-                .data(data)
+//                .data(data)
                 .build();
     }
 
