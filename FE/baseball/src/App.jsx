@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Login from "components/login/Login.jsx";
 import TeamList from "components/teamList/TeamList.jsx";
 import PlayGround from "components/playground/PlayGround.jsx";
-import PlayerList from "components/playground/playerList/PlayerList.jsx";
+import PlayerList from "components/playerList/PlayerList.jsx";
 import Loading from "components/loading/Loading.jsx";
 import NotFoundPage from "components/NotFoundPage.jsx";
 import OAuth from "components/OAuth/OAuth";
