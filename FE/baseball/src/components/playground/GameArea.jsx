@@ -3,7 +3,7 @@ import Background from "style/Background";
 import styled from "styled-components";
 import GameBoard from "./gameboard/GameBoard";
 
-const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount }) => {
+const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount, judgeDefenseTeam }) => {
   const { strike, out, ball } = ballCount;
 
   const ballCountHandler = (statusCount, currentCount, color) => {
@@ -27,7 +27,7 @@ const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount }) => {
   return (
     <GameBackground color={"none"}>
       {/* HOME AWAY 인지 파악하고, PITCH 버튼 나오게 하는 로직 작성 */}
-      <GameBoard defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={plates} />
+      <GameBoard />
       <ScoreBar>
         <TeamName>{defenseTeam.teamName}</TeamName>
         <Mid>

@@ -6,19 +6,35 @@ import Button from "style/Button";
 import { scale } from "style/Animation";
 import { useBaseballDispatch } from "context/context";
 import { useBaseballState } from "context/context";
+import { playGroundFetch } from "components/useFetch";
 import { STR } from "constants/constants";
 import _ from "../../../util/util";
 
-const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
-  let { baseFirst, baseSecond, baseThird } = plates;
+const GameBoard = () => {
   const { playGround } = useBaseballState();
+  const dispatch = useBaseballDispatch();
+
+  const { defenseTeam, attackTeam, plates } = playGround;
+  const { baseFirst, baseSecond, baseThird } = plates;
+
   const [isRun, setIsRun] = useState(true);
   const [isHit, setIsHit] = useState(true);
   const [isGetScore, setIsGetScore] = useState(true);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const [buttonAvailable, setButtonAvailable] = useState(true);
   const ANIMATION_DELAY = 2;
-  const dispatch = useBaseballDispatch();
+
+  const requsetAPI = process.env.REACT_APP_API_URL + ``;
+
+  const __clickHandler = () => {
+    playGroundFetch(requsetAPI, "PLAYGROUND", dispatch).then((defense) => {
+      if (_.transformBooleanType(defense)) {
+        return;
+      } else {
+        _.judgeDefenseTeam(dispatch);
+      }
+    });
+  };
 
   const clickHandler = () => {
     if (isHit) {

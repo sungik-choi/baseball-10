@@ -24,10 +24,9 @@ const useFetch = (url, actionType, dispatch) => {
 export const playGroundFetch = async (url, actionType, dispatch) => {
   const response = await fetch(url);
   const initialData = await response.json();
+  console.log(initialData);
 
   dispatch({ type: actionType, data: initialData });
-
-  console.log(initialData);
 
   return initialData.defense;
 };
