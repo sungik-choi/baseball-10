@@ -50,7 +50,7 @@ public class GameControllerTest {
         restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
 
         // user2 team request
-        String user2Email = "guswns1659@gmail.com";
+        String user2Email = "zmdk1127@naver.com";
         String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
         restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
     }
@@ -94,7 +94,8 @@ public class GameControllerTest {
     @Test
     public void getLastestTest() {
         // given
-        String url = "http://localhost:8080" + port + "/1"  + "/lastest";
+        String email = "guswns1659@gmail.com";
+        String url = "http://localhost:" + port + "/1" + "/" + email + "/lastest";
 
         String userWhere = "HOME";
         String isRunning = "false";

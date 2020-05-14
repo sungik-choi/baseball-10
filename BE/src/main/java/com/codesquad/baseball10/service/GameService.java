@@ -84,7 +84,7 @@ public class GameService {
             Matchs savedMatch = gameApplication.getMatchs().stream().filter(each -> each.getTeamMatching().equals("progress"))
                     .findFirst()
                     .orElseThrow(() ->
-                    new IllegalStateException("GameApplication에서 progress인 match가 없습니다."));
+                            new IllegalStateException("GameApplication에서 progress인 match가 없습니다."));
 
             return TeamsResponseDto.builder()
                     .status(OK)
@@ -209,28 +209,27 @@ public class GameService {
 
             if (matchs.getLocation().equals(TOP)) {
                 if (userTeam.getRole().equals(HOME)) {
-                    String defense = "true";
                     // attack : other, defense : user
-                    progressResponseDto = createProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
+                    String defense = "true";
+                    progressResponseDto = defenseIsUserProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
 
-               } else {
+                } else {
                     // attack : user, defense : other
-
                     String defense = "false";
-                    progressResponseDto = createProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
+                    progressResponseDto = defenseIsOtherProgressResponseDto(defense, matchs, AWAY, userTeam, otherTeam);
                 }
 
             } else {
                 if (userTeam.getRole().equals(HOME)) {
-                    String defense = "false";
                     // attack : user, defense : other
 
-                    progressResponseDto = createProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
+                    String defense = "false";
+                    progressResponseDto = defenseIsOtherProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
                 } else {
                     // attack : other, defense : user
 
                     String defense = "true";
-                    progressResponseDto = createProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
+                    progressResponseDto = defenseIsUserProgressResponseDto(defense, matchs, AWAY, userTeam, otherTeam);
                 }
             }
 
@@ -248,143 +247,295 @@ public class GameService {
 
     }
 
-    private ProgressResponseDto createProgressResponseDto(String defense, Matchs matchs, String HOME,
-                                                          Team userTeam, Team otherTeam) {
+    private ProgressResponseDto defenseIsOtherProgressResponseDto(String defense, Matchs matchs, String where, Team userTeam, Team otherTeam) {
+        MatchInfoResponseDto matchInfo = MatchInfoResponseDto.builder()
+                .currentInning(matchs.getCurrentInning())
+                .when(matchs.getLocation())
+                .build();
+
+        PitcherResponseDto pitcher = PitcherResponseDto.builder()
+                .name(otherTeam.getPlayers().stream()
+                        .filter(each -> each.getPosition().equals("pitcher"))
+                        .findFirst().get().getName())
+                .count(otherTeam.getPitchCount())
+                .build();
+
+        TeamProgressResponseDto defenseTeam = TeamProgressResponseDto.builder()
+                .teamName(otherTeam.getName())
+                .totalScore(otherTeam.getTotalScore())
+                .role(otherTeam.getRole())
+                .pitcher(pitcher)
+                .build();
+
+        // attack
+
+        List<BatterHistoryResponseDto> batters = new ArrayList<>();
+
+        String currentOrder = userTeam.getCurrentOrder();
+        int order = Integer.parseInt(currentOrder);
+
+        for (int index = 0; index < 3; index++) {
+            if (order <= 0) order = 9;
+            int finalOrder = order;
+            int finalOrder1 = order;
+            Player player = userTeam.getPlayers().stream().filter(each -> each.getOrders().equals(String.valueOf(finalOrder)))
+                    .findFirst().orElseThrow(() -> new IllegalStateException("No batter with order : " + finalOrder1));
+
+
+            List<String> histories = new ArrayList<>();
+            if (player.getPlayerOnePlateAppearanceInfos().size() < 1) {
+                histories = new ArrayList<>();
+            } else {
+                histories = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1)
+                        .getPlayerOnePlateAppearanceHistories().stream().map(each -> each.getHistory()).collect(Collectors.toList());
+            }
+
+            BatterHistoryResponseDto batterHistoryResponseDto = BatterHistoryResponseDto.builder()
+                    .name(player.getName())
+                    .plateAppearance(player.getPlateAppearance())
+                    .hit(player.getHitCount())
+                    .order(player.getOrders())
+                    .history(histories)
+                    .build();
+
+            batters.add(batterHistoryResponseDto);
+            order--;
+        }
+
+
+        TeamProgressResponseDto attackTeam = TeamProgressResponseDto.builder()
+                .teamName(userTeam.getName())
+                .totalScore(userTeam.getTotalScore())
+                .role(userTeam.getRole())
+                .batter(batters)
+                .build();
+
+        int finalOrder2 = order;
+        Player player = userTeam.getPlayers().stream().filter(each -> each.getOrders().equals(currentOrder))
+                .findFirst().orElseThrow(() -> new IllegalStateException("No batter with order : " + finalOrder2));
+
+        String strike;
+        String ball;
+        if (player.getPlayerOnePlateAppearanceInfos().size() < 1) {
+            strike = "0";
+            ball = "0";
+        } else {
+            strike = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1).getStrikeCount();
+            ball = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1).getBallCount();
+        }
+
+
+        // current inning outcount
+        TeamOneInningInfo teamOneInningInfo = userTeam.getTeamOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No TeamOneInningInfos with inning : " + matchs.getCurrentInning()));
+
+        BallCountResponseDto ballCount = BallCountResponseDto.builder()
+                .strike(strike)
+                .ball(ball)
+                .out(teamOneInningInfo.getOutCount())
+                .build();
+
+        MatchOneInningInfo matchOneInningInfo = matchs.getMatchOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                .findFirst().orElseThrow(() -> new IllegalStateException("No matchOneInningInfo with inning : " + matchs.getCurrentInning()));
+
+        PlatesResponseDto plates = PlatesResponseDto.builder()
+                .baseFirst(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseFirst"))
+                        .findFirst().get().getIsBatter())
+                .baseSecond(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseSecond"))
+                        .findFirst().get().getIsBatter())
+                .baseThird(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseThird"))
+                        .findFirst().get().getIsBatter())
+                .build();
+
+
+        // display is overall
+        List<DisplayResponseDto> displaies = new ArrayList<>();
+        List<String> inningScore1 = new ArrayList<>();
+        List<String> inningScore2 = new ArrayList<>();
+
+        userTeam.getTeamOneInningInfos().forEach(each -> inningScore1.add(each.getScore()));
+        otherTeam.getTeamOneInningInfos().forEach(each -> inningScore2.add(each.getScore()));
+
+        DisplayResponseDto displayResponseDto1 = DisplayResponseDto.builder()
+                .teamName(userTeam.getName())
+                .role(userTeam.getRole())
+                .totalScore(userTeam.getTotalScore())
+                .inningScore(inningScore1)
+                .build();
+
+        DisplayResponseDto displayResponseDto2 = DisplayResponseDto.builder()
+                .teamName(otherTeam.getName())
+                .role(otherTeam.getRole())
+                .totalScore(otherTeam.getTotalScore())
+                .inningScore(inningScore2)
+                .build();
+
+        displaies.add(displayResponseDto1);
+        displaies.add(displayResponseDto2);
+
+        return ProgressResponseDto.builder()
+                .status(OK)
+                .userWhere(where)
+                .matchInfo(matchInfo)
+                .isRunning(matchs.getMatchOneInningInfos().stream()
+                        .filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                        .findFirst().get().getIsRunning())
+                .isScore(matchs.getMatchOneInningInfos().stream()
+                        .filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                        .findFirst().get().getIsScore())
+                .defense(defense)
+                .defenseTeam(defenseTeam)
+                .attackTeam(attackTeam)
+                .ballCount(ballCount)
+                .plates(plates)
+                .display(displaies)
+                .build();
+    }
+
+
+    private ProgressResponseDto defenseIsUserProgressResponseDto(String defense, Matchs matchs, String where,
+                                                                 Team userTeam, Team otherTeam) {
 
         MatchInfoResponseDto matchInfo = MatchInfoResponseDto.builder()
                 .currentInning(matchs.getCurrentInning())
                 .when(matchs.getLocation())
                 .build();
 
+        PitcherResponseDto pitcher = PitcherResponseDto.builder()
+                .name(userTeam.getPlayers().stream()
+                        .filter(each -> each.getPosition().equals("pitcher"))
+                        .findFirst().get().getName())
+                .count(userTeam.getPitchCount())
+                .build();
+
+        TeamProgressResponseDto defenseTeam = TeamProgressResponseDto.builder()
+                .teamName(userTeam.getName())
+                .totalScore(userTeam.getTotalScore())
+                .role(userTeam.getRole())
+                .pitcher(pitcher)
+                .build();
+
+        List<BatterHistoryResponseDto> batters = new ArrayList<>();
+
+        String currentOrder = otherTeam.getCurrentOrder();
+        int order = Integer.parseInt(currentOrder);
+
+        for (int index = 0; index < 3; index++) {
+            if (order <= 0) order = 9;
+            int finalOrder = order;
+            int finalOrder1 = order;
+            Player player = otherTeam.getPlayers().stream().filter(each -> each.getOrders().equals(String.valueOf(finalOrder)))
+                    .findFirst().orElseThrow(() -> new IllegalStateException("No batter with order : " + finalOrder1));
 
 
-        if (defense.equals("true")) {
-
-            PitcherResponseDto pitcher = PitcherResponseDto.builder()
-                    .name(userTeam.getPlayers().stream()
-                            .filter(each -> each.getPosition().equals("pitcher"))
-                            .findFirst().get().getName())
-                    .count(userTeam.getPitchCount())
-                    .build();
-
-            TeamProgressResponseDto defenseTeam = TeamProgressResponseDto.builder()
-                    .teamName(userTeam.getName())
-                    .totalScore(userTeam.getTotalScore())
-                    .role(userTeam.getRole())
-                    .pitcher(pitcher)
-                    .build();
-
-            List<BatterHistoryResponseDto> batters = new ArrayList<>();
-
-            String currentOrder = otherTeam.getCurrentOrder();
-            int order = Integer.parseInt(currentOrder);
-
-            for (int index = 0; index < 3; index++) {
-                if (order <= 0) order = 9;
-                int finalOrder = order;
-                int finalOrder1 = order;
-                Player player = otherTeam.getPlayers().stream().filter(each -> each.getOrders().equals(String.valueOf(finalOrder)))
-                        .findFirst().orElseThrow(() -> new IllegalStateException("No batter with order : " + finalOrder1));
-
-                // batter last pa data
-                List<String> histories = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1)
+            List<String> histories = new ArrayList<>();
+            if (player.getPlayerOnePlateAppearanceInfos().size() < 1) {
+                histories = new ArrayList<>();
+            } else {
+                histories = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1)
                         .getPlayerOnePlateAppearanceHistories().stream().map(each -> each.getHistory()).collect(Collectors.toList());
-
-                BatterHistoryResponseDto batterHistoryResponseDto = BatterHistoryResponseDto.builder()
-                        .name(player.getName())
-                        .plateAppearance(player.getPlateAppearance())
-                        .hit(player.getHitCount())
-                        .order(player.getOrders())
-                        .history(histories)
-                        .build();
-
-                batters.add(batterHistoryResponseDto);
-                order--;
             }
 
-
-            TeamProgressResponseDto attackTeam = TeamProgressResponseDto.builder()
-                    .teamName(otherTeam.getName())
-                    .totalScore(otherTeam.getTotalScore())
-                    .role(otherTeam.getRole())
-                    .batter(batters)
+            BatterHistoryResponseDto batterHistoryResponseDto = BatterHistoryResponseDto.builder()
+                    .name(player.getName())
+                    .plateAppearance(player.getPlateAppearance())
+                    .hit(player.getHitCount())
+                    .order(player.getOrders())
+                    .history(histories)
                     .build();
 
-            int finalOrder2 = order;
-            Player player = otherTeam.getPlayers().stream().filter(each -> each.getOrders().equals(currentOrder))
-                    .findFirst().orElseThrow(() -> new IllegalStateException("No batter with order : " + finalOrder2));
-
-            String strikeCount = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1).getStrikeCount();
-            String ball = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1).getBallCount();
-
-
-            // current inning outcount
-            TeamOneInningInfo teamOneInningInfo = otherTeam.getTeamOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("No TeamOneInningInfos with inning : " + matchs.getCurrentInning()));
-
-            BallCountResponseDto ballCount = BallCountResponseDto.builder()
-                    .strike(strikeCount)
-                    .ball(ball)
-                    .out(teamOneInningInfo.getOutCount())
-                    .build();
-
-            MatchOneInningInfo matchOneInningInfo = matchs.getMatchOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
-                    .findFirst().orElseThrow(() -> new IllegalStateException("No matchOneInningInfo with inning : " + matchs.getCurrentInning()));
-
-            PlatesResponseDto plates = PlatesResponseDto.builder()
-                    .baseFirst(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseFirst"))
-                            .findFirst().get().getIsBatter())
-                    .baseSecond(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseSecond"))
-                            .findFirst().get().getIsBatter())
-                    .baseThird(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseThird"))
-                            .findFirst().get().getIsBatter())
-                    .build();
-
-            List<DisplayResponseDto> displaies = new ArrayList<>();
-            List<String> inningScore1 = new ArrayList<>();
-            List<String> inningScore2 = new ArrayList<>();
-
-            userTeam.getTeamOneInningInfos().forEach(each -> inningScore1.add(each.getScore()));
-            otherTeam.getTeamOneInningInfos().forEach(each -> inningScore2.add(each.getScore()));
-
-            DisplayResponseDto displayResponseDto1 = DisplayResponseDto.builder()
-                    .teamName(userTeam.getName())
-                    .role(userTeam.getRole())
-                    .totalScore(userTeam.getTotalScore())
-                    .inningScore(inningScore1)
-                    .build();
-
-            DisplayResponseDto displayResponseDto2 = DisplayResponseDto.builder()
-                    .teamName(otherTeam.getName())
-                    .role(otherTeam.getRole())
-                    .totalScore(otherTeam.getTotalScore())
-                    .inningScore(inningScore2)
-                    .build();
-
-            displaies.add(displayResponseDto1);
-            displaies.add(displayResponseDto2);
-
-            return ProgressResponseDto.builder()
-                    .status(OK)
-                    .userWhere(HOME)
-                    .matchInfo(matchInfo)
-                    .isRunning(matchs.getMatchOneInningInfos().stream()
-                            .filter(each -> each.getInning().equals(matchs.getCurrentInning()))
-                            .findFirst().get().getIsRunning())
-                    .isScore(matchs.getMatchOneInningInfos().stream()
-                            .filter(each -> each.getInning().equals(matchs.getCurrentInning()))
-                            .findFirst().get().getIsScore())
-                    .defense(defense)
-                    .defenseTeam(defenseTeam)
-                    .attackTeam(attackTeam)
-                    .ballCount(ballCount)
-                    .plates(plates)
-                    .display(displaies)
-                    .build();
-        } else {
-            return new ProgressResponseDto();
+            batters.add(batterHistoryResponseDto);
+            order--;
         }
+
+
+        TeamProgressResponseDto attackTeam = TeamProgressResponseDto.builder()
+                .teamName(otherTeam.getName())
+                .totalScore(otherTeam.getTotalScore())
+                .role(otherTeam.getRole())
+                .batter(batters)
+                .build();
+
+        int finalOrder2 = order;
+        Player player = otherTeam.getPlayers().stream().filter(each -> each.getOrders().equals(currentOrder))
+                .findFirst().orElseThrow(() -> new IllegalStateException("No batter with order : " + finalOrder2));
+
+        String strike;
+        String ball;
+        if (player.getPlayerOnePlateAppearanceInfos().size() < 1) {
+            strike = "0";
+            ball = "0";
+        } else {
+            strike = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1).getStrikeCount();
+            ball = player.getPlayerOnePlateAppearanceInfos().get(player.getPlayerOnePlateAppearanceInfos().size()-1).getBallCount();
+        }
+
+
+        // current inning outcount
+        TeamOneInningInfo teamOneInningInfo = otherTeam.getTeamOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No TeamOneInningInfos with inning : " + matchs.getCurrentInning()));
+
+        BallCountResponseDto ballCount = BallCountResponseDto.builder()
+                .strike(strike)
+                .ball(ball)
+                .out(teamOneInningInfo.getOutCount())
+                .build();
+
+        MatchOneInningInfo matchOneInningInfo = matchs.getMatchOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                .findFirst().orElseThrow(() -> new IllegalStateException("No matchOneInningInfo with inning : " + matchs.getCurrentInning()));
+
+        PlatesResponseDto plates = PlatesResponseDto.builder()
+                .baseFirst(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseFirst"))
+                        .findFirst().get().getIsBatter())
+                .baseSecond(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseSecond"))
+                        .findFirst().get().getIsBatter())
+                .baseThird(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseThird"))
+                        .findFirst().get().getIsBatter())
+                .build();
+
+        List<DisplayResponseDto> displaies = new ArrayList<>();
+        List<String> inningScore1 = new ArrayList<>();
+        List<String> inningScore2 = new ArrayList<>();
+
+        userTeam.getTeamOneInningInfos().forEach(each -> inningScore1.add(each.getScore()));
+        otherTeam.getTeamOneInningInfos().forEach(each -> inningScore2.add(each.getScore()));
+
+        DisplayResponseDto displayResponseDto1 = DisplayResponseDto.builder()
+                .teamName(userTeam.getName())
+                .role(userTeam.getRole())
+                .totalScore(userTeam.getTotalScore())
+                .inningScore(inningScore1)
+                .build();
+
+        DisplayResponseDto displayResponseDto2 = DisplayResponseDto.builder()
+                .teamName(otherTeam.getName())
+                .role(otherTeam.getRole())
+                .totalScore(otherTeam.getTotalScore())
+                .inningScore(inningScore2)
+                .build();
+
+        displaies.add(displayResponseDto1);
+        displaies.add(displayResponseDto2);
+
+        return ProgressResponseDto.builder()
+                .status(OK)
+                .userWhere(where)
+                .matchInfo(matchInfo)
+                .isRunning(matchs.getMatchOneInningInfos().stream()
+                        .filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                        .findFirst().get().getIsRunning())
+                .isScore(matchs.getMatchOneInningInfos().stream()
+                        .filter(each -> each.getInning().equals(matchs.getCurrentInning()))
+                        .findFirst().get().getIsScore())
+                .defense(defense)
+                .defenseTeam(defenseTeam)
+                .attackTeam(attackTeam)
+                .ballCount(ballCount)
+                .plates(plates)
+                .display(displaies)
+                .build();
 
     }
 }
