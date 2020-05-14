@@ -208,6 +208,8 @@ const baseballData = {
       currentInning: 0,
       when: "top",
     },
+    userWhere: "HOME",
+    defense: "true",
     defenseTeam: {
       teamName: "삼성",
       totalScore: "0",
