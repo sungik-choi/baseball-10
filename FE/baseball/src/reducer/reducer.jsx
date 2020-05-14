@@ -11,6 +11,9 @@ const baseballReducer = (state, action) => {
     case PLAYER_LIST: {
       return { ...state, playerList: action.data };
     }
+    case "PLAYGROUND": {
+      return { ...state, playGround: action.data };
+    }
     default:
       return state;
   }
