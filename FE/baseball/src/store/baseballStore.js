@@ -203,6 +203,7 @@ const baseballData = {
     ],
   },
   playGround: {
+    defense: "true",
     status: "200",
     matchInfo: {
       currentInning: 0,

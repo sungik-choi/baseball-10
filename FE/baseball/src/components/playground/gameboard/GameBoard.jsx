@@ -11,25 +11,24 @@ import _ from "../../../util/util";
 const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
   let { baseFirst, baseSecond, baseThird } = plates;
   const { playGround } = useBaseballState();
-  const [isRun, setIsRun] = useState(true);
+  const [isRun, setIsRun] = useState(false);
   const [isGetScore, setIsGetScore] = useState(true);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const [buttonAvailable, setButtonAvailable] = useState(true);
+  const ANIMATION_DELAY = 2;
 
   const clickHandler = () => {
     if (isGetScore) {
       setIsRun(true);
       console.log("get score !");
     }
-
     setButtonAvailable(false);
     setIsPitchBtnAppear(false);
     setTimeout(() => {
       setButtonAvailable(true);
-    }, 3000);
+    }, ANIMATION_DELAY * 1000);
   };
 
-  const ANIMATION_DELAY = 2;
   const platesType = ["PITCHER", "HOME", "FIRST", "SECOND", "THIRD"];
 
   const isExist = (type) => {
