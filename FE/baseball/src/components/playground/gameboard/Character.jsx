@@ -1,17 +1,18 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { fadeIn } from "style/Animation";
 import idleHome from "assets/idle_home.png";
 import idleAway from "assets/idle_away.png";
 import runHome from "assets/run_home.png";
 import runAway from "assets/run_away.png";
+import { STR } from "constants/constants";
 
 const Character = ({ team, plate, isRun, aniDelay }) => {
   const idle = team === "HOME" ? idleHome : idleAway;
   const run = team === "HOME" ? runHome : runAway;
 
   return (
-    <CharacterWrap team={team} plate={plate} delay={aniDelay}>
+    <CharacterWrap isRun={isRun} team={team} plate={plate} delay={aniDelay}>
       <CharacterDiv idleAni={idle} runAni={run} isRun={isRun}></CharacterDiv>
       <ShadowDiv></ShadowDiv>
     </CharacterWrap>
@@ -20,34 +21,102 @@ const Character = ({ team, plate, isRun, aniDelay }) => {
 
 const ANIMATION_SPEED = 0.5;
 const SPRITE_NUM = 11;
+const HOME_OFFSET_Y = 30;
 
 const getCharacterPosition = (plate) => {
   switch (plate) {
-    case "PITCHER":
+    case STR.PITCHER:
       return {
-        x: "50",
-        y: "54",
+        x: 50,
+        y: 54,
       };
-    case "HOME":
+    case STR.BATTER:
       return {
-        x: "50",
-        y: "82",
+        x: 50,
+        y: 82,
       };
-    case "FIRST":
+    case STR.FIRST:
       return {
-        x: "64",
-        y: "54",
+        x: 64,
+        y: 54,
       };
-    case "SECOND":
+    case STR.SECOND:
       return {
-        x: "50",
-        y: "27",
+        x: 50,
+        y: 27,
       };
-    case "THIRD":
+    case STR.THIRD:
       return {
-        x: "36",
-        y: "54",
+        x: 36,
+        y: 54,
       };
+    case STR.HOME:
+      return {
+        x: 50,
+        y: 82 + HOME_OFFSET_Y,
+      };
+    default:
+      break;
+  }
+};
+
+const move = (type) => {
+  switch (type) {
+    case STR.BATTER:
+      return keyframes`
+        0% {
+          left: ${getCharacterPosition(type).x}%;
+          top: ${getCharacterPosition(type).y + HOME_OFFSET_Y}%;
+        }
+        100% {
+          left: ${getCharacterPosition(type).x}%;
+          top: ${getCharacterPosition(type).y}%;
+        }`;
+    case STR.FIRST:
+      return keyframes`
+        0% {
+          left: ${getCharacterPosition(STR.BATTER).x}%;
+          top: ${getCharacterPosition(STR.BATTER).y}%;
+        }
+        100% {
+          left: ${getCharacterPosition(type).x}%;
+          top: ${getCharacterPosition(type).y}%;
+        }`;
+    case STR.SECOND:
+      return keyframes`
+        0% {
+          left: ${getCharacterPosition(STR.FIRST).x}%;
+          top: ${getCharacterPosition(STR.FIRST).y}%;
+        }
+        100% {
+          left: ${getCharacterPosition(type).x}%;
+          top: ${getCharacterPosition(type).y}%;
+        }`;
+    case STR.THIRD:
+      return keyframes`
+        0% {
+          left: ${getCharacterPosition(STR.SECOND).x}%;
+          top: ${getCharacterPosition(STR.SECOND).y}%;
+        }
+        100% {
+          left: ${getCharacterPosition(type).x}%;
+          top: ${getCharacterPosition(type).y}%;
+        }`;
+    case STR.HOME:
+      return keyframes`
+        0% {
+          left: ${getCharacterPosition(STR.THIRD).x}%;
+          top: ${getCharacterPosition(STR.THIRD).y}%;
+        }
+
+        50% {
+          left: ${getCharacterPosition(STR.BATTER).x}%;
+          top: ${getCharacterPosition(STR.BATTER).y}%;
+        }
+        100% {
+          left: ${getCharacterPosition(STR.BATTER).x}%;
+          top: ${getCharacterPosition(STR.BATTER).y + HOME_OFFSET_Y}%;
+        }`;
     default:
       break;
   }
@@ -82,6 +151,12 @@ const CharacterWrap = styled.div`
   transform: translate(-50%, -50%);
   width: var(--sprite-size);
   height: var(--sprite-size);
+  animation: ${(props) =>
+    props.isRun
+      ? css`
+          ${move(props.plate)} ${props.delay}s linear
+        `
+      : "none"};
 
   ${ShadowDiv} {
     animation: ${fadeIn({ end: 0.2, changePoint: 30 })} 1s;

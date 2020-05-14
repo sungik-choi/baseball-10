@@ -6,75 +6,83 @@ import Button from "style/Button";
 import { scale } from "style/Animation";
 import { useBaseballDispatch } from "context/context";
 import { useBaseballState } from "context/context";
+import { STR } from "constants/constants";
 import _ from "../../../util/util";
 
 const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
   let { baseFirst, baseSecond, baseThird } = plates;
   const { playGround } = useBaseballState();
   const [isRun, setIsRun] = useState(true);
+  const [isHit, setIsHit] = useState(true);
   const [isGetScore, setIsGetScore] = useState(true);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const [buttonAvailable, setButtonAvailable] = useState(true);
+  const ANIMATION_DELAY = 2;
+  const dispatch = useBaseballDispatch();
 
   const clickHandler = () => {
-    if (isGetScore) {
+    if (isHit) {
       setIsRun(true);
       console.log("get score !");
     }
-
     setButtonAvailable(false);
     setIsPitchBtnAppear(false);
+    dispatch({ type: "TEST" });
     setTimeout(() => {
       setButtonAvailable(true);
-    }, 3000);
+    }, ANIMATION_DELAY * 1500);
   };
 
-  const ANIMATION_DELAY = 2;
-  const platesType = ["PITCHER", "HOME", "FIRST", "SECOND", "THIRD"];
+  const platesType = [STR.PITCHER, STR.BATTER, STR.FIRST, STR.SECOND, STR.THIRD, STR.HOME];
 
   const isExist = (type) => {
     switch (type) {
-      case "HOME":
+      case STR.BATTER:
         return true;
-      case "FIRST":
+      case STR.FIRST:
         return +baseFirst;
-      case "SECOND":
+      case STR.SECOND:
         return +baseSecond;
-      case "THIRD":
+      case STR.THIRD:
         return +baseThird;
+      case STR.HOME:
+        return isGetScore;
       default:
         return false;
     }
   };
 
   const characters = platesType.map((type, index) => {
-    if (type === "PITCHER") return <Character key={index} team={defenseTeam.location} plate={"PITCHER"} isRun={false} aniDelay={ANIMATION_DELAY} />;
+    if (type === STR.PITCHER) return <Character key={index} team={defenseTeam.location} plate={STR.PITCHER} isRun={false} aniDelay={ANIMATION_DELAY} />;
     if (isExist(type)) return <Character key={index} team={attackTeam.location} plate={type} isRun={isRun} aniDelay={ANIMATION_DELAY} />;
   });
 
   useEffect(() => {
-    console.log(baseFirst, baseSecond, baseThird);
-    console.log("userTeam : ", userTeam);
     if (isRun) setTimeout(() => setIsRun(false), ANIMATION_DELAY * 1000);
-  }, [isRun, baseFirst, baseSecond, baseThird]);
+  }, [isRun]);
+
+  useEffect(() => {
+    // 원래 로직의 경우 버튼을 누르고, 해당 데이터가 true면 달리기 애니메이션 출력
+  }, [isHit]);
 
   return (
     <GameBoardWrap>
       <GameCanvas />
       {characters}
-      {_.transformBooleanType(playGround.defense) && buttonAvailable ? (
-        <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
-          {PITCH_TEXT}
-        </PitchButton>
-      ) : (
-        <PitchButton white>{LOADING_TEXT}</PitchButton>
-      )}
+      {_.transformBooleanType(playGround.defense) &&
+        (buttonAvailable ? (
+          <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
+            {PITCH_TEXT}
+          </PitchButton>
+        ) : (
+          <PitchButton white>{LOADING_TEXT}</PitchButton>
+        ))}
     </GameBoardWrap>
   );
 };
 
 const PITCH_TEXT = "PITCH!";
-const LOADING_TEXT = "GOGOGO !!!";
+const LOADING_TEXT = "게임 진행중...";
 
 const GameBoardWrap = styled.div`
   position: absolute;
@@ -87,7 +95,6 @@ const GameBoardWrap = styled.div`
 `;
 
 const PitchButton = styled(Button)`
-  /* display: ${(props) => (props.appear ? "block" : "none")}; */
   position: absolute;
   width: 15rem;
   left: 1.5rem;

@@ -47,6 +47,24 @@ export const fadeOut = ({ start = 1, changePoint = 66 }) => keyframes`
   }
 `;
 
+export const fadeInOut = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  33% {
+    opacity: 1;
+  }
+
+  66% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+`;
+
 export const scale = ({ from = 0, to = 1 }) => keyframes`
   0% {
     transform: scale(${from});
@@ -55,4 +73,4 @@ export const scale = ({ from = 0, to = 1 }) => keyframes`
   100% {
     transform: scale(${to});
   }
-`
+`;
