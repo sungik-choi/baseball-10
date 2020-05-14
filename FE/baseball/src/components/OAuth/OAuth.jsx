@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import _ from "../../util/util";
 import Background from "style/Background";
 
 const OAuth = () => {
   const history = useHistory();
   const judgeCookie = () => {
-    if (_.getCookie("token")) {
+    if (_.getCookie("userEmail")) {
       history.push("/");
     } else {
       setTimeout(() => {
@@ -19,6 +18,7 @@ const OAuth = () => {
   useEffect(() => {
     judgeCookie();
   }, []);
+
   return <Background></Background>;
 };
 
