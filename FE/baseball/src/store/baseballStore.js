@@ -253,8 +253,8 @@ const baseballData = {
       out: 2,
     },
     plates: {
-      baseFirst: "1",
-      baseSecond: "1",
+      baseFirst: "0",
+      baseSecond: "0",
       baseThird: "0",
     },
     displays: [

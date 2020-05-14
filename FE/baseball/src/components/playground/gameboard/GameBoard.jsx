@@ -10,15 +10,20 @@ const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
   let { baseFirst, baseSecond, baseThird } = plates;
   const dispatch = useBaseballDispatch();
   const [isRun, setIsRun] = useState(false);
+  const [isGetScore, setIsGetScore] = useState(true);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
+
   const clickHandler = () => {
-    setIsRun(!isRun);
-    dispatch({ type: "TEST" });
+    // setIsRun(!isRun);
+    // dispatch({ type: "TEST" });
+    if (isGetScore) {
+      setIsRun(true);
+      console.log("get score !");
+    }
     setIsPitchBtnAppear(false);
   };
 
   const ANIMATION_DELAY = 2;
-
   const platesType = ["PITCHER", "HOME", "FIRST", "SECOND", "THIRD"];
 
   const isExist = (type) => {
@@ -44,8 +49,8 @@ const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
   useEffect(() => {
     console.log(baseFirst, baseSecond, baseThird);
     console.log("userTeam : ", userTeam);
-    // setTimeout(() => setIsRun(false), ANIMATION_DELAY * 1000);
-  }, [baseFirst, baseSecond, baseThird]);
+    if (isRun) setTimeout(() => setIsRun(false), ANIMATION_DELAY * 1000);
+  }, [isRun, baseFirst, baseSecond, baseThird]);
 
   return (
     <GameBoardWrap>
