@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useBaseballState, useBaseballDispatch } from "context/context";
+import { playGroundFetch } from "../useFetch";
 
 import ScoreBoard from "./ScoreBoard";
 import CurrentPlayer from "./CurrentPlayer";
@@ -15,18 +16,48 @@ import logo from "assets/logo.svg";
 
 const PlayGround = () => {
   const { playGround } = useBaseballState();
+  const dispatch = useBaseballDispatch();
+  const firstAPI = process.env.REACT_APP_FIRST_TEST_URL;
 
   const defenseTeam = playGround.defenseTeam;
   const attackTeam = playGround.attackTeam;
   const userTeam = playGround.userWhere;
   const currentAttackTeamBatterList = defenseTeam.batter !== null ? defenseTeam.batter : attackTeam.batter;
 
+  // useEffect(() => {
+  //   playGroundFetch(firstAPI, "PLAYGROUND", dispatch).then((defense) => {
+  //     if (defense === "true") {
+  //     } else {
+  //     }
+  //   });
+  // }, []);
+
+  const judgeDefenseTeam = () => {
+    playGroundFetch(firstAPI, "PLAYGROUND", dispatch).then((defense) => {
+      if (defense === "true") {
+        console.log(`defense team !!`);
+      } else {
+        setTimeout(() => {
+          console.log(`attack team !!~`);
+          judgeDefenseTeam();
+        }, 2000);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (playGround.defense === "true") {
+    } else {
+      judgeDefenseTeam();
+    }
+  }, []);
+
   return (
     <PlayGroundWrap color="var(--gray-3 )">
       <Logo>
         <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
       </Logo>
-      <ScoreBoard displays={playGround.displays} />
+      <ScoreBoard displays={playGround.display} />
       <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
       <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
       <StatsCenter batterList={currentAttackTeamBatterList} />

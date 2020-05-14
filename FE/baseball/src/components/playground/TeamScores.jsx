@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const TeamScores = ({ border, scoreInfomation }) => {
-  const { team1, totalScore, inningScore } = scoreInfomation;
+  const { teamName, totalScore, inningScore } = scoreInfomation;
 
   const inningScoreLength = inningScore.length - 1;
 
@@ -15,7 +15,7 @@ const TeamScores = ({ border, scoreInfomation }) => {
   });
   return (
     <TeamScoreWarp border={border}>
-      <TeamName>{team1}</TeamName>
+      <TeamName>{teamName}</TeamName>
       {teamScores}
       <ToTalScore>{totalScore}</ToTalScore>
     </TeamScoreWarp>

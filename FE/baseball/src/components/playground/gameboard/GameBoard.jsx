@@ -5,22 +5,28 @@ import Character from "./Character";
 import Button from "style/Button";
 import { scale } from "style/Animation";
 import { useBaseballDispatch } from "context/context";
+import { useBaseballState } from "context/context";
+import _ from "../../../util/util";
 
 const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
   let { baseFirst, baseSecond, baseThird } = plates;
-  const dispatch = useBaseballDispatch();
-  const [isRun, setIsRun] = useState(false);
+  const { playGround } = useBaseballState();
+  const [isRun, setIsRun] = useState(true);
   const [isGetScore, setIsGetScore] = useState(true);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
+  const [buttonAvailable, setButtonAvailable] = useState(true);
 
   const clickHandler = () => {
-    // setIsRun(!isRun);
-    // dispatch({ type: "TEST" });
     if (isGetScore) {
       setIsRun(true);
       console.log("get score !");
     }
+
+    setButtonAvailable(false);
     setIsPitchBtnAppear(false);
+    setTimeout(() => {
+      setButtonAvailable(true);
+    }, 3000);
   };
 
   const ANIMATION_DELAY = 2;
@@ -56,14 +62,19 @@ const GameBoard = ({ defenseTeam, attackTeam, userTeam, plates }) => {
     <GameBoardWrap>
       <GameCanvas />
       {characters}
-      <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
-        {PITCH_TEXT}
-      </PitchButton>
+      {_.transformBooleanType(playGround.defense) && buttonAvailable ? (
+        <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
+          {PITCH_TEXT}
+        </PitchButton>
+      ) : (
+        <PitchButton white>{LOADING_TEXT}</PitchButton>
+      )}
     </GameBoardWrap>
   );
 };
 
 const PITCH_TEXT = "PITCH!";
+const LOADING_TEXT = "GOGOGO !!!";
 
 const GameBoardWrap = styled.div`
   position: absolute;

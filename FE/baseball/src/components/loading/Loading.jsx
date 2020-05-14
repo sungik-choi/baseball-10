@@ -26,14 +26,16 @@ const Loading = () => {
       name: "적팀",
       image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
     });
-    console.log(opposingTeam);
   };
 
   useEffect(() => {
     if (!opposingTeam.name) return;
     const interval = setInterval(() => {
       if (count > 0) setCount(count - 1);
-      else setTimeout(() => history.push("/playground"), TRANSITION_DELAY * 1000);
+      else
+        setTimeout(() => {
+          history.push("/playground");
+        }, TRANSITION_DELAY * 1000);
     }, TRANSITION_DELAY * 1000);
     return () => clearInterval(interval);
   }, [opposingTeam, count]);

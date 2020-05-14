@@ -18,6 +18,18 @@ const useFetch = (url, actionType, dispatch) => {
   useEffect(() => {
     initialFetch();
   }, []);
+  return;
+};
+
+export const playGroundFetch = async (url, actionType, dispatch) => {
+  const response = await fetch(url);
+  const initialData = await response.json();
+
+  dispatch({ type: actionType, data: initialData });
+
+  console.log(initialData);
+
+  return initialData.defense;
 };
 
 export default useFetch;

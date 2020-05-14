@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Button from "style/Button";
@@ -7,11 +7,13 @@ import Cover from "style/Cover";
 import { bounce } from "style/Animation";
 import logo from "assets/logo.svg";
 import githubLogo from "assets/github.svg";
+import _ from "../../util/util";
 
 const Login = () => {
   const [isGameStart, setIsGameStart] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  let history = useHistory();
+  const [isLogin, setIsLogin] = useState(false);
+
+  const history = useHistory();
 
   const github_login_url = process.env.REACT_APP_GITHUB_URL;
 
@@ -19,6 +21,10 @@ const Login = () => {
     setIsGameStart(true);
     setTimeout(() => history.push("/teamlist"), TRANSITION_DELAY * 1000);
   };
+
+  useEffect(() => {
+    if (_.getCookie("userEmail")) setIsLogin(true);
+  }, []);
 
   return (
     <Background>

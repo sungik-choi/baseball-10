@@ -257,15 +257,15 @@ const baseballData = {
       baseSecond: "0",
       baseThird: "0",
     },
-    displays: [
+    display: [
       {
-        team1: "삼성",
+        teamName: "삼성",
         where: "AWAY",
         totalScore: "0",
         inningScore: ["0", "0", "0", "0", "5", "6", "7", "8", "9"],
       },
       {
-        team1: "한화",
+        teamName: "한화",
         where: "HOME",
         totalScore: "0",
         inningScore: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
