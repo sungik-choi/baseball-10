@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useBaseballState, useBaseballDispatch } from "context/context";
@@ -11,7 +11,6 @@ import StatsCenter from "./StatsCenter";
 
 import Background from "style/Background";
 import Button from "style/Button";
-import { fadeIn } from "style/Animation";
 import logo from "assets/logo.svg";
 
 import _ from "../../util/util";
@@ -38,18 +37,20 @@ const PlayGround = () => {
   };
 
   return (
-    <PlayGroundWrap color="var(--gray-3 )">
-      <Logo>
-        <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
-      </Logo>
-      <ScoreBoard displays={playGround.display} />
-      <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
-      <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
-      <StatsCenter batterList={currentAttackTeamBatterList} />
-      <PlayerListButton as={Link} to="/playerlist">
-        선수 목록
-      </PlayerListButton>
-    </PlayGroundWrap>
+    <>
+      <PlayGroundWrap color="var(--gray-3)">
+        <Logo>
+          <LogoSvg type="image/svg+xml" data={logo}></LogoSvg>
+        </Logo>
+        <ScoreBoard displays={playGround.display} />
+        <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
+        <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
+        <StatsCenter batterList={currentAttackTeamBatterList} />
+        <PlayerListButton as={Link} to="/playerlist">
+          선수 목록
+        </PlayerListButton>
+      </PlayGroundWrap>
+    </>
   );
 };
 
@@ -63,7 +64,6 @@ const PlayGroundWrap = styled(Background)`
   grid-template-areas: var(--grid-template-areas);
   * {
     box-sizing: border-box;
-    animation: ${fadeIn({ end: 1, changePoint: 30 })} 1s;
   }
 `;
 

@@ -9,7 +9,7 @@ const baseballReducer = (state, action) => {
     case SELECT_TEAM:
       return { ...state, selectedTeam: { ...state.selectedTeam, name: action.name, image: action.image } };
     case "TEST":
-      return { ...state, playGround: { ...state.playGround, plates: { ...state.playGround.plates, baseThird: !state.playGround.plates.baseThird } } };
+      return { ...state, playGround: { ...state.playGround, plates: { ...state.playGround.plates, baseSecond: 1, baseThird: 1 } } };
     case PLAYER_LIST: {
       return { ...state, playerList: action.data };
     }
