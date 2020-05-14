@@ -14,43 +14,28 @@ import Button from "style/Button";
 import { fadeIn } from "style/Animation";
 import logo from "assets/logo.svg";
 
+import _ from "../../util/util";
+
 const PlayGround = () => {
   const { playGround } = useBaseballState();
   const dispatch = useBaseballDispatch();
-  const firstAPI = process.env.REACT_APP_FIRST_TEST_URL;
 
   const defenseTeam = playGround.defenseTeam;
   const attackTeam = playGround.attackTeam;
   const userTeam = playGround.userWhere;
   const currentAttackTeamBatterList = defenseTeam.batter !== null ? defenseTeam.batter : attackTeam.batter;
 
-  // useEffect(() => {
-  //   playGroundFetch(firstAPI, "PLAYGROUND", dispatch).then((defense) => {
-  //     if (defense === "true") {
-  //     } else {
-  //     }
-  //   });
-  // }, []);
+  //useEffect(() => {
+  //  _.judgeDefenseTeam(dispatch);
+  //  }, []);
 
-  const judgeDefenseTeam = () => {
-    playGroundFetch(firstAPI, "PLAYGROUND", dispatch).then((defense) => {
-      if (defense === "true") {
-        console.log(`defense team !!`);
-      } else {
-        setTimeout(() => {
-          console.log(`attack team !!~`);
-          judgeDefenseTeam();
-        }, 2000);
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (playGround.defense === "true") {
+  const judgeDefenseTeam__test = () => {
+    if (playGround.defense) {
+      console.log("defense team");
     } else {
-      judgeDefenseTeam();
+      judgeDefenseTeam__test();
     }
-  }, []);
+  };
 
   return (
     <PlayGroundWrap color="var(--gray-3 )">
