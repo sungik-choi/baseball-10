@@ -177,26 +177,26 @@ public class GameService {
                         .id(basicTeam.getId())
                         .name(basicTeam.getName())
                         .logoUrl(basicTeam.getLogoUrl())
-                        .userEmail(userEmail)
+                        .userEmail(userEmailInCookie)
                         .selected(TRUE)
                         .role(HOME)
                         .build();
 
                 // match에 저장하는 로직
-                matchs.saveChoosedTeam(basicTeam, userEmail, HOME);
+                matchs.saveChoosedTeam(basicTeam, userEmailInCookie, HOME);
 
             } else {
                 teamResponseDto = TeamResponseDto.builder()
                         .id(basicTeam.getId())
                         .name(basicTeam.getName())
                         .logoUrl(basicTeam.getLogoUrl())
-                        .userEmail(userEmail)
+                        .userEmail(userEmailInCookie)
                         .selected(TRUE)
                         .role(AWAY)
                         .build();
 
                 // match에 저장하는 로직.
-                matchs.saveChoosedTeam(basicTeam, userEmail, AWAY);
+                matchs.saveChoosedTeam(basicTeam, userEmailInCookie, AWAY);
                 matchs.finishTeamMatching();
             }
 

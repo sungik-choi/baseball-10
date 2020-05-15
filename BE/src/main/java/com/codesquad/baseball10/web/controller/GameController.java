@@ -28,7 +28,7 @@ public class GameController {
 
     // {userEmail} 붙인 것은 test를 위함.
     // 테스트할 땐 HttpServletRequest.setAttribute() 를 사용할 수 없기 때문에
-    @GetMapping("{matchId}/{teamId}/{userEmail}")
+    @GetMapping("{matchId}/{teamId}")
     public TeamChoiceResponseDto getChoosedTeam(@PathVariable Long matchId,
                                                 @PathVariable Long teamId,
                                                 @PathVariable String userEmail,
