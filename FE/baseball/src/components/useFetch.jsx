@@ -4,11 +4,13 @@ import { useEffect } from "react";
  인자로 url , actionType , dispatch 를 받아서 fetch 처리 */
 
 const useFetch = (url, actionType, dispatch) => {
+  const data = null;
   console.log(`......... fetch loading`);
   const initialFetch = async () => {
     try {
       const response = await fetch(url);
       const initialData = await response.json();
+      data = initialData;
       dispatch({ type: actionType, data: initialData });
     } catch (err) {
       alert(`Fetch Error !!`);
@@ -18,7 +20,8 @@ const useFetch = (url, actionType, dispatch) => {
   useEffect(() => {
     initialFetch();
   }, []);
-  return;
+
+  return data;
 };
 
 export const playGroundFetch = async (url, actionType, dispatch) => {
