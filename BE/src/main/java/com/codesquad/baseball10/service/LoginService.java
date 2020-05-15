@@ -56,10 +56,8 @@ public class LoginService {
             logger.info("userEmail : {}", userEmail);
 
             Cookie cookie = new Cookie("userEmail", userEmail);
-            Cookie cookie2 = new Cookie(" userEmail", userEmail);
-            response.addCookie(cookie);
-            response.addCookie(cookie2);
             cookie.setPath("/");
+            response.addCookie(cookie);
 
             return new RedirectView("http://15.164.34.6/");
 
