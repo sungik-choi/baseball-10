@@ -19,6 +19,7 @@ const TeamList = () => {
 
   const teamClickHandler = (name, image) => {
     setIsModalExist(true);
+    dispatch({ type: "DEMO_SELECT_TEAM", name: name, image: image });
     dispatch(selectTeam(name, image));
   };
 

@@ -24,17 +24,9 @@ const PlayGround = () => {
   const userTeam = playGround.userWhere;
   const currentAttackTeamBatterList = defenseTeam.batter !== null ? defenseTeam.batter : attackTeam.batter;
 
-  //useEffect(() => {
-  //  _.judgeDefenseTeam(dispatch);
-  //  }, []);
-
-  const judgeDefenseTeam__test = () => {
-    if (playGround.defense) {
-      console.log("defense team");
-    } else {
-      judgeDefenseTeam__test();
-    }
-  };
+  // useEffect(() => {
+  //   _.judgeDefenseTeam(dispatch);
+  // }, []);
 
   return (
     <>

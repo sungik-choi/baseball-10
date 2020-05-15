@@ -10,6 +10,10 @@ import { playGroundFetch } from "components/useFetch";
 import { STR } from "constants/constants";
 import _ from "../../../util/util";
 
+import demo_data from "store/demoPlayer.js";
+
+console.log(demo_data[0]);
+
 const GameBoard = () => {
   const { playGround } = useBaseballState();
   const dispatch = useBaseballDispatch();
@@ -18,10 +22,13 @@ const GameBoard = () => {
   const { baseFirst, baseSecond, baseThird } = plates;
 
   const [isRun, setIsRun] = useState(true);
-  const [isHit, setIsHit] = useState(true);
-  const [isGetScore, setIsGetScore] = useState(true);
+  const [isHit, setIsHit] = useState(false);
+  const [isGetScore, setIsGetScore] = useState(false);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const [buttonAvailable, setButtonAvailable] = useState(true);
+
+  const [demo_currentPitch, setDemo_currentPitch] = useState(0);
+
   const ANIMATION_DELAY = 2;
 
   const requsetAPI = process.env.REACT_APP_API_URL + ``;
@@ -36,6 +43,12 @@ const GameBoard = () => {
     });
   };
 
+  const demo_pitch = () => {
+    dispatch({ type: "DEMO_PLAYGROUND", data: demo_data[demo_currentPitch] });
+    clickHandler();
+    setDemo_currentPitch(demo_currentPitch + 1);
+  };
+
   const clickHandler = () => {
     if (isHit) {
       setIsRun(true);
@@ -43,7 +56,6 @@ const GameBoard = () => {
     }
     setButtonAvailable(false);
     setIsPitchBtnAppear(false);
-    dispatch({ type: "TEST" });
     setTimeout(() => {
       setButtonAvailable(true);
     }, ANIMATION_DELAY * 1500);
@@ -87,7 +99,7 @@ const GameBoard = () => {
       {characters}
       {_.transformBooleanType(playGround.defense) &&
         (buttonAvailable ? (
-          <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
+          <PitchButton appear={isPitchBtnAppear} onClick={demo_pitch}>
             {PITCH_TEXT}
           </PitchButton>
         ) : (

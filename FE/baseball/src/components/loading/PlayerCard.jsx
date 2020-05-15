@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { slideIn } from "style/Animation";
 
-const PlayerCard = ({ count, teamInfo: { name, email = "sungik-choi", image } }) => {
+const PlayerCard = ({ count, teamInfo: { name, logoUrl, image } }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -12,10 +12,9 @@ const PlayerCard = ({ count, teamInfo: { name, email = "sungik-choi", image } })
   return (
     <PlayerCardWrap isLoaded={isLoaded}>
       <ImgWrap>
-        <TeamImg src={image} />
+        <TeamImg src={logoUrl} />
       </ImgWrap>
       <TeamNameSpan>{name}</TeamNameSpan>
-      <span>{email}</span>
     </PlayerCardWrap>
   );
 };
