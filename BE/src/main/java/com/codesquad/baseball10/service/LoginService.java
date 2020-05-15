@@ -7,10 +7,7 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,7 +24,7 @@ public class LoginService {
 
     private final RestTemplate restTemplate;
 
-    public LoginResponseDto handleLogin(String code, HttpServletResponse response) {
+    public ResponseEntity<Void> handleLogin(String code, HttpServletResponse response) {
         logger.info("code : {}", code);
 
         try {
@@ -64,18 +61,11 @@ public class LoginService {
             Cookie cookie = new Cookie("userEmail", userEmail);
             response.addCookie(cookie);
 
-            return LoginResponseDto.builder()
-                    .status("200")
-                    .build();
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
-
-            return LoginResponseDto.builder()
-                    .status("401")
-                    .build();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
-
     }
 
     public AccessTokenRequestDto getAccessToken(String client_id, String client_secret, String code, String redirect_url) {

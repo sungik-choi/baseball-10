@@ -33,6 +33,6 @@ public class WebConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/api/github/**")
 //                .excludePathPatterns("/github/**")
 //                .excludePathPatterns("/mock/**");
-////                .excludePathPatterns("/init");
+//                .excludePathPatterns("/init");
 //    }
 }
