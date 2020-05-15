@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
@@ -58,9 +59,7 @@ public class LoginService {
             Cookie cookie2 = new Cookie(" userEmail", userEmail);
             response.addCookie(cookie);
             response.addCookie(cookie2);
-
-            RedirectView redirectView = new RedirectView("http://15.164.34.6/");
-
+            cookie.setPath("/");
 
             return new RedirectView("http://15.164.34.6/");
 
