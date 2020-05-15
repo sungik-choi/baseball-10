@@ -1,20 +1,16 @@
 package com.codesquad.baseball10.service;
 
 import com.codesquad.baseball10.web.dto.requestDto.AccessTokenRequestDto;
-import com.codesquad.baseball10.web.dto.responesDto.login.ListUserEmailResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.login.LoginResponseDto;
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +20,7 @@ public class LoginService {
 
     private final RestTemplate restTemplate;
 
-    public ResponseEntity<Void> handleLogin(String code, HttpServletResponse response) {
+    public RedirectView handleLogin(String code, HttpServletResponse response) {
         logger.info("code : {}", code);
 
         try {
@@ -59,12 +55,17 @@ public class LoginService {
             logger.info("userEmail : {}", userEmail);
 
             Cookie cookie = new Cookie("userEmail", userEmail);
+            Cookie cookie2 = new Cookie(" userEmail", userEmail);
             response.addCookie(cookie);
+            response.addCookie(cookie2);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            RedirectView redirectView = new RedirectView("http://15.164.34.6/");
+
+
+            return new RedirectView("http://15.164.34.6/");
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new RedirectView("http://15.164.34.6/");
         }
     }
 

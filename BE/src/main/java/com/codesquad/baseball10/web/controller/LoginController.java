@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,8 +25,8 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/oauth/callback")
-    public ResponseEntity<Void> OauthCallback(@RequestParam(value = "code") String code,
-                                              HttpServletResponse response) {
+    public RedirectView OauthCallback(@RequestParam(value = "code") String code,
+                                      HttpServletResponse response) {
         return loginService.handleLogin(code, response);
 
     }
