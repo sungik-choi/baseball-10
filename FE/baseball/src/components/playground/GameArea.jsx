@@ -3,7 +3,7 @@ import Background from "style/Background";
 import styled from "styled-components";
 import GameBoard from "./gameboard/GameBoard";
 
-const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount, judgeDefenseTeam }) => {
+const GameArea = ({ defenseTeam, attackTeam, ballCount, matchInfo }) => {
   const { strike, out, ball } = ballCount;
 
   const ballCountHandler = (statusCount, currentCount, color) => {
@@ -26,13 +26,14 @@ const GameArea = ({ defenseTeam, attackTeam, userTeam, plates, ballCount, judgeD
 
   return (
     <GameBackground color={"none"}>
-      {/* HOME AWAY 인지 파악하고, PITCH 버튼 나오게 하는 로직 작성 */}
       <GameBoard />
       <ScoreBar>
         <TeamName>{defenseTeam.teamName}</TeamName>
         <Mid>
           <TotalScore>{defenseTeam.totalScore}</TotalScore>
-          <CurrentInning>2회초 수비</CurrentInning>
+          <CurrentInning>
+            {matchInfo.currentInning}회 {matchInfo.when === "top" ? "초" : "말"}
+          </CurrentInning>
           <TotalScore>{attackTeam.totalScore}</TotalScore>
         </Mid>
         <TeamName>{attackTeam.teamName}</TeamName>
