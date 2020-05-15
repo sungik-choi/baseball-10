@@ -59,12 +59,15 @@ public class LoginService {
             String[] split1 = userDataList.split(",");
             String userEmail = split1[0].split(":")[1];
 
+            logger.info("userEmail : {}", userEmail);
+
             Cookie cookie = new Cookie("userEmail", userEmail);
             response.addCookie(cookie);
 
             return LoginResponseDto.builder()
                     .status("200")
                     .build();
+
         } catch (Exception e) {
 
             return LoginResponseDto.builder()
