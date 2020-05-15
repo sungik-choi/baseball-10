@@ -23,7 +23,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/oauth/callback")
-    public LoginResponseDto OauthCallback(@RequestParam("code") String code,
+    public LoginResponseDto OauthCallback(@RequestParam(value = "code") String code,
                                           HttpServletResponse response) {
         return loginService.handleLogin(code, response);
 
