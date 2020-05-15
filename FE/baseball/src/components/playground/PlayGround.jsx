@@ -56,6 +56,7 @@ const PlayGround = () => {
 
 const PlayGroundWrap = styled(Background)`
   min-width: var(--width);
+  overflow-y: hidden;
   display: grid;
   grid-template-columns: var(--grid-template-columns);
   grid-template-rows: var(--grid-template-rows);

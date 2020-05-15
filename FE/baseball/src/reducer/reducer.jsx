@@ -5,7 +5,8 @@ import { SELECT_TEAM, FETCH_TEAM_LIST, PLAYER_LIST, PLAYGROUND } from "../action
 const baseballReducer = (state, action) => {
   switch (action.type) {
     case FETCH_TEAM_LIST:
-      return { ...state, teamList: action.data.teamlist };
+      localStorage.setItem("matchId", action.data.matchId);
+      return { ...state, matchId: action.data.matchId, teamList: action.data.data };
     case SELECT_TEAM:
       return { ...state, selectedTeam: { ...state.selectedTeam, name: action.name, image: action.image } };
     case "TEST":
