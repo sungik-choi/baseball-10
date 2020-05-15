@@ -20,11 +20,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GameControllerTest {
 
     @LocalServerPort
-    private int port = 30000;
+    private int port;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -40,19 +40,19 @@ public class GameControllerTest {
         String initRequestURL = "http://localhost:" + port + "/init";
         restTemplate.getForEntity(initRequestURL, GameApplication.class);
 
-//        // 팀 리스트 요청
-//        String teamsRequestURL = "http://localhost:" + port + "/teams";
-//        restTemplate.getForEntity(teamsRequestURL, TeamsResponseDto.class);
-//
-//        // 유저1 팀 선택 요청
-//        String user1Email = "guswns1659@gmail.com";
-//        String user1TeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ user1Email;
-//        restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
-//
-//        // user2 team request
-//        String user2Email = "zmdk1127@naver.com";
-//        String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
-//        restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
+        // 팀 리스트 요청
+        String teamsRequestURL = "http://localhost:" + port + "/teams";
+        restTemplate.getForEntity(teamsRequestURL, TeamsResponseDto.class);
+
+        // 유저1 팀 선택 요청
+        String user1Email = "guswns1659@gmail.com";
+        String user1TeamChoiceRequestURL = "http://localhost:" + port + "/1/1/"+ user1Email;
+        restTemplate.getForEntity(user1TeamChoiceRequestURL, TeamChoiceResponseDto.class);
+
+        // user2 team request
+        String user2Email = "zmdk1127@naver.com";
+        String user2TeamChoiceRequestURL = "http://localhost:" + port + "/1/2/"+ user2Email;
+        restTemplate.getForEntity(user2TeamChoiceRequestURL, TeamChoiceResponseDto.class);
     }
 
     @Test
@@ -110,5 +110,26 @@ public class GameControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getUserWhere()).isEqualTo(userWhere);
         assertThat(responseEntity.getBody().getIsRunning()).isEqualTo(isRunning);
+    }
+
+    @Test
+    public void getPitchResultTest() {
+        // given
+        String email = "guswns1659@gmail.com";
+        String url = "http://localhost:" + port + "/1" + "/1" + "/TOP" + "/" + email;
+
+        String userWhere = "HOME";
+        String isRunning = "false";
+        String pitchCount = "1";
+        String plateAppearance = "1";
+
+        //when
+        ResponseEntity<ProgressResponseDto> responseEntity
+                = restTemplate.getForEntity(url, ProgressResponseDto.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getDefenseTeam().getPitcher().getCount()).isEqualTo(pitchCount);
+        assertThat(responseEntity.getBody().getAttackTeam().getBatter().get(0).getPlateAppearance()).isEqualTo(plateAppearance);
     }
 }

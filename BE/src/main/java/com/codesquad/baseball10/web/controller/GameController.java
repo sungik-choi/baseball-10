@@ -44,4 +44,15 @@ public class GameController {
 
         return gameService.getLastest(matchId, userEmail, request);
     }
+
+    @GetMapping("{matchId}/{inning}/{when}/{userEmail}")
+    public ProgressResponseDto getPitchResult(@PathVariable Long matchId,
+                                              @PathVariable String inning,
+                                              @PathVariable String when,
+                                              @PathVariable String userEmail,
+                                              HttpServletRequest request) {
+
+        return gameService.getPitchResult(matchId, inning, when, userEmail, request);
+
+    }
 }

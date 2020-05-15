@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,7 +18,7 @@ public class Player {
 
     private String name;
     private String position;
-    private String batting_average;
+    private String battingAverage;
     private String orders;
     private String plateAppearance;
     private String hitCount;

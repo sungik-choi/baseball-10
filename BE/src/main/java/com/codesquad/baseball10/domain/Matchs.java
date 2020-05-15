@@ -89,7 +89,7 @@ public class Matchs {
             Player player = Player.builder()
                     .name(each.getName())
                     .position(each.getPosition())
-                    .batting_average(each.getBattingAverage())
+                    .battingAverage(each.getBattingAverage())
                     .orders(each.getOrders())
                     .plateAppearance(ZERO)
                     .hitCount(ZERO)

@@ -7,6 +7,7 @@ import org.springframework.data.relational.core.mapping.Embedded;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

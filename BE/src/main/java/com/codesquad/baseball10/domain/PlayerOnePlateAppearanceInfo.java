@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

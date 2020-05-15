@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +38,11 @@ public class GameService {
     private final String TOP = "TOP";
     private final String BOTTOM = "BOTTOM";
     private final String ZERO = "0";
+
+    private final String STRIKE = "1";
+    private final String BALL = "2";
+    private final String HIT = "3";
+    private final String OUT = "4";
 
     // 팀 리스트 요청 시 Match가 1개 만들어진다.
     public TeamsResponseDto getTeams() {
@@ -266,19 +272,16 @@ public class GameService {
             } else {
                 if (userTeam.getRole().equals(HOME)) {
                     // attack : user, defense : other
-
                     String defense = "false";
                     progressResponseDto = defenseIsOtherProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
                 } else {
                     // attack : other, defense : user
-
                     String defense = "true";
                     progressResponseDto = defenseIsUserProgressResponseDto(defense, matchs, AWAY, userTeam, otherTeam);
                 }
             }
 
             return progressResponseDto;
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -287,8 +290,6 @@ public class GameService {
                     .build();
 
         }
-
-
     }
 
     private ProgressResponseDto defenseIsOtherProgressResponseDto(String defense, Matchs matchs, String where, Team userTeam, Team otherTeam) {
@@ -383,14 +384,32 @@ public class GameService {
         MatchOneInningInfo matchOneInningInfo = matchs.getMatchOneInningInfos().stream().filter(each -> each.getInning().equals(matchs.getCurrentInning()))
                 .findFirst().orElseThrow(() -> new IllegalStateException("No matchOneInningInfo with inning : " + matchs.getCurrentInning()));
 
-        PlatesResponseDto plates = PlatesResponseDto.builder()
-                .baseFirst(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseFirst"))
-                        .findFirst().get().getIsBatter())
-                .baseSecond(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseSecond"))
-                        .findFirst().get().getIsBatter())
-                .baseThird(matchOneInningInfo.getMatchPlates().stream().filter(each -> each.getName().equals("baseThird"))
-                        .findFirst().get().getIsBatter())
-                .build();
+        PlatesResponseDto plates;
+        if (matchOneInningInfo.getMatchPlates().size() == 0) {
+            plates= PlatesResponseDto.builder()
+                    .baseFirst(ZERO)
+                    .baseSecond(ZERO)
+                    .baseThird(ZERO)
+                    .build();
+        } else if (matchOneInningInfo.getMatchPlates().size() == 1) {
+            plates= PlatesResponseDto.builder()
+                    .baseFirst("1")
+                    .baseSecond(ZERO)
+                    .baseThird(ZERO)
+                    .build();
+        } else if (matchOneInningInfo.getMatchPlates().size() == 2) {
+            plates= PlatesResponseDto.builder()
+                    .baseFirst("1")
+                    .baseSecond("1")
+                    .baseThird(ZERO)
+                    .build();
+        } else  {
+            plates= PlatesResponseDto.builder()
+                    .baseFirst("1")
+                    .baseSecond("1")
+                    .baseThird("1")
+                    .build();
+        }
 
 
         // display is overall
@@ -582,4 +601,173 @@ public class GameService {
                 .build();
 
     }
+
+    public ProgressResponseDto getPitchResult(Long matchId, String inning,
+                                              String when, String userEmail, HttpServletRequest request) {
+        String userEmailInCookie = (String) request.getAttribute("userEmail");
+
+        try {
+            GameApplication savedGameApplication = getGameApplication();
+
+            Matchs matchs = savedGameApplication.getMatchs().stream()
+                    .filter(each -> each.getId().equals(matchId))
+                    .findFirst()
+                    .orElseThrow(() ->
+                            new IllegalStateException("getChoicedTeam : 해당 match가 없습니다. id : " + matchId));
+
+            Team userTeam = matchs.getTeams().stream()
+                    .filter(each -> each.getUserEmail().equals(userEmail))
+                    .findFirst()
+                    .orElseThrow(() ->
+                            new IllegalStateException("getLastest : 해당 team 없습니다. userEmail : " + userEmail));
+
+            Team otherTeam = matchs.getTeams().stream()
+                    .filter(each -> !each.getUserEmail().equals(userEmail))
+                    .findFirst()
+                    .orElseThrow(() ->
+                            new IllegalStateException("getLastest : not opposite. userEmail : " + userEmail));
+
+            ProgressResponseDto progressResponseDto;
+
+            if (matchs.getLocation().equals(TOP)) {
+                if (userTeam.getRole().equals(HOME)) {
+                    // attack : other, defense : user
+                    String defense = "true";
+                    userTeamPitch(matchs, userTeam, otherTeam);
+                    progressResponseDto = defenseIsUserProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
+
+                } else {
+                    // attack : user, defense : other
+                    String defense = "false";
+                    otherTeamPitch();
+                    progressResponseDto = defenseIsOtherProgressResponseDto(defense, matchs, AWAY, userTeam, otherTeam);
+                }
+
+            } else {
+                if (userTeam.getRole().equals(HOME)) {
+                    // attack : user, defense : other
+                    String defense = "false";
+                    otherTeamPitch();
+                    progressResponseDto = defenseIsOtherProgressResponseDto(defense, matchs, HOME, userTeam, otherTeam);
+                } else {
+                    // attack : other, defense : user
+                    String defense = "true";
+//                    userTeamPitch();
+                    progressResponseDto = defenseIsUserProgressResponseDto(defense, matchs, AWAY, userTeam, otherTeam);
+                }
+            }
+
+            return progressResponseDto;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ProgressResponseDto.builder()
+                    .status(UNAUTHORIZED)
+                    .build();
+
+        }
+    }
+
+    private void otherTeamPitch() {
+
+    }
+
+    private void userTeamPitch(Matchs matchs, Team userTeam, Team otherTeam) {
+
+        Player pitcher = userTeam.getPlayers().stream()
+                .filter(each -> each.getPosition().equals("pitcher"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("userTeamPitch() : No Pitcher "));
+        int pitchCount = Integer.parseInt(pitcher.getPitchCount());
+
+        Player currentBatter = otherTeam.getPlayers().stream()
+                .filter(player -> player.getOrders().equals(otherTeam.getCurrentOrder()))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalStateException("userTeamPitch() : No batter! order = " + otherTeam.getCurrentOrder()));
+
+        if (pitchCount == 0) {
+            List<PlayerOnePlateAppearanceHistory> playerOnePlateAppearanceHistories
+                    = new ArrayList<>();
+
+            PlayerOnePlateAppearanceInfo playerOnePlateAppearanceInfo
+                    = PlayerOnePlateAppearanceInfo.builder()
+                    .strikeCount(ZERO)
+                    .ballCount(ZERO)
+                    .playerOnePlateAppearanceHistories(playerOnePlateAppearanceHistories)
+                    .build();
+            currentBatter.getPlayerOnePlateAppearanceInfos().add(playerOnePlateAppearanceInfo);
+        }
+        pitcher.setPitchCount(String.valueOf(pitchCount++));
+
+        userTeam.setPitchCount(String.valueOf(pitchCount));
+
+        String ApitchResult = getAPitchResult(currentBatter.getBattingAverage());
+
+        applyResult(ApitchResult, currentBatter, matchs);
+
+
+
+
+
+    }
+
+    private void applyResult(String ApitchResult, Player currentBatter, Matchs matchs) {
+        if (ApitchResult.equals(STRIKE)) {
+            currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .getPlayerOnePlateAppearanceHistories().add(PlayerOnePlateAppearanceHistory.builder()
+                    .history(STRIKE).build());
+
+
+            String strikeCount = currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .getStrikeCount();
+            int strike = Integer.parseInt(strikeCount);
+            currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .setStrikeCount(String.valueOf(strike++));
+            strikeCount = currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .getStrikeCount();
+
+            if (Integer.parseInt(strikeCount) == 3) {
+
+            }
+
+
+        } else if (ApitchResult.equals(BALL)) {
+            currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .getPlayerOnePlateAppearanceHistories().add(PlayerOnePlateAppearanceHistory.builder()
+                    .history(BALL).build());
+        } else if (ApitchResult.equals(HIT)) {
+            currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .getPlayerOnePlateAppearanceHistories().add(PlayerOnePlateAppearanceHistory.builder()
+                    .history(HIT).build());
+        } else {
+            currentBatter.getPlayerOnePlateAppearanceInfos().get(currentBatter.getPlayerOnePlateAppearanceInfos().size()-1)
+                    .getPlayerOnePlateAppearanceHistories().add(PlayerOnePlateAppearanceHistory.builder()
+                    .history(OUT).build());
+        }
+    }
+
+    private String getAPitchResult(String batting_average) {
+        double hit = Double.parseDouble(batting_average);
+        double strike = (1 - hit) / 2 - 0.05;
+        double ball = (1 - hit) / 2 - 0.05;
+        double ballStrike = ball + strike;
+        double ballStrikeHit = ballStrike + hit;
+
+        return getCondition(strike, ballStrike, ballStrikeHit) ;
+    }
+
+    private String getCondition(double strike, double ballStrike, double ballStrikeHit) {
+        double random = Math.random();
+        if (random <= strike) {
+            return STRIKE;
+        } else if (random > strike && random <= ballStrike) {
+            return BALL;
+        } else if (random > ballStrike && random <= ballStrikeHit) {
+            return HIT;
+        } else {
+            return OUT;
+        }
+    }
 }
+
