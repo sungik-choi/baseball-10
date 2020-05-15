@@ -2,6 +2,7 @@ package com.codesquad.baseball10.web.controller;
 
 import com.codesquad.baseball10.domain.GameApplication;
 import com.codesquad.baseball10.domain.GameApplicationRepository;
+import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.progress.ProgressResponseDto;
@@ -131,5 +132,36 @@ public class GameControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody().getDefenseTeam().getPitcher().getCount()).isEqualTo(pitchCount);
         assertThat(responseEntity.getBody().getAttackTeam().getBatter().get(0).getPlateAppearance()).isEqualTo(plateAppearance);
+    }
+
+    @Test
+    public void getPlayers() {
+        // given
+        String email = "guswns1659@gmail.com";
+        String url = "http://localhost:" + port + "/1" + "/players";
+
+        String teamName1 = "두산베어스";
+        String player1 = "두르난데스";
+        String player2 = "두건우";
+        String teamName2 = "키움히어로즈";
+        String player3 = "키르난데스";
+        String player4 = "키건우";
+        String pitchCount = "1";
+        String plateAppearance = "1";
+
+        // when
+        ResponseEntity<PlayersResponseDto> responseEntity
+                = restTemplate.getForEntity(url, PlayersResponseDto.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getData().get(0).getTeamName()).isEqualTo(teamName1);
+        assertThat(responseEntity.getBody().getData().get(0).getPlayers().get(0).getName()).isEqualTo(player1);
+        assertThat(responseEntity.getBody().getData().get(0).getPlayers().get(1).getName()).isEqualTo(player2);
+        assertThat(responseEntity.getBody().getData().get(1).getTeamName()).isEqualTo(teamName2);
+        assertThat(responseEntity.getBody().getData().get(1).getPlayers().get(0).getName()).isEqualTo(player3);
+        assertThat(responseEntity.getBody().getData().get(1).getPlayers().get(1).getName()).isEqualTo(player4);
+
+
     }
 }

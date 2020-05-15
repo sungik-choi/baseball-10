@@ -1,10 +1,7 @@
 package com.codesquad.baseball10.service;
 
 import com.codesquad.baseball10.domain.*;
-import com.codesquad.baseball10.web.dto.responesDto.PitcherResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.TeamResponseDto;
-import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.*;
 import com.codesquad.baseball10.web.dto.responesDto.progress.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -153,6 +150,7 @@ public class GameService {
     }
 
     public TeamChoiceResponseDto getChoosedTeam(Long matchId, Long teamId, String userEmail, HttpServletRequest request) {
+
         String userEmailInCookie = (String) request.getAttribute("userEmail");
 
         try {
@@ -177,26 +175,26 @@ public class GameService {
                         .id(basicTeam.getId())
                         .name(basicTeam.getName())
                         .logoUrl(basicTeam.getLogoUrl())
-                        .userEmail(userEmailInCookie)
+                        .userEmail(userEmail)
                         .selected(TRUE)
                         .role(HOME)
                         .build();
 
                 // match에 저장하는 로직
-                matchs.saveChoosedTeam(basicTeam, userEmailInCookie, HOME);
+                matchs.saveChoosedTeam(basicTeam, userEmail, HOME);
 
             } else {
                 teamResponseDto = TeamResponseDto.builder()
                         .id(basicTeam.getId())
                         .name(basicTeam.getName())
                         .logoUrl(basicTeam.getLogoUrl())
-                        .userEmail(userEmailInCookie)
+                        .userEmail(userEmail)
                         .selected(TRUE)
                         .role(AWAY)
                         .build();
 
                 // match에 저장하는 로직.
-                matchs.saveChoosedTeam(basicTeam, userEmailInCookie, AWAY);
+                matchs.saveChoosedTeam(basicTeam, userEmail, AWAY);
                 matchs.finishTeamMatching();
             }
 
@@ -768,6 +766,75 @@ public class GameService {
         } else {
             return OUT;
         }
+    }
+
+    public PlayersResponseDto getPlayers(Long matchId, HttpServletRequest request) {
+
+        GameApplication gameApplication = gameApplicationRepository.findById(1L).orElseThrow(() ->
+                new IllegalStateException("해당 gameApp은 없습니다"));
+
+        Matchs matchs = gameApplication.getMatchs().stream().filter(each -> each.getId().equals(matchId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("getPlayers : No Matchs"));
+
+        Team home = matchs.getTeams().stream()
+                .filter(team -> team.getRole().equals(HOME))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("getPlayers : No Home"));
+
+        Team away = matchs.getTeams().stream()
+                .filter(team -> team.getRole().equals(AWAY))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("getPlayers : No Home"));
+
+        List<Team> teams = new ArrayList<>();
+        teams.add(home);
+        teams.add(away);
+
+        List<EachTeamPlayersResponseDto> data =
+                new ArrayList<>();
+
+        for (int index = 0; index < teams.size(); index++) {
+
+            List<BatterResponseDto> players = getBatterResponseDto(teams.get(index));
+
+            EachTeamPlayersResponseDto each = EachTeamPlayersResponseDto.builder()
+                    .teamName(teams.get(index).getName())
+                    .totalAppearance(teams.get(index).getTotalPa())
+                    .totalHit(teams.get(index).getTotalHit())
+                    .totalOut(teams.get(index).getTotalOut())
+                    .players(players)
+                    .build();
+
+            data.add(each);
+        }
+
+
+        return PlayersResponseDto.builder()
+                .status(OK)
+                .data(data)
+                .build();
+
+    }
+
+    private List<BatterResponseDto> getBatterResponseDto(Team team) {
+
+        List<BatterResponseDto> players = new ArrayList<>();
+
+        for (int index = 0; index < team.getPlayers().size(); index++) {
+
+            BatterResponseDto batterResponseDto = BatterResponseDto.builder()
+                    .name(team.getPlayers().get(index).getName())
+                    .plateAppearance(team.getPlayers().get(index).getPlateAppearance())
+                    .hit(team.getPlayers().get(index).getHitCount())
+                    .out(team.getPlayers().get(index).getOutCount())
+                    .average(team.getPlayers().get(index).getGameAverage())
+                    .build();
+
+            players.add(batterResponseDto);
+        }
+
+        return players;
     }
 }
 

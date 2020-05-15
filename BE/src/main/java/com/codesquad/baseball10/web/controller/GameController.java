@@ -1,6 +1,7 @@
 package com.codesquad.baseball10.web.controller;
 
 import com.codesquad.baseball10.service.GameService;
+import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.progress.ProgressResponseDto;
@@ -28,7 +29,7 @@ public class GameController {
 
     // {userEmail} 붙인 것은 test를 위함.
     // 테스트할 땐 HttpServletRequest.setAttribute() 를 사용할 수 없기 때문에
-    @GetMapping("{matchId}/{teamId}")
+    @GetMapping("{matchId}/{teamId}/{userEmail}")
     public TeamChoiceResponseDto getChoosedTeam(@PathVariable Long matchId,
                                                 @PathVariable Long teamId,
                                                 @PathVariable String userEmail,
@@ -54,5 +55,11 @@ public class GameController {
 
         return gameService.getPitchResult(matchId, inning, when, userEmail, request);
 
+    }
+
+    @GetMapping("{matchId}/players")
+    public PlayersResponseDto getPlayers(@PathVariable Long matchId,
+                                         HttpServletRequest request) {
+        return gameService.getPlayers(matchId, request);
     }
 }
