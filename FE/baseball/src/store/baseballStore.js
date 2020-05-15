@@ -215,10 +215,11 @@ const baseballData = {
     ],
   },
   playGround: {
+    isHit: false,
     defense: "true",
     status: "200",
     matchInfo: {
-      currentInning: 0,
+      currentInning: 1,
       when: "top",
     },
     userWhere: "HOME",

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useBaseballState, useBaseballDispatch } from "context/context.jsx";
+import useFetch from "components/useFetch";
+import { FETCH_TEAM_LIST } from "action/action";
 import Header from "./Header";
 import TeamCard from "./TeamCard";
 import Modal from "../Modal";
@@ -17,6 +19,9 @@ const TeamList = () => {
   const [isModalExist, setIsModalExist] = useState(false);
   let history = useHistory();
 
+  const teamListGetURL = process.env.REACT_APP_API_URL + `api/mock/teams`; // delete mock
+  useFetch(teamListGetURL, FETCH_TEAM_LIST, dispatch);
+
   const teamClickHandler = (name, image) => {
     setIsModalExist(true);
     dispatch({ type: "DEMO_SELECT_TEAM", name: name, image: image });
@@ -29,7 +34,7 @@ const TeamList = () => {
     setTimeout(() => history.push("/loading"), TRANSITION_DELAY * 1000);
   };
 
-  const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.image} clickHandler={teamClickHandler} />);
+  const teamCard = teamList.map((teamInfo) => <TeamCard key={teamInfo.id} name={teamInfo.name} image={teamInfo.logoUrl} clickHandler={teamClickHandler} />);
 
   const modalOptions = {
     clickHandler: modalClickHandler,
