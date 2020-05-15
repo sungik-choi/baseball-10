@@ -7,29 +7,49 @@ import Background from "style/Background";
 import Cover from "style/Cover";
 import { fadeIn, fadeOut } from "style/Animation";
 import magnify from "assets/magnify.svg";
+import _ from "../../util/util";
+import useFetch from "components/useFetch";
 
 const Loading = () => {
-  const {
-    TESTselectedTeam = {
-      name: "우리팀",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    },
-  } = useBaseballState();
+  const { loading } = useBaseballState();
+  const dispatch = useBaseballDispatch();
 
   const [opposingTeam, setOpposingTeam] = useState({ name: null, image: null });
   const [count, setCount] = useState(GAME_START_DELAY);
+  const [isMatch, setIsMatch] = useState(false);
   let history = useHistory();
 
-  const clickHandler = () => {
-    // 상대팀 접속시 화면 테스트용
-    setOpposingTeam({
-      name: "적팀",
-      image: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FsfG5j%2Fbtqyjd8BHCx%2FcKTzWIU3jPjZ0h84IKJjm0%2Fimg.jpg",
-    });
+  const clickHandler_test = () => {
+    setIsMatch(true);
+  };
+
+  // useEffect(() => {
+  //   const matchId = _.getLocalstorage("matchId");
+  //   const requsetURL = process.env.REACT_APP_API_URL + `/${matchId}/loading`;
+  //   fetch(requsetURL)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (_.transformBooleanType(data.start)) {
+  //         setIsMatch(true);
+  //       } else {
+  //         _.judgeToMatchTarget(setIsMatch, dispatch);
+  //       }
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    demo_handler();
+  }, []);
+
+  const demo_handler = () => {
+    setTimeout(() => {
+      setIsMatch(true);
+      dispatch({ type: "DEMO_MATCHING" });
+    }, 5000);
   };
 
   useEffect(() => {
-    if (!opposingTeam.name) return;
+    if (!isMatch) return;
     const interval = setInterval(() => {
       if (count > 0) setCount(count - 1);
       else
@@ -38,18 +58,18 @@ const Loading = () => {
         }, TRANSITION_DELAY * 1000);
     }, TRANSITION_DELAY * 1000);
     return () => clearInterval(interval);
-  }, [opposingTeam, count]);
+  }, [isMatch, count]);
 
   return (
     <>
       <Cover isAppear={count === 0} color={"var(--gray-3)"} />
-      <LoadingWrap color={"var(--orange)"} onClick={clickHandler} count={count}>
-        <LoadingTitle>{opposingTeam.name ? LOADING_COMPLETE_TEXT(count) : LOADING_TEXT}</LoadingTitle>
+      <LoadingWrap color={"var(--orange)"} onClick={clickHandler_test} count={count}>
+        <LoadingTitle>{isMatch ? LOADING_COMPLETE_TEXT(count) : LOADING_TEXT}</LoadingTitle>
         <PlayerCardWrap>
-          <PlayerCard count={count} teamInfo={TESTselectedTeam} />
+          <PlayerCard count={count} teamInfo={loading.firstTeam} />
           <VersusSpan>{VS_TEXT}</VersusSpan>
-          {opposingTeam.name ? (
-            <PlayerCard count={count} teamInfo={opposingTeam} />
+          {isMatch ? (
+            <PlayerCard count={count} teamInfo={loading.secondTeam} />
           ) : (
             <SvgWrap>
               <LoadingIndicatorSvg type="image/svg+xml" data={magnify} />
@@ -62,7 +82,7 @@ const Loading = () => {
 };
 
 const TRANSITION_DELAY = 1;
-const GAME_START_DELAY = 3;
+const GAME_START_DELAY = 10;
 const VS_TEXT = "VS";
 const LOADING_TEXT = "상대를 찾는 중입니다...";
 const LOADING_COMPLETE_TEXT = (num) => `게임시작 ${num}초 전`;
