@@ -4,6 +4,7 @@ import com.codesquad.baseball10.service.GameService;
 import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.loading.LoadingResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.progress.ProgressResponseDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -61,5 +62,11 @@ public class GameController {
     public PlayersResponseDto getPlayers(@PathVariable Long matchId,
                                          HttpServletRequest request) {
         return gameService.getPlayers(matchId, request);
+    }
+
+    @GetMapping("{matchId}/loading")
+    public LoadingResponseDto getLoading(@PathVariable Long matchId,
+                                         HttpServletRequest request) {
+        return gameService.getLoading(matchId, request);
     }
 }

@@ -5,6 +5,7 @@ import com.codesquad.baseball10.domain.GameApplicationRepository;
 import com.codesquad.baseball10.web.dto.responesDto.PlayersResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamChoiceResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.TeamsResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.loading.LoadingResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.progress.ProgressResponseDto;
 import org.junit.Before;
 import org.junit.Test;
@@ -146,8 +147,6 @@ public class GameControllerTest {
         String teamName2 = "키움히어로즈";
         String player3 = "키르난데스";
         String player4 = "키건우";
-        String pitchCount = "1";
-        String plateAppearance = "1";
 
         // when
         ResponseEntity<PlayersResponseDto> responseEntity
@@ -161,7 +160,32 @@ public class GameControllerTest {
         assertThat(responseEntity.getBody().getData().get(1).getTeamName()).isEqualTo(teamName2);
         assertThat(responseEntity.getBody().getData().get(1).getPlayers().get(0).getName()).isEqualTo(player3);
         assertThat(responseEntity.getBody().getData().get(1).getPlayers().get(1).getName()).isEqualTo(player4);
+    }
 
+    @Test
+    public void getLoading() {
 
+        // given
+        String email = "guswns1659@gmail.com";
+        String url = "http://localhost:" + port + "/1" + "/loading";
+
+        String teamName1 = "두산베어스";
+        String team1LogoUrl = "https://i.ibb.co/F7fd0RQ/bears.png";
+        String teamName2 = "키움히어로즈";
+        String team2LogoUrl = "https://i.ibb.co/4dyWvQq/kiwoom.png";
+
+        // when
+        ResponseEntity<LoadingResponseDto> responseEntity
+                = restTemplate.getForEntity(url, LoadingResponseDto.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getStart()).isEqualTo("true");
+        assertThat(responseEntity.getBody().getFirstTeam().getName()).isEqualTo(teamName1);
+        assertThat(responseEntity.getBody().getFirstTeam().getLogoUrl()).isEqualTo(team1LogoUrl);
+//        assertThat(responseEntity.getBody().getFirstTeam()).isNull();
+//        assertThat(responseEntity.getBody().getSecondTeam()).isNull();
+        assertThat(responseEntity.getBody().getSecondTeam().getName()).isEqualTo(teamName2);
+        assertThat(responseEntity.getBody().getSecondTeam().getLogoUrl()).isEqualTo(team2LogoUrl);
     }
 }

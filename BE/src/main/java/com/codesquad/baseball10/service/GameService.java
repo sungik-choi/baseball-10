@@ -2,6 +2,8 @@ package com.codesquad.baseball10.service;
 
 import com.codesquad.baseball10.domain.*;
 import com.codesquad.baseball10.web.dto.responesDto.*;
+import com.codesquad.baseball10.web.dto.responesDto.loading.FirstTeamResponseDto;
+import com.codesquad.baseball10.web.dto.responesDto.loading.LoadingResponseDto;
 import com.codesquad.baseball10.web.dto.responesDto.progress.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -835,6 +837,57 @@ public class GameService {
         }
 
         return players;
+    }
+
+    public LoadingResponseDto getLoading(Long matchId, HttpServletRequest request) {
+
+        GameApplication gameApplication = gameApplicationRepository.findById(1L).orElseThrow(() ->
+                new IllegalStateException("해당 gameApp은 없습니다"));
+
+        Matchs matchs = gameApplication.getMatchs().stream().filter(each -> each.getId().equals(matchId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("getLoading : No Matchs"));
+
+        if (matchs.getTeams().size() == 0) {
+            return LoadingResponseDto.builder()
+                    .start(FALSE)
+                    .build();
+
+        } else if (matchs.getTeams().size() == 1) {
+
+            Team ATeam = matchs.getTeams().get(0);
+
+            FirstTeamResponseDto firstTeam = FirstTeamResponseDto.builder()
+                    .name(ATeam.getName())
+                    .logoUrl(ATeam.getLogoUrl())
+                    .build();
+
+            return LoadingResponseDto.builder()
+                    .start(FALSE)
+                    .firstTeam(firstTeam)
+                    .build();
+
+        } else {
+
+            Team ATeam = matchs.getTeams().get(0);
+            Team otherTeam = matchs.getTeams().get(1);
+
+            FirstTeamResponseDto firstTeam = FirstTeamResponseDto.builder()
+                    .name(ATeam.getName())
+                    .logoUrl(ATeam.getLogoUrl())
+                    .build();
+
+            FirstTeamResponseDto secondTeam = FirstTeamResponseDto.builder()
+                    .name(otherTeam.getName())
+                    .logoUrl(otherTeam.getLogoUrl())
+                    .build();
+
+            return LoadingResponseDto.builder()
+                    .start(TRUE)
+                    .firstTeam(firstTeam)
+                    .secondTeam(secondTeam)
+                    .build();
+        }
     }
 }
 
