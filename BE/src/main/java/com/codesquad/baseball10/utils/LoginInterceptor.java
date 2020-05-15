@@ -36,6 +36,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             request.setAttribute("userEmail", userEmail);
 
         } catch (Exception e) {
+            e.printStackTrace();
             response.setStatus(401);
             return false;
         }
