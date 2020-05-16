@@ -36,7 +36,7 @@ const PlayGround = () => {
         </Logo>
         <ScoreBoard displays={playGround.display} />
         <CurrentPlayer defenseTeam={defenseTeam} attackTeam={attackTeam} />
-        <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} />
+        <GameArea defenseTeam={defenseTeam} attackTeam={attackTeam} userTeam={userTeam} plates={playGround.plates} ballCount={playGround.ballCount} matchInfo={playGround.matchInfo} />
         <StatsCenter batterList={currentAttackTeamBatterList} />
         <PlayerListButton as={Link} to="/playerlist">
           선수 목록

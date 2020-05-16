@@ -8,45 +8,28 @@ import Cover from "style/Cover";
 import { fadeIn, fadeOut } from "style/Animation";
 import magnify from "assets/magnify.svg";
 import _ from "../../util/util";
-import useFetch from "components/useFetch";
 
 const Loading = () => {
   const { loading } = useBaseballState();
   const dispatch = useBaseballDispatch();
 
-  const [opposingTeam, setOpposingTeam] = useState({ name: null, image: null });
   const [count, setCount] = useState(GAME_START_DELAY);
   const [isMatch, setIsMatch] = useState(false);
   let history = useHistory();
 
-  const clickHandler_test = () => {
-    setIsMatch(true);
-  };
-
-  // useEffect(() => {
-  //   const matchId = _.getLocalstorage("matchId");
-  //   const requsetURL = process.env.REACT_APP_API_URL + `/${matchId}/loading`;
-  //   fetch(requsetURL)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (_.transformBooleanType(data.start)) {
-  //         setIsMatch(true);
-  //       } else {
-  //         _.judgeToMatchTarget(setIsMatch, dispatch);
-  //       }
-  //     });
-  // }, []);
-
   useEffect(() => {
-    demo_handler();
+    const matchId = _.getLocalstorage("matchId");
+    const requsetURL = process.env.REACT_APP_API_URL + `/${matchId}/loading`;
+    fetch(requsetURL)
+      .then((res) => res.json())
+      .then((data) => {
+        if (_.transformBooleanType(data.start)) {
+          setIsMatch(true);
+        } else {
+          _.judgeToMatchTarget(setIsMatch, dispatch);
+        }
+      });
   }, []);
-
-  const demo_handler = () => {
-    setTimeout(() => {
-      setIsMatch(true);
-      dispatch({ type: "DEMO_MATCHING" });
-    }, 5000);
-  };
 
   useEffect(() => {
     if (!isMatch) return;
@@ -60,10 +43,21 @@ const Loading = () => {
     return () => clearInterval(interval);
   }, [isMatch, count]);
 
+  // useEffect(() => {
+  //   demo_handler();
+  // }, []);
+
+  // const demo_handler = () => {
+  //   setTimeout(() => {
+  //     setIsMatch(true);
+  //     dispatch({ type: "DEMO_MATCHING" });
+  //   }, 5000);
+  // };
+
   return (
     <>
       <Cover isAppear={count === 0} color={"var(--gray-3)"} />
-      <LoadingWrap color={"var(--orange)"} onClick={clickHandler_test} count={count}>
+      <LoadingWrap color={"var(--orange)"} count={count}>
         <LoadingTitle>{isMatch ? LOADING_COMPLETE_TEXT(count) : LOADING_TEXT}</LoadingTitle>
         <PlayerCardWrap>
           <PlayerCard count={count} teamInfo={loading.firstTeam} />

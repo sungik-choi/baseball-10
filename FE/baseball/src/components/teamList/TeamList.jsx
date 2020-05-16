@@ -19,7 +19,8 @@ const TeamList = () => {
   const [isModalExist, setIsModalExist] = useState(false);
   let history = useHistory();
 
-  const teamListGetURL = process.env.REACT_APP_API_URL + `api/mock/teams`; // delete mock
+  const teamListGetURL = process.env.REACT_APP_API_URL + `api/teams`; // delete mock
+
   useFetch(teamListGetURL, FETCH_TEAM_LIST, dispatch);
 
   const teamClickHandler = (name, image) => {
@@ -29,6 +30,7 @@ const TeamList = () => {
   };
 
   const modalClickHandler = () => setIsModalExist(false);
+
   const confirmClickHandler = () => {
     setIsGameStart(true);
     setTimeout(() => history.push("/loading"), TRANSITION_DELAY * 1000);

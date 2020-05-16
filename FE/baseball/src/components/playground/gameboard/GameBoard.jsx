@@ -10,30 +10,31 @@ import { playGroundFetch } from "components/useFetch";
 import { STR } from "constants/constants";
 import _ from "../../../util/util";
 
-import demo_data from "store/demoPlayer.js";
+import { useHistory } from "react-router-dom";
 
-console.log(demo_data[0]);
+import demo_data from "store/demoPlayer.js";
 
 const GameBoard = () => {
   const { playGround } = useBaseballState();
   const dispatch = useBaseballDispatch();
 
-  const { defenseTeam, attackTeam, plates } = playGround;
+  const history = useHistory();
+
+  const { defenseTeam, attackTeam, plates, isHit, isGetScore } = playGround;
   const { baseFirst, baseSecond, baseThird } = plates;
 
   const [isRun, setIsRun] = useState(true);
-  const [isHit, setIsHit] = useState(false);
-  const [isGetScore, setIsGetScore] = useState(false);
   const [isPitchBtnAppear, setIsPitchBtnAppear] = useState(true);
   const [buttonAvailable, setButtonAvailable] = useState(true);
 
   const [demo_currentPitch, setDemo_currentPitch] = useState(0);
 
-  const ANIMATION_DELAY = 2;
+  const ANIMATION_DELAY = 11 - ``;
 
   const requsetAPI = process.env.REACT_APP_API_URL + ``;
 
-  const __clickHandler = () => {
+  const clickHandler = () => {
+    moveCharacter();
     playGroundFetch(requsetAPI, "PLAYGROUND", dispatch).then((defense) => {
       if (_.transformBooleanType(defense)) {
         return;
@@ -43,23 +44,26 @@ const GameBoard = () => {
     });
   };
 
-  const demo_pitch = () => {
-    dispatch({ type: "DEMO_PLAYGROUND", data: demo_data[demo_currentPitch] });
-    clickHandler();
-    setDemo_currentPitch(demo_currentPitch + 1);
-  };
-
-  const clickHandler = () => {
-    if (isHit) {
-      setIsRun(true);
-      console.log("get score !");
-    }
+  const moveCharacter = () => {
     setButtonAvailable(false);
     setIsPitchBtnAppear(false);
     setTimeout(() => {
       setButtonAvailable(true);
     }, ANIMATION_DELAY * 1500);
   };
+
+  // const demo_pitch = () => {
+  //   dispatch({ type: "DEMO_PLAYGROUND", data: demo_data[demo_currentPitch] });
+  //   clickHandler();
+  //   if (playGround.gameOver) {
+  //     history.push("/");
+  //     return;
+  //   }
+  //   setDemo_currentPitch(demo_currentPitch + 1);
+  //   setTimeout(() => {
+  //     if (playGround.changeTeam) demo_pitch();
+  //   }, 2000);
+  // };
 
   const platesType = [STR.PITCHER, STR.BATTER, STR.FIRST, STR.SECOND, STR.THIRD, STR.HOME];
 
@@ -90,8 +94,8 @@ const GameBoard = () => {
   }, [isRun]);
 
   useEffect(() => {
-    // 원래 로직의 경우 버튼을 누르고, 해당 데이터가 true면 달리기 애니메이션 출력
-  }, [isHit]);
+    if (isHit) setIsRun(true);
+  }, [isHit, baseFirst, baseSecond, baseThird, isGetScore]);
 
   return (
     <GameBoardWrap>
@@ -99,7 +103,7 @@ const GameBoard = () => {
       {characters}
       {_.transformBooleanType(playGround.defense) &&
         (buttonAvailable ? (
-          <PitchButton appear={isPitchBtnAppear} onClick={demo_pitch}>
+          <PitchButton appear={isPitchBtnAppear} onClick={clickHandler}>
             {PITCH_TEXT}
           </PitchButton>
         ) : (

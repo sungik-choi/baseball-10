@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { slideIn } from "style/Animation";
 
-const PlayerCard = ({ count, teamInfo: { name, logoUrl, image } }) => {
+const PlayerCard = ({ count, teamInfo: { name, logoUrl } }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
