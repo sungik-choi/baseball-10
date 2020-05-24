@@ -2,7 +2,6 @@ package com.codesquad.baseball10.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Embedded;
 
 import java.util.List;
 

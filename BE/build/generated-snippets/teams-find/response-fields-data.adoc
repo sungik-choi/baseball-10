@@ -1,0 +1,28 @@
+|===
+|Path|Type|Description
+
+|`+[].id+`
+|`+Number+`
+|아이디
+
+|`+[].name+`
+|`+String+`
+|팀 이름
+
+|`+[].logoUrl+`
+|`+String+`
+|로고 URL
+
+|`+[].userEmail+`
+|`+Null+`
+|유저 이메일
+
+|`+[].selected+`
+|`+Null+`
+|팀 선택 여부
+
+|`+[].role+`
+|`+Null+`
+|홈 인지 어웨이인지
+
+|===

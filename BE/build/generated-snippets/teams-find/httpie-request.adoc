@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http GET 'https://docs.api.com/mock/teams' \
+    'Accept:application/json'
+----

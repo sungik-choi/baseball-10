@@ -13,10 +13,10 @@ import java.util.List;
 public class MockService {
 
     public TeamsResponseDto getTeamsResponseDto() {
-        List<BasicTeam> data = new ArrayList<>();
+        List<TeamResponseDto> data = new ArrayList<>();
 
         for (int count = 0; count < 10; count++) {
-            BasicTeam team = BasicTeam.builder()
+            TeamResponseDto team = TeamResponseDto.builder()
                     .id(1L)
                     .name("삼성")
                     .logoUrl("http://naver.com")
@@ -26,7 +26,7 @@ public class MockService {
 
         return TeamsResponseDto.builder()
                 .status("200")
-//                .data(data)
+                .data(data)
                 .build();
     }
 

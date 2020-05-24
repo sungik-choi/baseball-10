@@ -1,0 +1,78 @@
+[source,options="nowrap"]
+----
+{
+  "status" : "200",
+  "matchId" : null,
+  "data" : [ {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  }, {
+    "id" : 1,
+    "name" : "삼성",
+    "logoUrl" : "http://naver.com",
+    "userEmail" : null,
+    "selected" : null,
+    "role" : null
+  } ]
+}
+----
