@@ -1,5 +1,6 @@
 package com.codesquad.baseball10.service;
 
+import com.codesquad.baseball10.utils.GithubProperty;
 import com.codesquad.baseball10.web.dto.requestDto.AccessTokenRequestDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -21,14 +22,16 @@ public class LoginService {
 
     private final RestTemplate restTemplate;
 
+    private final GithubProperty githubProperty;
+
     public RedirectView handleLogin(String code, HttpServletResponse response) {
         logger.info("code : {}", code);
 
         try {
-            String url = "https://github.com/login/oauth/access_token";
-            String client_id = "6adbd2fe704c49a614b7";
-            String client_secret = "9130ab10336dcdec503fb7ec923f3e1193db3872";
-            String redirect_url = "http://15.164.34.6/api/github/oauth/callback";
+            String url = githubProperty.getUrl();
+            String client_id = githubProperty.getClient_id();
+            String client_secret = githubProperty.getClient_secret();
+            String redirect_url = githubProperty.getRedirect_url();
 
             AccessTokenRequestDto accessTokenRequestDto
                     = getAccessToken(client_id, client_secret, code, redirect_url);
