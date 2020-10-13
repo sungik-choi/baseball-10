@@ -1,35 +1,24 @@
-# baseball-10
+# Baseball Project
 
-온라인 야구게임 - 10팀
+온라인 야구게임 프로젝트
 
-### Commit rule
+## Member
 
-![image](https://user-images.githubusercontent.com/49897409/80965072-eb9fd280-8e4c-11ea-9b39-c0f3d6cb1dd5.png)
+| 분야 |    이름     |
+| :--: | :---------: |
+|  FE  | Ed, Hoi |
+|  BE  | Jack |
 
-```jsx
-[#issue_number] Feat: issue content
-// 처음 문자는 대문자를 사용한다.
-```
+## Features
 
-### Branch rule
+- 페어 프로그래밍
+- Context API + useReduer로 상태관리
+- React Router
+- styled-components로 재사용 가능한 스타일 컴포넌트 제작
+- [canvas를 사용한 게임판 구현](https://github.com/sungik-choi/baseball-project/blob/fe-dev/FE/baseball/src/components/playground/gameboard/GameCanvas.jsx)
+- [CSS Animation을 사용한 캐릭터 출루 애니메이션 구현](https://github.com/sungik-choi/baseball-project/blob/fe-dev/FE/baseball/src/components/playground/gameboard/Character.jsx)
+- OAuth 연동
 
-```jsx
-feature/<className>-<branch-content>
+## Docs 
 
-ex) featuer/fe-mainPage
-```
-
-### 스크럼
-
-- 매일 11시 30분
-
-### Branch Structure
-
-```jsx
-                  master
-
-           dev             deploy
-
-    fe-dev      be-dev
-
-```
+- [그라운드 룰](https://github.com/sungik-choi/baseball-project/wiki)
